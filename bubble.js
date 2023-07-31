@@ -48,7 +48,29 @@ function createBubble() {
   }
 }
 
+// function mousePressed() {
+//   if (isGameStarted) {
+//     for (let i = bubbles.length - 1; i >= 0; i--) {
+//       if (bubbles[i].contains(mouseX, mouseY)) {
+//         bubbles.splice(i, 1);
+//         score++;
+//         missedBubbles = 0; // 버블을 클릭하면 놓친 버블 개수 초기화
+//         break;
+//       }
+//     }
+//   }
+// }
+
 function touchStarted() {
+  handleTouchOrClick();
+  return false; // 이 부분은 추가적인 터치 이벤트 처리를 방지하기 위해 필요합니다.
+}
+
+function mousePressed() {
+  handleTouchOrClick();
+}
+
+function handleTouchOrClick() {
   if (isGameStarted) {
     for (let i = bubbles.length - 1; i >= 0; i--) {
       if (bubbles[i].contains(mouseX, mouseY)) {
@@ -60,7 +82,6 @@ function touchStarted() {
     }
   }
 }
-
 class Bubble {
   constructor(x, y) {
     this.x = x;
