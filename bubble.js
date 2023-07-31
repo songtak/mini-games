@@ -48,7 +48,7 @@ function createBubble() {
   }
 }
 
-function mousePressed() {
+function mouseClicked() {
   if (isGameStarted) {
     for (let i = bubbles.length - 1; i >= 0; i--) {
       if (bubbles[i].contains(mouseX, mouseY)) {
