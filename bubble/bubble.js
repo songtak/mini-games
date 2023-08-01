@@ -19,7 +19,6 @@ function setup() {
   coinSideImg = loadImage("../assets/img/CoinSide.png");
 }
 
-console.log("screen.availWidth ", screen.availWidth);
 function draw() {
   background(255, 246, 219);
 
