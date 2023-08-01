@@ -5,8 +5,9 @@ let isGameStarted = false;
 let missedBubbles = 0; // 놓친 버블 개수
 const maxMissedBubbles = 10; // 최대 놓친 버블 개수
 
-let coinImg;
-let coinSideImg;
+let bubbleImg1;
+let bubbleImg2;
+let bubbleGif;
 
 function setup() {
   if (screen.availWidth < 800) {
@@ -15,13 +16,14 @@ function setup() {
     createCanvas(600, 900);
   }
   setInterval(increaseSpeed, 10000); // 10초마다 속도 증가 함수 호출
-  coinImg = loadImage("../assets/img/Coin.png");
-  coinSideImg = loadImage("../assets/img/CoinSide.png");
+  bubbleImg1 = loadImage("../assets/img/bubble1.png");
+  bubbleImg2 = loadImage("../assets/img/bubble2.png");
+  bubbleGif = loadImage("../assets/img/bubble.gif");
+  startGame(); // 게임을 즉시 시작합니다.
 }
 
-console.log("screen.availWidth ", screen.availWidth);
 function draw() {
-  background(255, 246, 219);
+  background(255, 255, 255);
 
   if (isGameStarted) {
     createBubble();
@@ -58,19 +60,6 @@ function createBubble() {
   }
 }
 
-// function mousePressed() {
-//   if (isGameStarted) {
-//     for (let i = bubbles.length - 1; i >= 0; i--) {
-//       if (bubbles[i].contains(mouseX, mouseY)) {
-//         bubbles.splice(i, 1);
-//         score++;
-//         missedBubbles = 0; // 버블을 클릭하면 놓친 버블 개수 초기화
-//         break;
-//       }
-//     }
-//   }
-// }
-
 function touchStarted() {
   handleTouchOrClick();
   return false; // 이 부분은 추가적인 터치 이벤트 처리를 방지하기 위해 필요합니다.
@@ -92,16 +81,17 @@ function handleTouchOrClick() {
     }
   }
 }
+
 class Bubble {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.r = 20;
+    this.r = 40;
   }
 
   display() {
     fill(255, 0, 150);
-    image(coinImg, this.x, this.y, this.r, 40, 40);
+    image(bubbleImg1, this.x, this.y, this.r, this.r);
 
     // ellipse(this.x, this.y, this.r * 2);
   }
