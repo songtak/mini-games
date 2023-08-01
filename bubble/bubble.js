@@ -5,13 +5,23 @@ let isGameStarted = false;
 let missedBubbles = 0; // 놓친 버블 개수
 const maxMissedBubbles = 10; // 최대 놓친 버블 개수
 
+let coinImg;
+let coinSideImg;
+
 function setup() {
-  createCanvas(400, 400);
+  if (screen.availWidth < 800) {
+    createCanvas(screen.availWidth, screen.availHeight);
+  } else {
+    createCanvas(600, 900);
+  }
   setInterval(increaseSpeed, 10000); // 10초마다 속도 증가 함수 호출
+  coinImg = loadImage("../assets/img/Coin.png");
+  coinSideImg = loadImage("../assets/img/CoinSide.png");
 }
 
+console.log("screen.availWidth ", screen.availWidth);
 function draw() {
-  background(220);
+  background(255, 246, 219);
 
   if (isGameStarted) {
     createBubble();
@@ -91,7 +101,9 @@ class Bubble {
 
   display() {
     fill(255, 0, 150);
-    ellipse(this.x, this.y, this.r * 2);
+    image(coinImg, this.x, this.y, this.r, 40, 40);
+
+    // ellipse(this.x, this.y, this.r * 2);
   }
 
   update() {
