@@ -3,12 +3,14 @@ let score = 0;
 let bubbleSpeed = 1; // 초당 이동 거리 (기본값 1)
 let isGameStarted = false;
 let missedBubbles = 0; // 놓친 버블 개수
+let isOver = false; // 게임 끝
 const maxMissedBubbles = 3; // 최대 놓친 버블 개수
 
 let bubbleImg1;
 let bubbleImg2;
 let popImg;
 let bubbleGif;
+let gameOverGif;
 
 function setup() {
   if (windowWidth < 800) {
@@ -27,6 +29,9 @@ function setup() {
     "https://songtak.github.io/mini-games/assets/img/Bubble.gif"
   );
   popImg = loadImage("https://songtak.github.io/mini-games/assets/img/pop.png");
+  gameOverGif = loadImage(
+    "https://songtak.github.io/mini-games/assets/img/GameOver.gif"
+  );
   startGame(); // 게임을 즉시 시작합니다.
 }
 
@@ -67,8 +72,10 @@ function draw() {
     gameOver();
   }
 
-  textSize(24);
-  text("Score: " + score, 10, 30);
+  if (!isOver) {
+    textSize(24);
+    text("Score: " + score, 10, 30);
+  }
 }
 
 function increaseSpeed() {
@@ -167,7 +174,10 @@ function startGame() {
 
 function gameOver() {
   isGameStarted = false;
-  textSize(36);
+  isOver = true;
+  gameOverGif;
+  image(gameOverGif, width / 2 - 60, height / 2 - 60, 120, 120);
+  textSize(28);
   textAlign(CENTER);
-  text("Game Over", width / 2, height / 2);
+  text(`Score : ${score}`, width / 2, height / 2 + 100);
 }
