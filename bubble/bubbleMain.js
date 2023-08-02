@@ -22,8 +22,8 @@ function setup() {
     createCanvas(600, 900);
   }
 
-  bubbleImg1 = loadImage("../../../assets/img/Bubble1.png");
-  bubbleImg2 = loadImage("../../assets/img/Bubble2.png");
+  bubbleImg1 = loadImage("/assets/img/Bubble1.png");
+  bubbleImg2 = loadImage("mini-games/assets/img/Bubble2.png");
   bubbleGif = loadImage("../../assets/img/Bubble.gif");
   bubbleTitleGif = loadImage("../../assets/img/BubbleTitle.gif");
   pressStartGif = loadImage("../../assets/img/PressStart.gif");
