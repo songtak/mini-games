@@ -17,9 +17,9 @@ function setup() {
   // }
 
   if (windowWidth < 800) {
-    resizeCanvas(windowWidth, windowHeight);
+    createCanvas(windowWidth, windowHeight);
   } else {
-    resizeCanvas(600, 900);
+    createCanvas(600, 900);
   }
 
   bubbleImg1 = loadImage("../assets/img/bubble1.png");
