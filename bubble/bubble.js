@@ -17,10 +17,16 @@ function setup() {
     createCanvas(600, 900);
   }
   setInterval(increaseSpeed, 10000); // 10초마다 속도 증가 함수 호출
-  bubbleImg1 = loadImage("../../assets/img/Bubble1.png");
-  bubbleImg2 = loadImage("../../assets/img/Bubble2.png");
-  bubbleGif = loadImage("../../assets/img/Bubble.gif");
-  popImg = loadImage("../../assets/img/pop.png");
+  bubbleImg1 = loadImage(
+    "https://songtak.github.io/mini-games/assets/img/Bubble1.png"
+  );
+  bubbleImg2 = loadImage(
+    "https://songtak.github.io/mini-games/assets/img/Bubble2.png"
+  );
+  bubbleGif = loadImage(
+    "https://songtak.github.io/mini-games/assets/img/Bubble.gif"
+  );
+  popImg = loadImage("https://songtak.github.io/mini-games/assets/img/pop.png");
   startGame(); // 게임을 즉시 시작합니다.
 }
 
