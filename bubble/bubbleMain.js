@@ -10,10 +10,16 @@ let pressStartGif;
 let pointerImage = false;
 
 function setup() {
-  if (screen.availWidth < 800) {
-    createCanvas(screen.availWidth, screen.availHeight);
+  // if (screen.availWidth < 800) {
+  //   createCanvas(screen.availWidth, screen.availHeight);
+  // } else {
+  //   createCanvas(600, 900);
+  // }
+
+  if (windowWidth < 800) {
+    resizeCanvas(windowWidth, windowHeight);
   } else {
-    createCanvas(600, 900);
+    resizeCanvas(600, 900);
   }
 
   bubbleImg1 = loadImage("../assets/img/bubble1.png");
@@ -22,6 +28,14 @@ function setup() {
   bubbleTitleGif = loadImage("../assets/img/bubbleTitle.gif");
   pressStartGif = loadImage("../assets/img/pressStart.gif");
   imageMode(CENTER); // 이미지를 가로 가운데로 정렬하는 모드로 설정합니다.
+}
+
+function windowResized() {
+  if (windowWidth < 800) {
+    resizeCanvas(windowWidth, windowHeight);
+  } else {
+    resizeCanvas(600, 900);
+  }
 }
 
 function draw() {
