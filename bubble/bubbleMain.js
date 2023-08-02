@@ -97,10 +97,19 @@ function mouseOverImage(x, y, w, h) {
 
 /** 이벤트 클릭 함수 */
 function mouseClicked() {
+  handleTouchOrClick();
+}
+
+function touchStarted() {
+  handleTouchOrClick();
+  return false; // 이 부분은 추가적인 터치 이벤트 처리를 방지하기 위해 필요합니다.
+}
+
+const handleTouchOrClick = () => {
   if (mouseOverImage(width / 2 - 50, height / 2 - 50, 100, 100)) {
     window.location.href = "../bubble/bubble.html";
   }
-}
+};
 
 class Bubble {
   constructor(x, y) {

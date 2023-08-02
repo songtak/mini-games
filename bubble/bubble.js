@@ -82,6 +82,7 @@ function touchStarted() {
 function mousePressed() {
   handleTouchOrClick();
 }
+
 function handleTouchOrClick() {
   if (isGameStarted) {
     for (let i = bubbles.length - 1; i >= 0; i--) {
