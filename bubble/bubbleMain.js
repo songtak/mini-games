@@ -23,7 +23,7 @@ function setup() {
   }
 
   bubbleImg1 = loadImage("/assets/img/Bubble1.png");
-  bubbleImg2 = loadImage("/assets/img/Bubble2.png");
+  bubbleImg2 = loadImage("../assets/img/Bubble2.png");
   bubbleGif = loadImage("/assets/img/Bubble.gif");
   bubbleTitleGif = loadImage("/assets/img/BubbleTitle.gif");
   pressStartGif = loadImage("/assets/img/PressStart.gif");
