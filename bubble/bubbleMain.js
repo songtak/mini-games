@@ -69,7 +69,7 @@ function draw() {
   //   textSize(24);
   //   text("BUBBLE", 300, 30);
   //   textAlign(CENTER, CENTER);
-  image(bubbleTitleGif, width / 2, height / 4);
+  image(bubbleTitleGif, width / 2, height / 4, 150, 150);
   image(pressStartGif, width / 2, height / 2, 100, 100);
 
   if (mouseOverImage(width / 2 - 50, height / 2 - 50, 100, 100)) {
