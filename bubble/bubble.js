@@ -7,6 +7,7 @@ const maxMissedBubbles = 10; // 최대 놓친 버블 개수
 
 let bubbleImg1;
 let bubbleImg2;
+let popImg;
 let bubbleGif;
 
 function setup() {
@@ -19,6 +20,7 @@ function setup() {
   bubbleImg1 = loadImage("../assets/img/bubble1.png");
   bubbleImg2 = loadImage("../assets/img/bubble2.png");
   bubbleGif = loadImage("../assets/img/bubble.gif");
+  popImg = loadImage("../assets/img/pop.png");
   startGame(); // 게임을 즉시 시작합니다.
 }
 
@@ -32,6 +34,12 @@ function draw() {
   for (let i = bubbles.length - 1; i >= 0; i--) {
     bubbles[i].display();
     bubbles[i].update();
+
+    if (bubbles[i].contains(mouseX, mouseY, 40, 40)) {
+      cursor("pointer");
+    } else {
+      cursor();
+    }
 
     if (bubbles[i].isOffScreen()) {
       bubbles.splice(i, 1);
@@ -68,18 +76,41 @@ function touchStarted() {
 function mousePressed() {
   handleTouchOrClick();
 }
-
 function handleTouchOrClick() {
   if (isGameStarted) {
     for (let i = bubbles.length - 1; i >= 0; i--) {
       if (bubbles[i].contains(mouseX, mouseY)) {
-        bubbles.splice(i, 1);
+        bubbles[i].isClicked = true; // 버블이 클릭되었다고 표시
         score++;
         missedBubbles = 0; // 버블을 클릭하면 놓친 버블 개수 초기화
+
+        // 1초 후에 해당 버블 제거
+        setTimeout(() => {
+          bubbles.splice(i, 1);
+        }, 100);
+
         break;
       }
     }
   }
+}
+
+// function handleTouchOrClick() {
+//   if (isGameStarted) {
+//     for (let i = bubbles.length - 1; i >= 0; i--) {
+//       if (bubbles[i].contains(mouseX, mouseY)) {
+//         bubbles.splice(i, 1);
+//         score++;
+//         missedBubbles = 0; // 버블을 클릭하면 놓친 버블 개수 초기화
+//         break;
+//       }
+//     }
+//   }
+// }
+
+function mouseOverImage(x, y, w, h) {
+  // 주어진 영역(x, y, w, h)에 마우스 커서가 있는지 여부를 반환합니다.
+  return mouseX > x && mouseX < x + w && mouseY > y && mouseY < y + h;
 }
 
 class Bubble {
@@ -87,11 +118,16 @@ class Bubble {
     this.x = x;
     this.y = y;
     this.r = 40;
+    this.isClicked = false; // 추가: 버블이 클릭되었는지 여부를 추적합니다.
   }
 
   display() {
     fill(255, 0, 150);
-    image(bubbleImg1, this.x, this.y, this.r, this.r);
+    if (!this.isClicked) {
+      image(bubbleImg1, this.x, this.y, this.r, this.r);
+    } else {
+      image(popImg, this.x, this.y, this.r, this.r); // 클릭되었을 때 popImg 이미지로 변경
+    }
 
     // ellipse(this.x, this.y, this.r * 2);
   }
