@@ -52,7 +52,6 @@ function windowResized() {
 function draw() {
   background(255, 255, 255);
   //   background(255, 255, 255);
-
   //   image(bubbleGif, 0, 0);
 
   createBubble();
