@@ -137,7 +137,7 @@ function mouseOverImage(x, y, w, h) {
 
 class Bubble {
   constructor(x, y) {
-    this.x = x;
+    this.x = x - 20;
     this.y = y;
     this.r = 40;
     this.isClicked = false; // 추가: 버블이 클릭되었는지 여부를 추적합니다.
