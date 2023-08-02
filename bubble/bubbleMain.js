@@ -22,11 +22,15 @@ function setup() {
     createCanvas(600, 900);
   }
 
-  bubbleImg1 = loadImage("/assets/img/Bubble1.png");
-  bubbleImg2 = loadImage("../assets/img/Bubble2.png");
-  bubbleGif = loadImage("/assets/img/Bubble.gif");
-  bubbleTitleGif = loadImage("/assets/img/BubbleTitle.gif");
-  pressStartGif = loadImage("/assets/img/PressStart.gif");
+  bubbleImg1 = loadImage("../../assets/img/Bubble1.png");
+  bubbleImg2 = loadImage("../../assets/img/Bubble2.png");
+  bubbleGif = loadImage("../../assets/img/Bubble.gif");
+  bubbleTitleGif = loadImage("../../assets/img/BubbleTitle.gif");
+  pressStartGif = loadImage("../../assets/img/PressStart.gif");
+  // bubbleImg2 = loadImage("../assets/img/Bubble2.png");
+  // bubbleGif = loadImage("/assets/img/Bubble.gif");
+  // bubbleTitleGif = loadImage("/assets/img/BubbleTitle.gif");
+  // pressStartGif = loadImage("/assets/img/PressStart.gif");
   imageMode(CENTER); // 이미지를 가로 가운데로 정렬하는 모드로 설정합니다.
 }
 
