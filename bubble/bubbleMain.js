@@ -37,10 +37,7 @@ function setup() {
   pressStartGif = loadImage(
     "https://songtak.github.io/mini-games/assets/img/PressStart.gif"
   );
-  // bubbleImg2 = loadImage("../assets/img/Bubble2.png");
-  // bubbleGif = loadImage("/assets/img/Bubble.gif");
-  // bubbleTitleGif = loadImage("/assets/img/BubbleTitle.gif");
-  // pressStartGif = loadImage("/assets/img/PressStart.gif");
+
   imageMode(CENTER); // 이미지를 가로 가운데로 정렬하는 모드로 설정합니다.
 }
 
@@ -102,6 +99,10 @@ function mouseClicked() {
 
 function touchStarted() {
   handleTouchOrClick();
+
+  // 터치의 좌표
+  // let touchX = touches[touches.length - 1].x;
+  // let touchY = touches[touches.length - 1].y;
   window.location.href = "../bubble/bubble.html";
 
   return false; // 이 부분은 추가적인 터치 이벤트 처리를 방지하기 위해 필요합니다.

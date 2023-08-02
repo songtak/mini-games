@@ -3,7 +3,7 @@ let score = 0;
 let bubbleSpeed = 1; // 초당 이동 거리 (기본값 1)
 let isGameStarted = false;
 let missedBubbles = 0; // 놓친 버블 개수
-const maxMissedBubbles = 10; // 최대 놓친 버블 개수
+const maxMissedBubbles = 3; // 최대 놓친 버블 개수
 
 let bubbleImg1;
 let bubbleImg2;
