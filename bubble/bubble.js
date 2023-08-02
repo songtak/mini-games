@@ -11,8 +11,8 @@ let popImg;
 let bubbleGif;
 
 function setup() {
-  if (screen.availWidth < 800) {
-    createCanvas(screen.availWidth, screen.availHeight);
+  if (windowWidth < 800) {
+    createCanvas(windowWidth, windowHeight);
   } else {
     createCanvas(600, 900);
   }
@@ -28,6 +28,14 @@ function setup() {
   );
   popImg = loadImage("https://songtak.github.io/mini-games/assets/img/pop.png");
   startGame(); // 게임을 즉시 시작합니다.
+}
+
+function windowResized() {
+  if (windowWidth < 800) {
+    resizeCanvas(windowWidth, windowHeight);
+  } else {
+    resizeCanvas(600, 900);
+  }
 }
 
 function draw() {
