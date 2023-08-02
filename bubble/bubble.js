@@ -17,9 +17,9 @@ function setup() {
     createCanvas(600, 900);
   }
   setInterval(increaseSpeed, 10000); // 10초마다 속도 증가 함수 호출
-  bubbleImg1 = loadImage("../assets/img/bubble1.png");
-  bubbleImg2 = loadImage("../assets/img/bubble2.png");
-  bubbleGif = loadImage("../assets/img/bubble.gif");
+  bubbleImg1 = loadImage("../assets/img/Bubble1.png");
+  bubbleImg2 = loadImage("../assets/img/Bubble2.png");
+  bubbleGif = loadImage("../assets/img/Bubble.gif");
   popImg = loadImage("../assets/img/pop.png");
   startGame(); // 게임을 즉시 시작합니다.
 }
