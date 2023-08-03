@@ -10,12 +10,6 @@ let pressStartGif;
 let pointerImage = false;
 
 function setup() {
-  // if (screen.availWidth < 800) {
-  //   createCanvas(screen.availWidth, screen.availHeight);
-  // } else {
-  //   createCanvas(600, 900);
-  // }
-
   if (windowWidth < 800) {
     createCanvas(windowWidth, windowHeight);
   } else {

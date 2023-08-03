@@ -13,3 +13,35 @@ canvas {
   display: block;
   touch-action: auto;
 }
+
+.main {
+  background-color: rgb(255, 255, 255);
+  height: 600px;
+  height: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  /* color: rgb(0, 214, 142); */
+}
+
+@media (max-width: 800px) {
+  .title {
+    font-size: 30px;
+    height: 10vh;
+  }
+  .main {
+    width: 100vw;
+    padding-top: 40vh;
+  }
+  .menu-item {
+    height: 40px;
+  }
+}
+@media (min-width: 801px) {
+  .title {
+    font-size: 20px;
+  }
+}
