@@ -55,3 +55,14 @@ function mouseOverImage(x, y, w, h) {
 function mouseClicked() {
   handleTouchOrClick();
 }
+
+function touchStarted() {
+  handleTouchOrClick();
+
+  // 터치의 좌표
+  // let touchX = touches[touches.length - 1].x;
+  // let touchY = touches[touches.length - 1].y;
+  window.location.href = "../bubble/bubble.html";
+
+  return false; // 이 부분은 추가적인 터치 이벤트 처리를 방지하기 위해 필요합니다.
+}
