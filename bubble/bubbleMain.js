@@ -104,7 +104,6 @@ function touchStarted() {
 const handleTouchOrClick = () => {
   if (mouseOverImage(width / 2 - 50, height / 2 - 50, 100, 100)) {
     window.location.href = "../bubble/bubble.html";
-  } else {
   }
 };
 
