@@ -1,10 +1,21 @@
+let playerImg;
+let obstacleImg;
 let player;
 let obstacles = [];
 let score = 0;
 let speedMultiplier = 1;
+let dragging = false;
+
+function preload() {
+  playerImg = loadImage(
+    "https://songtak.github.io/mini-games/assets/img/RunMe.gif"
+  );
+  obstacleImg = loadImage(
+    "https://songtak.github.io/mini-games/assets/img/Rock1.png"
+  );
+}
 
 function setup() {
-  // createCanvas(400, 400);
   if (windowHeight < windowWidth && windowWidth < 1000) {
     createCanvas(windowWidth, windowHeight);
   } else if (windowHeight < windowWidth && windowWidth < 1000) {
@@ -12,19 +23,14 @@ function setup() {
   } else {
     createCanvas(600, 900);
   }
-
-  player = loadImage(
-    "https://songtak.github.io/mini-games/assets/img/RunMe.gif"
-  );
-
   player = {
     x: 50,
     y: height / 2,
-    size: 30,
+    w: 60, // 이미지의 너비
+    h: 60, // 이미지의 높이
     moveSpeed: 5,
   };
 
-  // 매 20초마다 speedMultiplier를 증가시킴
   setInterval(function () {
     speedMultiplier += 0.1;
   }, 2000);
@@ -33,95 +39,86 @@ function setup() {
 function draw() {
   background(252, 238, 212);
 
-  // Player movement
-  if (keyIsDown(UP_ARROW) && player.y > 0) {
-    player.y -= player.moveSpeed;
-  }
-  if (keyIsDown(DOWN_ARROW) && player.y < height) {
-    player.y += player.moveSpeed;
-  }
-
   // Draw player
-  fill(0, 0, 255);
-  ellipse(player.x, player.y, player.size);
+  image(
+    playerImg,
+    player.x - player.w / 2,
+    player.y - player.h / 2,
+    player.w,
+    player.h
+  );
 
-  // Create obstacles
-  if (random() < 0.03) {
+  // Randomly create obstacles
+  if (random() < 0.02) {
     obstacles.push({
       x: width,
       y: random(height),
-      size: random(20, 50),
-      speed: random(2, 6) * speedMultiplier,
+      size: 40,
+      speed: random(2, 5),
     });
   }
 
   // Draw and move obstacles
   for (let i = obstacles.length - 1; i >= 0; i--) {
-    fill(255, 0, 0);
-    ellipse(obstacles[i].x, obstacles[i].y, obstacles[i].size);
-    obstacles[i].x -= obstacles[i].speed;
+    image(
+      obstacleImg,
+      obstacles[i].x - obstacles[i].size / 2,
+      obstacles[i].y - obstacles[i].size / 2,
+      obstacles[i].size,
+      obstacles[i].size
+    );
+    obstacles[i].x -= obstacles[i].speed * speedMultiplier;
 
     // Check for collision
     let distance = dist(player.x, player.y, obstacles[i].x, obstacles[i].y);
-    if (distance < (player.size + obstacles[i].size) / 2) {
-      // Game Over
-      noLoop();
-      fill(0);
-      textSize(32);
-      textAlign(CENTER, CENTER);
-      text("Game Over", width / 2, height / 2);
+    if (distance < (player.w + obstacles[i].size) / 2) {
+      gameOver();
     }
 
-    // Remove off-screen obstacles and add score
-    if (obstacles[i].x < 0) {
-      obstacles.splice(i, 1);
+    // Check if the obstacle has passed out of the screen
+    if (obstacles[i].x < -obstacles[i].size / 2) {
       score += 10;
+      obstacles.splice(i, 1);
     }
   }
 
   // Display score
   fill(0);
-  textSize(16);
-  text("Score: " + score, 10, 20);
+  textSize(24);
+  textAlign(LEFT, TOP);
+  text("Score: " + score, 10, 10);
 }
 
-function windowResized() {
-  if (windowHeight < windowWidth && windowWidth < 1000) {
-    createCanvas(windowWidth, windowHeight);
-  } else if (windowHeight < windowWidth && windowWidth > 1000) {
-    createCanvas(windowWidth, 900);
-  } else {
-    // createCanvas(600, 900);
-  }
-}
-
-function mousePressed() {
-  // If mouse is clicked or screen is touched above the player's current position
-  if (mouseY < player.y) {
-    player.y -= player.moveSpeed;
-  }
-  // If mouse is clicked or screen is touched below the player's current position
-  else if (mouseY > player.y) {
-    player.y += player.moveSpeed;
-  }
+function gameOver() {
+  noLoop();
+  background(220);
+  fill(0);
+  textSize(32);
+  textAlign(CENTER, CENTER);
+  text("Game Over", width / 2, height / 2);
+  textSize(24);
+  text("Final Score: " + score, width / 2, height / 2 + 40);
 }
 
 function mousePressed() {
-  // Check if mouse is inside the circle
-  let distance = dist(mouseX, mouseY, player.x, player.y);
-  if (distance < player.size / 2) {
+  if (
+    mouseX > player.x - player.w / 2 &&
+    mouseX < player.x + player.w / 2 &&
+    mouseY > player.y - player.h / 2 &&
+    mouseY < player.y + player.h / 2
+  ) {
     dragging = true;
   }
 }
 
 function mouseDragged() {
-  // Move the circle while mouse is being dragged
   if (dragging) {
+    player.x = mouseX;
     player.y = mouseY;
   }
+  return false; // Prevent default drag behavior
 }
 
 function mouseReleased() {
-  // Stop moving the circle when mouse is released
   dragging = false;
 }
