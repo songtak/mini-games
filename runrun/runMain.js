@@ -1,3 +1,4 @@
+let runRunTitleGif;
 let pressStartGif;
 
 function setup() {
@@ -8,6 +9,10 @@ function setup() {
   } else {
     createCanvas(600, 900);
   }
+
+  runRunTitleGif = loadImage(
+    "https://songtak.github.io/mini-games/assets/img/RunRunTitle.gif"
+  );
 
   pressStartGif = loadImage(
     "https://songtak.github.io/mini-games/assets/img/PressStart.gif"
@@ -27,9 +32,10 @@ function windowResized() {
 }
 
 function draw() {
-  background(255, 255, 2);
+  background(252, 238, 212);
   //   background(255, 255, 255);
 
+  image(runRunTitleGif, width / 2, height / 4, 200, 200);
   image(pressStartGif, width / 2, height / 2, 100, 100);
 }
 
