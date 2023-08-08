@@ -100,6 +100,8 @@ function gameOver() {
   text("Final Score: " + score, width / 2, height / 2 + 40);
 }
 
+/** ====================================================================== */
+
 function mousePressed() {
   if (
     mouseX > player.x - player.w / 2 &&
@@ -123,6 +125,7 @@ function mouseReleased() {
   dragging = false;
 }
 
+/** ====================================================================== */
 function touchStarted() {
   if (dist(mouseX, mouseY, player.x, player.y) < player.w / 2) {
     dragging = true;
@@ -142,3 +145,5 @@ function touchEnded() {
   dragging = false;
   return false; // Prevent default touch behavior
 }
+
+/** ====================================================================== */

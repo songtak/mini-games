@@ -135,6 +135,8 @@ function mouseOverImage(x, y, w, h) {
   return mouseX > x && mouseX < x + w && mouseY > y && mouseY < y + h;
 }
 
+/** ====================================================================== */
+
 class Bubble {
   constructor(x, y) {
     this.x = x - 20;
@@ -168,6 +170,8 @@ class Bubble {
   }
 }
 
+/** ====================================================================== */
+
 function startGame() {
   isGameStarted = true;
 }
@@ -181,3 +185,5 @@ function gameOver() {
   textAlign(CENTER);
   text(`Score : ${score}`, width / 2, height / 2 + 100);
 }
+
+/** ====================================================================== */
