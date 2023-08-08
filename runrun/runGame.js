@@ -122,3 +122,23 @@ function mouseDragged() {
 function mouseReleased() {
   dragging = false;
 }
+
+function touchStarted() {
+  if (dist(mouseX, mouseY, player.x, player.y) < player.w / 2) {
+    dragging = true;
+  }
+  return false; // Prevent default touch behavior
+}
+
+function touchMoved() {
+  if (dragging) {
+    player.x = mouseX;
+    player.y = mouseY;
+  }
+  return false; // Prevent default touch behavior (like scrolling)
+}
+
+function touchEnded() {
+  dragging = false;
+  return false; // Prevent default touch behavior
+}
