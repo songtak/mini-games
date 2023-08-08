@@ -127,23 +127,43 @@ function mouseReleased() {
 
 /** ====================================================================== */
 function touchStarted() {
-  if (dist(mouseX, mouseY, player.x, player.y) < player.w / 2) {
+  if (dist(touches[0].x, touches[0].y, player.x, player.y) < player.w / 2) {
     dragging = true;
   }
-  return false; // Prevent default touch behavior
+  return false; // prevent default
 }
 
 function touchMoved() {
   if (dragging) {
-    player.x = mouseX;
-    player.y = mouseY;
+    player.x = touches[0].x;
+    player.y = touches[0].y;
   }
-  return false; // Prevent default touch behavior (like scrolling)
+  return false; // prevent default
 }
 
 function touchEnded() {
   dragging = false;
-  return false; // Prevent default touch behavior
+  return false; // prevent default
 }
+
+// function touchStarted() {
+//   if (dist(mouseX, mouseY, player.x, player.y) < player.w / 2) {
+//     dragging = true;
+//   }
+//   return false; // Prevent default touch behavior
+// }
+
+// function touchMoved() {
+//   if (dragging) {
+//     player.x = mouseX;
+//     player.y = mouseY;
+//   }
+//   return false; // Prevent default touch behavior (like scrolling)
+// }
+
+// function touchEnded() {
+//   dragging = false;
+//   return false; // Prevent default touch behavior
+// }
 
 /** ====================================================================== */

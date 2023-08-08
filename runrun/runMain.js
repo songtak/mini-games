@@ -2,10 +2,12 @@ let runRunTitleGif;
 let pressStartGif;
 
 function setup() {
-  if (windowHeight < windowWidth && windowWidth < 1000) {
-    createCanvas(windowWidth, windowHeight);
-  } else if (windowHeight < windowWidth && windowWidth < 1000) {
-    createCanvas(windowWidth, 900);
+  if (windowWidth < 800) {
+    // createCanvas(windowWidth, windowHeight);
+
+    // canvas를 생성하고 화면 중앙에 위치시킵니다.
+    let cnv = createCanvas(windowHeight, windowWidth);
+    cnv.position((windowWidth - width) / 2, (windowHeight - height) / 2);
   } else {
     createCanvas(600, 900);
   }
@@ -22,17 +24,26 @@ function setup() {
 }
 
 function windowResized() {
-  if (windowHeight < windowWidth && windowWidth < 1000) {
-    createCanvas(windowWidth, windowHeight);
-  } else if (windowHeight < windowWidth && windowWidth > 1000) {
-    createCanvas(windowWidth, 900);
+  if (windowWidth < 800) {
+    // createCanvas(windowWidth, windowHeight);
+
+    // canvas를 생성하고 화면 중앙에 위치시킵니다.
+    let cnv = createCanvas(windowHeight, windowWidth);
+    cnv.position((windowWidth - width) / 2, (windowHeight - height) / 2);
   } else {
-    // createCanvas(600, 900);
+    createCanvas(600, 900);
   }
 }
 
 function draw() {
   background(252, 238, 212);
+
+  if (windowWidth < 800) {
+    translate(width / 2, height / 2);
+    rotate(-PI / 2);
+    translate(-height / 2, -width / 2);
+  }
+
   //   background(255, 255, 255);
 
   image(runRunTitleGif, width / 2, height / 4, 200, 200);
