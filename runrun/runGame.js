@@ -7,8 +7,6 @@ let speedMultiplier = 1;
 let dragging = false;
 let isGameOver = false;
 
-let happyPotatoGif;
-
 const isMobile = () => {
   const user = navigator.userAgent;
   let isCheck = false;
@@ -26,9 +24,6 @@ function preload() {
   );
   obstacleImg = loadImage(
     "https://songtak.github.io/mini-games/assets/img/Rock1.png"
-  );
-  happyPotatoGif = loadImage(
-    "https://songtak.github.io/mini-games/assets/img/HappyPotato.gif"
   );
 }
 

@@ -1,5 +1,6 @@
 let runRunTitleGif;
 let pressStartGif;
+let happyPotatoGif;
 
 const isMobile = () => {
   const user = navigator.userAgent;
@@ -31,6 +32,10 @@ function setup() {
     "https://songtak.github.io/mini-games/assets/img/PressStart.gif"
   );
 
+  happyPotatoGif = loadImage(
+    "https://songtak.github.io/mini-games/assets/img/HappyPotato.gif"
+  );
+
   imageMode(CENTER); // 이미지를 가로 가운데로 정렬하는 모드로 설정합니다.
 }
 
@@ -43,10 +48,10 @@ function draw() {
       rotate(-PI / 2);
       translate(-height / 2, -width / 2);
     }
-    image(runRunTitleGif, height / 2, width / 4, 200, 200);
+    image(happyPotatoGif, height / 2, width / 4, 200, 200);
     image(pressStartGif, height / 2, width / 1.4, 100, 100);
   } else {
-    image(runRunTitleGif, width / 2, height / 4, 200, 200);
+    image(happyPotatoGif, width / 2, height / 4, 200, 200);
     image(pressStartGif, width / 2, height / 1.4, 100, 100);
   }
 }
