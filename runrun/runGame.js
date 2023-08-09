@@ -23,7 +23,7 @@ function setup() {
     let cnv = createCanvas(windowHeight, windowWidth);
     cnv.position((windowWidth - width) / 2, (windowHeight - height) / 2);
   } else {
-    createCanvas(600, 900);
+    createCanvas(900, 400);
   }
   player = {
     x: 50,

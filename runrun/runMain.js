@@ -9,7 +9,7 @@ function setup() {
     let cnv = createCanvas(windowHeight, windowWidth);
     cnv.position((windowWidth - width) / 2, (windowHeight - height) / 2);
   } else {
-    createCanvas(600, 900);
+    createCanvas(800, 400);
   }
 
   runRunTitleGif = loadImage(
@@ -31,7 +31,7 @@ function windowResized() {
     let cnv = createCanvas(windowHeight, windowWidth);
     cnv.position((windowWidth - width) / 2, (windowHeight - height) / 2);
   } else {
-    createCanvas(600, 900);
+    createCanvas(800, 400);
   }
 }
 
@@ -47,7 +47,7 @@ function draw() {
   //   background(255, 255, 255);
 
   image(runRunTitleGif, width / 2, height / 4, 200, 200);
-  image(pressStartGif, width / 2, height / 2, 100, 100);
+  image(pressStartGif, width / 2, height / 1.4, 100, 100);
 }
 
 const handleTouchOrClick = () => {
