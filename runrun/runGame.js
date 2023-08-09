@@ -142,6 +142,8 @@ function gameOver() {
   text("Game Over", height / 2, width / 2);
   textSize(24);
   text("Final Score: " + score, height / 2, width / 2 + 40);
+  textSize(50);
+  text("try again !", height / 2, width / 2 + 100);
 }
 
 /** ====================================================================== */
@@ -186,13 +188,31 @@ function touchStarted() {
   ) {
     dragging = true;
   }
+
+  let tryAgain = {
+    x: height / 2,
+    y: width / 2 + 100,
+    w: textWidth("try again !"),
+    h: 50, // 이 값은 텍스트의 크기입니다.
+  };
+  if (isGameOver) {
+    if (
+      windowHeight - realX > tryAgain.x - tryAgain.w / 2 &&
+      windowHeight - realX < tryAgain.x + tryAgain.w / 2 &&
+      windowWidth - realY > tryAgain.y - tryAgain.h / 2 &&
+      windowWidth - realY < tryAgain.y + tryAgain.h / 2
+    ) {
+      window.location.href = "../runrun/runGame.html"; // 원하는 URL로 리다이렉션
+      return;
+    }
+  }
+
   return false; // prevent default
 }
 
 function touchMoved() {
   let [realX, realY] = getTransformedCoordinates(touches[0].x, touches[0].y);
 
-  console.log("dragging", dragging);
   if (dragging) {
     player.x = windowHeight - realX;
     player.y = windowWidth - realY;
