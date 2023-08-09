@@ -5,6 +5,20 @@ let obstacles = [];
 let score = 0;
 let speedMultiplier = 1;
 let dragging = false;
+let isGameOver = false;
+
+let happyPotatoGif;
+
+const isMobile = () => {
+  const user = navigator.userAgent;
+  let isCheck = false;
+
+  if (user.indexOf("iPhone") > -1 || user.indexOf("Android") > -1) {
+    isCheck = true;
+  }
+
+  return isCheck;
+};
 
 function preload() {
   playerImg = loadImage(
@@ -13,21 +27,25 @@ function preload() {
   obstacleImg = loadImage(
     "https://songtak.github.io/mini-games/assets/img/Rock1.png"
   );
+  happyPotatoGif = loadImage(
+    "https://songtak.github.io/mini-games/assets/img/HappyPotato.gif"
+  );
 }
 
 function setup() {
-  if (windowWidth < 800) {
-    // createCanvas(windowWidth, windowHeight);
-
-    // canvas를 생성하고 화면 중앙에 위치시킵니다.
-    let cnv = createCanvas(windowHeight, windowWidth);
-    cnv.position((windowWidth - width) / 2, (windowHeight - height) / 2);
+  if (isMobile()) {
+    if (windowWidth < 1024) {
+      createCanvas(windowWidth, windowHeight);
+    } else {
+      createCanvas(1024, 500);
+    }
   } else {
-    createCanvas(900, 400);
+    createCanvas(1024, 500);
   }
+
   player = {
     x: 50,
-    y: height / 2,
+    y: width / 2,
     w: 60, // 이미지의 너비
     h: 60, // 이미지의 높이
     moveSpeed: 5,
@@ -40,30 +58,51 @@ function setup() {
 
 function draw() {
   background(252, 238, 212);
+  if (isMobile()) {
+    if (windowWidth < 1024) {
+      translate(width / 2, height / 2);
+      rotate(-PI / 2);
+      translate(-height / 2, -width / 2);
 
-  if (windowWidth < 800) {
-    translate(width / 2, height / 2);
-    rotate(-PI / 2);
-    translate(-height / 2, -width / 2);
+      /** Draw player */
+      image(
+        playerImg,
+        player.x - player.h / 2,
+        player.y - player.w / 2,
+        player.h,
+        player.w
+      );
+    }
+  } else {
+    /** Draw player */
+    image(
+      playerImg,
+      player.x - player.w / 2,
+      player.y - player.h / 2,
+      player.w,
+      player.h
+    );
   }
 
-  // Draw player
-  image(
-    playerImg,
-    player.x - player.w / 2,
-    player.y - player.h / 2,
-    player.w,
-    player.h
-  );
-
   // Randomly create obstacles
-  if (random() < 0.02) {
-    obstacles.push({
-      x: width,
-      y: random(height),
-      size: 40,
-      speed: random(2, 5),
-    });
+  if (isMobile()) {
+    if (random() < 0.02) {
+      obstacles.push({
+        x: height,
+        y: random(width),
+        size: 40,
+        speed: random(2, 5),
+      });
+    }
+  } else {
+    if (random() < 0.02) {
+      obstacles.push({
+        x: width,
+        y: random(height),
+        size: 40,
+        speed: random(2, 5),
+      });
+    }
   }
 
   // Draw and move obstacles
@@ -94,84 +133,76 @@ function draw() {
   fill(0);
   textSize(24);
   textAlign(LEFT, TOP);
-  text("Score: " + score, 10, 10);
+
+  !isGameOver && text("Score: " + score, 10, 10);
 }
 
 function gameOver() {
+  isGameOver = true;
   noLoop();
-  background(220);
+  background(252, 238, 212);
   fill(0);
   textSize(32);
   textAlign(CENTER, CENTER);
-  text("Game Over", width / 2, height / 2);
+  text("Game Over", height / 2, width / 2);
   textSize(24);
-  text("Final Score: " + score, width / 2, height / 2 + 40);
+  text("Final Score: " + score, height / 2, width / 2 + 40);
 }
 
 /** ====================================================================== */
 
+function getTransformedCoordinates(x, y) {
+  if (windowWidth < 1024) {
+    return [y, width - x];
+  } else {
+    return [x, y];
+  }
+}
+
 function mousePressed() {
+  let [realX, realY] = getTransformedCoordinates(mouseX, mouseY);
+
   if (
-    mouseX > player.x - player.w / 2 &&
-    mouseX < player.x + player.w / 2 &&
-    mouseY > player.y - player.h / 2 &&
-    mouseY < player.y + player.h / 2
+    windowHeight - realX > player.x - player.w / 2 &&
+    windowHeight - realX < player.x + player.w / 2 &&
+    windowWidth - realY > player.y - player.h / 2 &&
+    windowWidth - realY < player.y + player.h / 2
   ) {
     dragging = true;
   }
 }
 
 function mouseDragged() {
+  let [realX, realY] = getTransformedCoordinates(mouseX, mouseY);
+
   if (dragging) {
-    player.x = mouseX;
-    player.y = mouseY;
+    player.x = windowHeight - realX;
+    player.y = windowWidth - realY;
   }
   return false; // Prevent default drag behavior
 }
 
-function mouseReleased() {
-  dragging = false;
-}
-
-/** ====================================================================== */
 function touchStarted() {
-  if (dist(touches[0].x, touches[0].y, player.x, player.y) < player.w / 2) {
+  let [realX, realY] = getTransformedCoordinates(touches[0].x, touches[0].y);
+
+  if (
+    dist(windowHeight - realX, windowWidth - realY, player.x, player.y) <
+    player.w / 2
+  ) {
     dragging = true;
   }
   return false; // prevent default
 }
 
 function touchMoved() {
+  let [realX, realY] = getTransformedCoordinates(touches[0].x, touches[0].y);
+
+  console.log("dragging", dragging);
   if (dragging) {
-    player.x = touches[0].x;
-    player.y = touches[0].y;
+    player.x = windowHeight - realX;
+    player.y = windowWidth - realY;
   }
   return false; // prevent default
 }
-
-function touchEnded() {
-  dragging = false;
-  return false; // prevent default
-}
-
-// function touchStarted() {
-//   if (dist(mouseX, mouseY, player.x, player.y) < player.w / 2) {
-//     dragging = true;
-//   }
-//   return false; // Prevent default touch behavior
-// }
-
-// function touchMoved() {
-//   if (dragging) {
-//     player.x = mouseX;
-//     player.y = mouseY;
-//   }
-//   return false; // Prevent default touch behavior (like scrolling)
-// }
-
-// function touchEnded() {
-//   dragging = false;
-//   return false; // Prevent default touch behavior
-// }
 
 /** ====================================================================== */

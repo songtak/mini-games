@@ -1,15 +1,26 @@
 let runRunTitleGif;
 let pressStartGif;
 
-function setup() {
-  if (windowWidth < 800) {
-    // createCanvas(windowWidth, windowHeight);
+const isMobile = () => {
+  const user = navigator.userAgent;
+  let isCheck = false;
 
-    // canvas를 생성하고 화면 중앙에 위치시킵니다.
-    let cnv = createCanvas(windowHeight, windowWidth);
-    cnv.position((windowWidth - width) / 2, (windowHeight - height) / 2);
+  if (user.indexOf("iPhone") > -1 || user.indexOf("Android") > -1) {
+    isCheck = true;
+  }
+
+  return isCheck;
+};
+
+function setup() {
+  if (isMobile()) {
+    if (windowWidth < 1024) {
+      createCanvas(windowWidth, windowHeight);
+    } else {
+      createCanvas(1024, 500);
+    }
   } else {
-    createCanvas(800, 400);
+    createCanvas(1024, 500);
   }
 
   runRunTitleGif = loadImage(
@@ -23,31 +34,21 @@ function setup() {
   imageMode(CENTER); // 이미지를 가로 가운데로 정렬하는 모드로 설정합니다.
 }
 
-function windowResized() {
-  if (windowWidth < 800) {
-    // createCanvas(windowWidth, windowHeight);
-
-    // canvas를 생성하고 화면 중앙에 위치시킵니다.
-    let cnv = createCanvas(windowHeight, windowWidth);
-    cnv.position((windowWidth - width) / 2, (windowHeight - height) / 2);
-  } else {
-    createCanvas(800, 400);
-  }
-}
-
 function draw() {
   background(252, 238, 212);
 
-  if (windowWidth < 800) {
-    translate(width / 2, height / 2);
-    rotate(-PI / 2);
-    translate(-height / 2, -width / 2);
+  if (isMobile()) {
+    if (windowWidth < 1024) {
+      translate(width / 2, height / 2);
+      rotate(-PI / 2);
+      translate(-height / 2, -width / 2);
+    }
+    image(runRunTitleGif, height / 2, width / 4, 200, 200);
+    image(pressStartGif, height / 2, width / 1.4, 100, 100);
+  } else {
+    image(runRunTitleGif, width / 2, height / 4, 200, 200);
+    image(pressStartGif, width / 2, height / 1.4, 100, 100);
   }
-
-  //   background(255, 255, 255);
-
-  image(runRunTitleGif, width / 2, height / 4, 200, 200);
-  image(pressStartGif, width / 2, height / 1.4, 100, 100);
 }
 
 const handleTouchOrClick = () => {

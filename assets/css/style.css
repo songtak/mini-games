@@ -16,7 +16,7 @@ canvas {
 
 .main {
   background-color: rgb(255, 255, 255);
-  height: 600px;
+  /* height: 600px; */
   height: 100%;
   text-align: center;
   display: flex;
@@ -44,7 +44,6 @@ canvas {
     height: 100vw; /* 뷰포트의 너비를 기반으로 높이 설정 */
     transform-origin: center center; /* 회전의 중심점을 설정 */
     transform: rotate(-90deg); /* -90도 회전하고 x축으로 이동 */
-    /* overflow-y: scroll; 필요한 경우 스크롤 허용 */
   }
 }
 @media (min-width: 801px) {
