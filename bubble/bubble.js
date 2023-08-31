@@ -5,12 +5,15 @@ let isGameStarted = false;
 let missedBubbles = 0; // 놓친 버블 개수
 let isOver = false; // 게임 끝
 const maxMissedBubbles = 3; // 최대 놓친 버블 개수
+let bombs = []; // bombGif 객체를 담을 배열
+let bombSpeed = 3; // bombGif의 속도
 
 let bubbleImg1;
 let bubbleImg2;
 let popImg;
 let bubbleGif;
 let gameOverGif;
+let bombGif;
 
 function setup() {
   if (windowWidth < 800) {
@@ -32,6 +35,9 @@ function setup() {
   gameOverGif = loadImage(
     "https://songtak.github.io/mini-games/assets/img/GameOver.gif"
   );
+  bombGif = loadImage(
+    "https://songtak.github.io/mini-games/assets/img/Bomb.gif"
+  );
   startGame(); // 게임을 즉시 시작합니다.
 }
 
@@ -48,8 +54,11 @@ function draw() {
 
   if (isGameStarted) {
     createBubble();
+    createBomb();
+    // setInterval(createBomb, 1000); // 10초마다 bomb 생성
   }
 
+  //  bubbleGif
   for (let i = bubbles.length - 1; i >= 0; i--) {
     bubbles[i].display();
     bubbles[i].update();
@@ -65,6 +74,16 @@ function draw() {
       if (isGameStarted) {
         missedBubbles++;
       }
+    }
+  }
+
+  //  bombGif
+  for (let i = bombs.length - 1; i >= 0; i--) {
+    bombs[i].display();
+    bombs[i].update();
+
+    if (bombs[i].isOffScreen()) {
+      bombs.splice(i, 1);
     }
   }
 
@@ -87,6 +106,19 @@ function createBubble() {
     let bubble = new Bubble(random(width), height);
     bubbles.push(bubble);
   }
+}
+
+// bombGif 생성 함수
+function createBomb() {
+  if (frameCount % 180 === 0) {
+    // 3초에 한 번 Bomb 객체 생성
+    let bomb = new Bomb(random(width), height);
+    bombs.push(bomb);
+  }
+  // if (frameCount % (60 / bombSpeed) === 0) {
+  //   let bomb = new Bomb(random(width), height);
+  //   bombs.push(bomb);
+  // }
 }
 
 function touchStarted() {
@@ -114,21 +146,17 @@ function handleTouchOrClick() {
         break;
       }
     }
+
+    //  bombGif 클릭 체크
+    for (let i = bombs.length - 1; i >= 0; i--) {
+      let d = dist(mouseX, mouseY, bombs[i].x + 20, bombs[i].y + 20);
+      if (d < 20) {
+        gameOver(); // 게임 오버 함수 호출
+        return;
+      }
+    }
   }
 }
-
-// function handleTouchOrClick() {
-//   if (isGameStarted) {
-//     for (let i = bubbles.length - 1; i >= 0; i--) {
-//       if (bubbles[i].contains(mouseX, mouseY)) {
-//         bubbles.splice(i, 1);
-//         score++;
-//         missedBubbles = 0; // 버블을 클릭하면 놓친 버블 개수 초기화
-//         break;
-//       }
-//     }
-//   }
-// }
 
 function mouseOverImage(x, y, w, h) {
   // 주어진 영역(x, y, w, h)에 마우스 커서가 있는지 여부를 반환합니다.
@@ -167,6 +195,19 @@ class Bubble {
 
   isOffScreen() {
     return this.y < -this.r;
+  }
+}
+class Bomb extends Bubble {
+  constructor(x, y) {
+    super(x, y);
+  }
+
+  display() {
+    image(bombGif, this.x, this.y, this.r, this.r); // Bomb 객체를 화면에 그립니다.
+  }
+
+  update() {
+    this.y -= bombSpeed;
   }
 }
 
