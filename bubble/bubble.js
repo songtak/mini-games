@@ -42,7 +42,7 @@ function setup() {
     "https://songtak.github.io/mini-games/assets/img/Bomb.gif"
   );
   payWatchCoinGif = loadImage(
-    "https://songtak.github.io/mini-games/assets/img/PayWatchCoinGif.gif"
+    "https://songtak.github.io/mini-games/assets/img/PayWatchCoin.gif"
   );
   startGame(); // 게임을 즉시 시작합니다.
 }
@@ -131,16 +131,14 @@ function createBubble() {
 
 // bombGif 생성 함수
 function createBomb() {
-  if (frameCount % 1000 === 0) {
-    // 3초에 한 번 Bomb 객체 생성
+  if (frameCount % 600 === 0) {
     let bomb = new Bomb(random(width), height);
     bombs.push(bomb);
   }
 }
 
 function createPayWatchCoin() {
-  if (frameCount % 1000 === 0) {
-    // 3초에 한 번 Bomb 객체 생성
+  if (frameCount % 900 === 0) {
     let payWatchCoin = new PayWatchCoin(random(width), height);
     payWatchCoins.push(payWatchCoin);
   }
@@ -172,20 +170,15 @@ function handleTouchOrClick() {
         break;
       }
     }
-    // for (let i = bubbles.length - 1; i >= 0; i--) {
-    //   if (bubbles[i].contains(mouseX, mouseY)) {
-    //     bubbles[i].isClicked = true; // 버블이 클릭되었다고 표시
-    //     score += 10;
-    //     missedBubbles = 0; // 버블을 클릭하면 놓친 버블 개수 초기화
-
-    //     // 1초 후에 해당 버블 제거
-    //     setTimeout(() => {
-    //       bubbles.splice(i, 1);
-    //     }, 100);
-
-    //     break;
-    //   }
-    // }
+    for (let i = payWatchCoins.length - 1; i >= 0; i--) {
+      if (payWatchCoins[i].contains(mouseX, mouseY)) {
+        score += 50;
+        setTimeout(() => {
+          payWatchCoins.splice(i, 1);
+        }, 100);
+        break;
+      }
+    }
 
     //  bombGif 클릭 체크
     for (let i = bombs.length - 1; i >= 0; i--) {
@@ -243,7 +236,7 @@ class Bomb extends Bubble {
   }
 
   display() {
-    image(payWatchCoinGif, this.x, this.y, this.r, this.r);
+    image(bombGif, this.x, this.y, this.r, this.r);
   }
 
   update() {
@@ -256,7 +249,7 @@ class PayWatchCoin extends Bubble {
   }
 
   display() {
-    image(bombGif, this.x, this.y, this.r, this.r);
+    image(payWatchCoinGif, this.x, this.y, this.r, this.r);
   }
 
   update() {
