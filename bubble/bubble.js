@@ -7,6 +7,8 @@ let isOver = false; // 게임 끝
 const maxMissedBubbles = 3; // 최대 놓친 버블 개수
 let bombs = []; // bombGif 객체를 담을 배열
 let bombSpeed = 3; // bombGif의 속도
+let payWatchCoins = []; // bombGif 객체를 담을 배열
+let payWatchCoinSpeed = 10; // bombGif의 속도
 
 let bubbleImg1;
 let bubbleImg2;
@@ -59,13 +61,14 @@ function draw() {
   if (isGameStarted) {
     createBubble();
     createBomb();
+    createPayWatchCoin();
     // setInterval(createBomb, 1000); // 10초마다 bomb 생성
   } else if (isOver) {
     // 게임이 끝났을 때 gameOver 함수 호출
     gameOver();
   }
 
-  //  bubbleGif
+  /* bubbleGif */
   for (let i = bubbles.length - 1; i >= 0; i--) {
     bubbles[i].display();
     bubbles[i].update();
@@ -84,13 +87,23 @@ function draw() {
     }
   }
 
-  //  bombGif
+  /* bombGif */
   for (let i = bombs.length - 1; i >= 0; i--) {
     bombs[i].display();
     bombs[i].update();
 
     if (bombs[i].isOffScreen()) {
       bombs.splice(i, 1);
+    }
+  }
+
+  /* payWatchCoinGif */
+  for (let i = payWatchCoins.length - 1; i >= 0; i--) {
+    payWatchCoins[i].display();
+    payWatchCoins[i].update();
+
+    if (payWatchCoins[i].isOffScreen()) {
+      payWatchCoins.splice(i, 1);
     }
   }
 
@@ -107,6 +120,7 @@ function draw() {
 function increaseSpeed() {
   bubbleSpeed += 0.5; // 10초마다 속도를 0.5씩 증가
 }
+/** ====================================================================== */
 
 function createBubble() {
   if (frameCount % (60 / bubbleSpeed) === 0) {
@@ -123,6 +137,15 @@ function createBomb() {
     bombs.push(bomb);
   }
 }
+
+function createPayWatchCoin() {
+  if (frameCount % 1000 === 0) {
+    // 3초에 한 번 Bomb 객체 생성
+    let payWatchCoin = new PayWatchCoin(random(width), height);
+    payWatchCoins.push(payWatchCoin);
+  }
+}
+/** ====================================================================== */
 
 function touchStarted() {
   handleTouchOrClick();
@@ -149,6 +172,20 @@ function handleTouchOrClick() {
         break;
       }
     }
+    // for (let i = bubbles.length - 1; i >= 0; i--) {
+    //   if (bubbles[i].contains(mouseX, mouseY)) {
+    //     bubbles[i].isClicked = true; // 버블이 클릭되었다고 표시
+    //     score += 10;
+    //     missedBubbles = 0; // 버블을 클릭하면 놓친 버블 개수 초기화
+
+    //     // 1초 후에 해당 버블 제거
+    //     setTimeout(() => {
+    //       bubbles.splice(i, 1);
+    //     }, 100);
+
+    //     break;
+    //   }
+    // }
 
     //  bombGif 클릭 체크
     for (let i = bombs.length - 1; i >= 0; i--) {
@@ -206,7 +243,20 @@ class Bomb extends Bubble {
   }
 
   display() {
-    image(bombGif, this.x, this.y, this.r, this.r); // Bomb 객체를 화면에 그립니다.
+    image(payWatchCoinGif, this.x, this.y, this.r, this.r);
+  }
+
+  update() {
+    this.y -= bombSpeed;
+  }
+}
+class PayWatchCoin extends Bubble {
+  constructor(x, y) {
+    super(x, y);
+  }
+
+  display() {
+    image(bombGif, this.x, this.y, this.r, this.r);
   }
 
   update() {
