@@ -14,6 +14,7 @@ let popImg;
 let bubbleGif;
 let gameOverGif;
 let bombGif;
+let payWatchCoinGif;
 
 function setup() {
   if (windowWidth < 800) {
@@ -38,6 +39,9 @@ function setup() {
   bombGif = loadImage(
     "https://songtak.github.io/mini-games/assets/img/Bomb.gif"
   );
+  payWatchCoinGif = loadImage(
+    "https://songtak.github.io/mini-games/assets/img/PayWatchCoinGif.gif"
+  );
   startGame(); // 게임을 즉시 시작합니다.
 }
 
@@ -56,6 +60,9 @@ function draw() {
     createBubble();
     createBomb();
     // setInterval(createBomb, 1000); // 10초마다 bomb 생성
+  } else if (isOver) {
+    // 게임이 끝났을 때 gameOver 함수 호출
+    gameOver();
   }
 
   //  bubbleGif
@@ -110,15 +117,11 @@ function createBubble() {
 
 // bombGif 생성 함수
 function createBomb() {
-  if (frameCount % 180 === 0) {
+  if (frameCount % 1000 === 0) {
     // 3초에 한 번 Bomb 객체 생성
     let bomb = new Bomb(random(width), height);
     bombs.push(bomb);
   }
-  // if (frameCount % (60 / bombSpeed) === 0) {
-  //   let bomb = new Bomb(random(width), height);
-  //   bombs.push(bomb);
-  // }
 }
 
 function touchStarted() {
@@ -135,7 +138,7 @@ function handleTouchOrClick() {
     for (let i = bubbles.length - 1; i >= 0; i--) {
       if (bubbles[i].contains(mouseX, mouseY)) {
         bubbles[i].isClicked = true; // 버블이 클릭되었다고 표시
-        score++;
+        score += 10;
         missedBubbles = 0; // 버블을 클릭하면 놓친 버블 개수 초기화
 
         // 1초 후에 해당 버블 제거
