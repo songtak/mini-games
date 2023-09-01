@@ -195,7 +195,7 @@ function createBubble() {
 
 // bombGif 생성 함수
 function createBomb() {
-  if (frameCount % 180 === 0) {
+  if (frameCount % 90 === 0) {
     let bomb = new Bomb(random(width), -40); // y 좌표를 -40으로 설정
     bombs.push(bomb);
   }
