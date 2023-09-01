@@ -237,7 +237,7 @@ function handleTouchOrClick() {
       if (payWatchCoins[i].contains(mouseX, mouseY)) {
         payWatchCoins[i].isClicked = true; // 버블이 클릭되었다고 표시
 
-        score += 50;
+        score += 100;
         setTimeout(() => {
           payWatchCoins.splice(i, 1);
         }, 100);
