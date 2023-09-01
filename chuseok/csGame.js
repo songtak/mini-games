@@ -21,6 +21,10 @@ let gameOverGif;
 let bombGif;
 let payWatchCoinGif;
 
+let whiteSongImg;
+let greenSongImg;
+let pinkSongImg;
+
 function setup() {
   if (windowWidth < 800) {
     createCanvas(windowWidth, windowHeight);
@@ -47,6 +51,16 @@ function setup() {
   payWatchCoinGif = loadImage(
     "https://songtak.github.io/mini-games/assets/img/PayWatchCoin.gif"
   );
+  whiteSongImg = loadImage(
+    "https://songtak.github.io/mini-games/assets/img/WhiteSong.png"
+  );
+  greenSongImg = loadImage(
+    "https://songtak.github.io/mini-games/assets/img/GreenSong.png"
+  );
+  pinkSongImg = loadImage(
+    "https://songtak.github.io/mini-games/assets/img/PinkSong.png"
+  );
+
   startGame(); // 게임을 즉시 시작합니다.
   startTime = millis(); // 현재 시간을 저장
 }
@@ -60,7 +74,7 @@ function windowResized() {
 }
 
 function draw() {
-  background(255, 255, 255);
+  background(255, 244, 230); //
 
   if (isGameStarted) {
     createBubble();
@@ -230,13 +244,14 @@ class Bubble {
     this.x = x - 20;
     this.y = y;
     this.r = 40;
-    this.isClicked = false; // 추가: 버블이 클릭되었는지 여부를 추적합니다.
+    this.isClicked = false; // 버블이 클릭되었는지 여부를 추적합니다.
+    this.selectedImage = random([whiteSongImg, greenSongImg, pinkSongImg]); // 랜덤하게 이미지를 선택합니다.
   }
 
   display() {
     fill(255, 0, 150);
     if (!this.isClicked) {
-      image(bubbleImg1, this.x, this.y, this.r, this.r);
+      image(this.selectedImage, this.x, this.y, this.r, this.r); // 선택된 이미지를 사용합니다.
     } else {
       image(popImg, this.x, this.y, this.r, this.r); // 클릭되었을 때 popImg 이미지로 변경
     }
