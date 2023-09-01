@@ -31,7 +31,7 @@ if (/(android)/i.test(ua)) {
 } else if (/(ipod|iphone|ipad)/i.test(ua)) {
   os = "ios";
 } else {
-  return null;
+  os = null;
 }
 
 const getPayWatchApp = (functionName, params) => {
