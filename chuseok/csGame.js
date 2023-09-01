@@ -74,7 +74,8 @@ function windowResized() {
 }
 
 function draw() {
-  background(255, 244, 230); //
+  background(255, 255, 255); //
+  // background(255, 244, 230); //
 
   if (isGameStarted) {
     createBubble();
@@ -161,11 +162,27 @@ function displayCountdown() {
 //   }
 // }
 
+// function createBubble() {
+//   if (millis() >= nextBubbleTime) {
+//     let bubble = new Bubble(random(width), -40); // y 좌표를 -40으로 설정
+//     bubbles.push(bubble);
+//     nextBubbleTime = millis() + 1000 / bubbleSpeed; // 다음 버블이 나오는 시간 업데이트
+//   }
+// }
+
+let totalBubbles = 110; // 총 버블 수
+let totalTime = 30000; // 총 시간 (30초 = 30000 밀리초)
+let bubblesCreated = 0; // 생성된 버블 수
+
 function createBubble() {
-  if (millis() >= nextBubbleTime) {
-    let bubble = new Bubble(random(width), -40); // y 좌표를 -40으로 설정
+  let currentTime = millis() - startTime;
+  let bubblesNeeded = map(currentTime, 0, totalTime, 0, totalBubbles); // 현재까지 필요한 버블 수
+
+  // 아직 생성되지 않은 버블이 있다면
+  while (bubblesCreated < Math.floor(bubblesNeeded)) {
+    let bubble = new Bubble(random(width), -40);
     bubbles.push(bubble);
-    nextBubbleTime = millis() + 1000 / bubbleSpeed; // 다음 버블이 나오는 시간 업데이트
+    bubblesCreated++;
   }
 }
 
@@ -178,7 +195,7 @@ function createBomb() {
 }
 
 function createPayWatchCoin() {
-  if (frameCount % 280 === 0) {
+  if (frameCount % 300 === 0) {
     let payWatchCoin = new PayWatchCoin(random(width), -40); // y 좌표를 -40으로 설정
     payWatchCoins.push(payWatchCoin);
   }
