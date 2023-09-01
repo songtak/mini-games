@@ -1,5 +1,6 @@
 let bubbles = [];
 let score = 0;
+let gameEnded = false; // 게임 종료 상태
 let bubbleSpeed = 3; // 초당 이동 거리 (기본값 1)
 let isGameStarted = false;
 let isOver = false; // 게임 끝
@@ -121,6 +122,12 @@ function draw() {
     if (payWatchCoins[i].isOffScreen()) {
       payWatchCoins.splice(i, 1);
     }
+  }
+
+  if (score >= 1000 && !gameEnded) {
+    gameEnded = true; // 게임 종료 상태로 변경
+    noLoop(); // draw() 함수의 반복을 중지
+    gameOver();
   }
 
   if (isGameStarted && !isOver) {
