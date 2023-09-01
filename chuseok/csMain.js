@@ -34,6 +34,9 @@ if (/(android)/i.test(ua)) {
   os = null;
 }
 
+alert(os);
+alert(`${os}`);
+
 const getPayWatchApp = (functionName, params) => {
   try {
     /** 안드로이드 디바이스일때 */
