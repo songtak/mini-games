@@ -172,6 +172,8 @@ function handleTouchOrClick() {
     }
     for (let i = payWatchCoins.length - 1; i >= 0; i--) {
       if (payWatchCoins[i].contains(mouseX, mouseY)) {
+        payWatchCoins[i].isClicked = true; // 버블이 클릭되었다고 표시
+
         score += 50;
         setTimeout(() => {
           payWatchCoins.splice(i, 1);
@@ -223,7 +225,8 @@ class Bubble {
 
   contains(x, y) {
     let d = dist(x, y, this.x, this.y);
-    return d < this.r;
+    return d < this.r + 5; // 반경을 5픽셀 더 늘림
+    // return d < this.r;
   }
 
   isOffScreen() {
@@ -249,7 +252,12 @@ class PayWatchCoin extends Bubble {
   }
 
   display() {
-    image(payWatchCoinGif, this.x, this.y, this.r, this.r);
+    // image(payWatchCoinGif, this.x, this.y, this.r, this.r);
+    if (!this.isClicked) {
+      image(payWatchCoinGif, this.x, this.y, this.r, this.r);
+    } else {
+      image(popImg, this.x, this.y, this.r, this.r); // 클릭되었을 때 popImg 이미지로 변경
+    }
   }
 
   update() {

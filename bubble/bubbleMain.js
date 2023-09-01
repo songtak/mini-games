@@ -9,12 +9,25 @@ let pressStartGif;
 
 let pointerImage = false;
 
+const firebaseConfig = {
+  apiKey: "AIzaSyDeDG3C9i3BZLa8JXGTJcOUCla2rwSskik",
+  authDomain: "test-c81cd.firebaseapp.com",
+  projectId: "test-c81cd",
+  storageBucket: "test-c81cd.appspot.com",
+  messagingSenderId: "485320566376",
+  appId: "1:485320566376:web:7b148995b1f40879c93ddd",
+};
+firebase.initializeApp(firebaseConfig);
+
+const database = firebase.database();
+
 function setup() {
   if (windowWidth < 800) {
     createCanvas(windowWidth, windowHeight);
   } else {
     createCanvas(600, 900);
   }
+  getUsers();
 
   bubbleImg1 = loadImage(
     "https://songtak.github.io/mini-games/assets/img/Bubble1.png"
@@ -42,6 +55,12 @@ function windowResized() {
     resizeCanvas(600, 900);
   }
 }
+
+const getUsers = async () => {
+  const data = await getDocs(usersCollectionRef);
+  setUsers(data.docs.map((doc) => ({ ...doc.data() })));
+  console.log(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+};
 
 function draw() {
   background(255, 255, 255);
