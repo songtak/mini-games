@@ -9,6 +9,9 @@ let pressStartGif;
 
 let pointerImage = false;
 
+let os;
+let userInfo;
+
 const firebaseConfig = {
   apiKey: "AIzaSyDeDG3C9i3BZLa8JXGTJcOUCla2rwSskik",
   authDomain: "test-c81cd.firebaseapp.com",
@@ -20,7 +23,61 @@ const firebaseConfig = {
 // firebase.initializeApp(firebaseConfig);
 // const app = firebase.initializeApp(firebaseConfig);
 
+// const ua = navigator.userAgent;
+const ua = window.navigator.userAgent;
+
+if (/(android)/i.test(ua)) {
+  os = "android";
+} else if (/(ipod|iphone|ipad)/i.test(ua)) {
+  os = "ios";
+} else {
+  return null;
+}
+
+const getPayWatchApp = (functionName, params) => {
+  try {
+    /** 안드로이드 디바이스일때 */
+    if (deviceType === "android") {
+      !_.isUndefined(params)
+        ? window.PaywatchAppInterface[functionName](params)
+        : window.PaywatchAppInterface[functionName]();
+      /** IOS 디바이스일때 */
+    } else if (deviceType === "ios") {
+      if (_.isUndefined(params)) {
+        window.webkit.messageHandlers?.nativeCallback.postMessage(
+          `${functionName}#`
+        );
+      } else if (
+        _.isString(params) ||
+        _.isNumber(params) ||
+        _.isBoolean(params)
+      ) {
+        window.webkit.messageHandlers?.nativeCallback.postMessage(
+          `${functionName}#${params}`
+        );
+      } else if (_.isObject(params)) {
+        const msg = JSON.stringify({});
+        window.webkit.messageHandlers?.nativeCallback.postMessage(
+          `${functionName}#${msg}`
+        );
+      }
+    } else {
+      console.log("[OS ERROR] OS is neither AOS nor IOS");
+    }
+  } catch (error) {
+    console.groupCollapsed("[BRIDGE ERROR] bridge name : ", functionName);
+    console.error(error);
+    console.groupEnd();
+  }
+};
+
 function setup() {
+  getPayWatchApp("getUserInfo");
+
+  window.setUserInfo = (params) => {
+    userInfo = JSON.parse(params).userType;
+  };
+
   if (windowWidth < 800) {
     createCanvas(windowWidth, windowHeight);
   } else {
