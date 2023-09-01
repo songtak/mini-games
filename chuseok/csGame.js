@@ -6,7 +6,7 @@ let isGameStarted = false;
 let isOver = false; // 게임 끝
 const maxMissedBubbles = 3; // 최대 놓친 버블 개수
 let bombs = []; // bombGif 객체를 담을 배열
-let bombSpeed = 3; // bombGif의 속도
+let bombSpeed = 8; // bombGif의 속도
 let payWatchCoins = []; // bombGif 객체를 담을 배열
 let payWatchCoinSpeed = 10; // bombGif의 속도
 let nextBubbleTime = 0; // 다음 버블이 나오는 시간
@@ -195,7 +195,7 @@ function createBubble() {
 
 // bombGif 생성 함수
 function createBomb() {
-  if (frameCount % 60 === 0) {
+  if (frameCount % 30 === 0) {
     let bomb = new Bomb(random(width), -40); // y 좌표를 -40으로 설정
     bombs.push(bomb);
   }
