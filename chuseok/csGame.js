@@ -1,7 +1,7 @@
 let bubbles = [];
 let score = 0;
 let gameEnded = false; // 게임 종료 상태
-let bubbleSpeed = 6; // 초당 이동 거리 (기본값 1)
+let bubbleSpeed = 9; // 초당 이동 거리 (기본값 1)
 let isGameStarted = false;
 let isOver = false; // 게임 끝
 const maxMissedBubbles = 3; // 최대 놓친 버블 개수
@@ -195,7 +195,7 @@ function createBubble() {
 
 // bombGif 생성 함수
 function createBomb() {
-  if (frameCount % 90 === 0) {
+  if (frameCount % 60 === 0) {
     let bomb = new Bomb(random(width), -40); // y 좌표를 -40으로 설정
     bombs.push(bomb);
   }
