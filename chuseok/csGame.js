@@ -1,14 +1,17 @@
 let bubbles = [];
 let score = 0;
-let bubbleSpeed = 1; // 초당 이동 거리 (기본값 1)
+let bubbleSpeed = 3; // 초당 이동 거리 (기본값 1)
 let isGameStarted = false;
-let missedBubbles = 0; // 놓친 버블 개수
 let isOver = false; // 게임 끝
 const maxMissedBubbles = 3; // 최대 놓친 버블 개수
 let bombs = []; // bombGif 객체를 담을 배열
 let bombSpeed = 3; // bombGif의 속도
 let payWatchCoins = []; // bombGif 객체를 담을 배열
 let payWatchCoinSpeed = 10; // bombGif의 속도
+let nextBubbleTime = 0; // 다음 버블이 나오는 시간
+
+let startTime; // 게임 시작 시간
+let countdown = 30; // 30초 카운트다운
 
 let bubbleImg1;
 let bubbleImg2;
@@ -45,6 +48,7 @@ function setup() {
     "https://songtak.github.io/mini-games/assets/img/PayWatchCoin.gif"
   );
   startGame(); // 게임을 즉시 시작합니다.
+  startTime = millis(); // 현재 시간을 저장
 }
 
 function windowResized() {
@@ -81,9 +85,6 @@ function draw() {
 
     if (bubbles[i].isOffScreen()) {
       bubbles.splice(i, 1);
-      if (isGameStarted) {
-        missedBubbles++;
-      }
     }
   }
 
@@ -107,39 +108,64 @@ function draw() {
     }
   }
 
-  if (missedBubbles >= maxMissedBubbles) {
-    gameOver();
+  if (isGameStarted && !isOver) {
+    updateCountdown();
+    displayCountdown();
   }
 
   if (!isOver) {
     textSize(24);
+    textAlign(LEFT);
     text("Score: " + score, 10, 30);
   }
 }
 
+/** ====================================================================== */
 function increaseSpeed() {
   bubbleSpeed += 0.5; // 10초마다 속도를 0.5씩 증가
 }
 /** ====================================================================== */
+function updateCountdown() {
+  let currentTime = millis();
+  countdown = 30 - int((currentTime - startTime) / 1000);
+  if (countdown <= 0) {
+    gameOver(); // 시간이 다 되면 게임 오버
+  }
+}
+
+function displayCountdown() {
+  textSize(24);
+  textAlign(RIGHT);
+  text(`Time: ${countdown}`, width - 10, 30);
+}
+/** ====================================================================== */
+
+// function createBubble() {
+//   if (frameCount % (60 / bubbleSpeed) === 0) {
+//     let bubble = new Bubble(random(width), -40); // y 좌표를 -40으로 설정
+//     bubbles.push(bubble);
+//   }
+// }
 
 function createBubble() {
-  if (frameCount % (60 / bubbleSpeed) === 0) {
-    let bubble = new Bubble(random(width), height);
+  if (millis() >= nextBubbleTime) {
+    let bubble = new Bubble(random(width), -40); // y 좌표를 -40으로 설정
     bubbles.push(bubble);
+    nextBubbleTime = millis() + 1000 / bubbleSpeed; // 다음 버블이 나오는 시간 업데이트
   }
 }
 
 // bombGif 생성 함수
 function createBomb() {
-  if (frameCount % 600 === 0) {
-    let bomb = new Bomb(random(width), height);
+  if (frameCount % 180 === 0) {
+    let bomb = new Bomb(random(width), -40); // y 좌표를 -40으로 설정
     bombs.push(bomb);
   }
 }
 
 function createPayWatchCoin() {
-  if (frameCount % 900 === 0) {
-    let payWatchCoin = new PayWatchCoin(random(width), height);
+  if (frameCount % 280 === 0) {
+    let payWatchCoin = new PayWatchCoin(random(width), -40); // y 좌표를 -40으로 설정
     payWatchCoins.push(payWatchCoin);
   }
 }
@@ -160,7 +186,6 @@ function handleTouchOrClick() {
       if (bubbles[i].contains(mouseX, mouseY)) {
         bubbles[i].isClicked = true; // 버블이 클릭되었다고 표시
         score += 10;
-        missedBubbles = 0; // 버블을 클릭하면 놓친 버블 개수 초기화
 
         // 1초 후에 해당 버블 제거
         setTimeout(() => {
@@ -220,7 +245,7 @@ class Bubble {
   }
 
   update() {
-    this.y -= bubbleSpeed;
+    this.y += bubbleSpeed;
   }
 
   contains(x, y) {
@@ -230,7 +255,8 @@ class Bubble {
   }
 
   isOffScreen() {
-    return this.y < -this.r;
+    return this.y > height + this.r;
+    // return this.y < -this.r;
   }
 }
 class Bomb extends Bubble {
@@ -243,7 +269,7 @@ class Bomb extends Bubble {
   }
 
   update() {
-    this.y -= bombSpeed;
+    this.y += bombSpeed;
   }
 }
 class PayWatchCoin extends Bubble {
@@ -261,7 +287,7 @@ class PayWatchCoin extends Bubble {
   }
 
   update() {
-    this.y -= bombSpeed;
+    this.y += payWatchCoinSpeed;
   }
 }
 
