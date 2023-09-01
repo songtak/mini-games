@@ -343,7 +343,7 @@ function gameOver() {
   image(gameOverGif, width / 2 - 60, height / 2 - 60, 120, 120);
   textSize(28);
   textAlign(CENTER);
-  text(`Score : ${score}`, width / 2, height / 2 + 100);
+  text(`Score : ${score > 1000 ? 1000 : score}`, width / 2, height / 2 + 100);
 }
 
 /** ====================================================================== */
