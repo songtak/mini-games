@@ -177,7 +177,7 @@ function displayCountdown() {
 //   }
 // }
 
-let totalBubbles = 110; // 총 버블 수
+let totalBubbles = 80; // 총 버블 수
 let totalTime = 30000; // 총 시간 (30초 = 30000 밀리초)
 let bubblesCreated = 0; // 생성된 버블 수
 
