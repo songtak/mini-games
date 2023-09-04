@@ -12,28 +12,16 @@ let pointerImage = false;
 let os;
 let userInfo;
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDeDG3C9i3BZLa8JXGTJcOUCla2rwSskik",
-  authDomain: "test-c81cd.firebaseapp.com",
-  projectId: "test-c81cd",
-  storageBucket: "test-c81cd.appspot.com",
-  messagingSenderId: "485320566376",
-  appId: "1:485320566376:web:7b148995b1f40879c93ddd",
-};
-// firebase.initializeApp(firebaseConfig);
-// const app = firebase.initializeApp(firebaseConfig);
-
-// const ua = navigator.userAgent;
 const ua = window.navigator.userAgent;
 
-if (/(android)/i.test(ua)) {
-  os = "android";
-} else if (/(ipod|iphone|ipad)/i.test(ua)) {
-  console.log("이거 타냐고");
-  os = "ios";
-} else {
-  os = null;
-}
+// if (/(android)/i.test(ua)) {
+//   os = "android";
+// } else if (/(ipod|iphone|ipad)/i.test(ua)) {
+//   console.log("이거 타냐고");
+//   os = "ios";
+// } else {
+//   os = null;
+// }
 
 console.log("ua", ua);
 console.log("os", os);
@@ -76,12 +64,12 @@ const getPayWatchApp = (functionName, params) => {
 };
 
 const setup = async () => {
-  getPayWatchApp("getUserInfo");
+  // getPayWatchApp("getUserInfo");
 
-  window.setUserInfo = (params) => {
-    alert(params);
-    userInfo = JSON.parse(params).userType;
-  };
+  // window.setUserInfo = (params) => {
+  //   alert(params);
+  //   userInfo = JSON.parse(params).userType;
+  // };
 
   if (windowWidth < 800) {
     createCanvas(windowWidth, windowHeight);
