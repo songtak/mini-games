@@ -162,16 +162,16 @@ function mouseClicked() {
   handleTouchOrClick();
 }
 
-function touchStarted() {
-  handleTouchOrClick();
+// function touchStarted() {
+//   handleTouchOrClick();
 
-  // 터치의 좌표
-  // let touchX = touches[touches.length - 1].x;
-  // let touchY = touches[touches.length - 1].y;
-  window.location.href = "../chuseok/csGame.html";
+//   // 터치의 좌표
+//   // let touchX = touches[touches.length - 1].x;
+//   // let touchY = touches[touches.length - 1].y;
+//   window.location.href = "../chuseok/csGame.html";
 
-  return false; // 이 부분은 추가적인 터치 이벤트 처리를 방지하기 위해 필요합니다.
-}
+//   return false; // 이 부분은 추가적인 터치 이벤트 처리를 방지하기 위해 필요합니다.
+// }
 
 const handleTouchOrClick = () => {
   if (mouseOverImage(width / 2 - 50, height / 2 - 50, 100, 100)) {
