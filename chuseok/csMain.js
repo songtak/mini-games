@@ -1,6 +1,7 @@
 let os;
 let userInfo;
 
+/** 브릿지 통신 */
 const getPayWatchApp = (functionName, params) => {
   try {
     /** 안드로이드 디바이스일때 */
@@ -36,8 +37,10 @@ const getPayWatchApp = (functionName, params) => {
   }
 };
 
+/** 디바이스 정보 */
 const ua = window.navigator.userAgent;
 
+/** os 정보 저장 */
 if (/(android)/i.test(ua)) {
   os = "android";
 } else if (/(ipod|iphone|ipad)/i.test(ua)) {
@@ -46,8 +49,10 @@ if (/(android)/i.test(ua)) {
   os = null;
 }
 
+/** 브릿지 호출 */
 getPayWatchApp("getUserInfo");
 
+/** 앱->웹 브릿지 정보 취득 */
 window.setUserInfo = (params) => {
   console.log("setUserInfo : ", JSON.parse(params));
   userInfo = JSON.parse(params).userType;
