@@ -26,17 +26,6 @@ const firebaseConfig = {
 // const ua = navigator.userAgent;
 const ua = window.navigator.userAgent;
 
-if (/(android)/i.test(ua)) {
-  os = "android";
-} else if (/(ipod|iphone|ipad)/i.test(ua)) {
-  os = "ios";
-} else {
-  os = null;
-}
-
-alert(os);
-alert(`${os}`);
-
 const getPayWatchApp = (functionName, params) => {
   try {
     /** 안드로이드 디바이스일때 */
@@ -74,7 +63,15 @@ const getPayWatchApp = (functionName, params) => {
   }
 };
 
-function setup() {
+const setup = async () => {
+  if (/(android)/i.test(ua)) {
+    os = "android";
+  } else if (/(ipod|iphone|ipad)/i.test(ua)) {
+    os = "ios";
+  } else {
+    os = null;
+  }
+
   getPayWatchApp("getUserInfo");
 
   window.setUserInfo = (params) => {
@@ -105,7 +102,7 @@ function setup() {
   );
 
   imageMode(CENTER); // 이미지를 가로 가운데로 정렬하는 모드로 설정합니다.
-}
+};
 
 function windowResized() {
   if (windowWidth < 800) {
