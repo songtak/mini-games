@@ -26,6 +26,9 @@ let whiteSongImg;
 let greenSongImg;
 let pinkSongImg;
 
+let eatingSound;
+let coinSound;
+
 function setup() {
   if (windowWidth < 800) {
     createCanvas(windowWidth, windowHeight);
@@ -72,6 +75,15 @@ function windowResized() {
   } else {
     resizeCanvas(600, 900);
   }
+}
+
+function preload() {
+  eatingSound = loadSound(
+    "https://songtak.github.io/mini-games/assets/sound/eating-sound-effect.mp3"
+  );
+  coinSound = loadSound(
+    "https://songtak.github.io/mini-games/assets/sound/coin.mp3"
+  );
 }
 
 function draw() {
@@ -224,6 +236,7 @@ function handleTouchOrClick() {
       if (bubbles[i].contains(mouseX, mouseY)) {
         bubbles[i].isClicked = true; // 버블이 클릭되었다고 표시
         score += 10;
+        eatingSound.play(); // 사운드 재생
 
         // 1초 후에 해당 버블 제거
         setTimeout(() => {
@@ -238,6 +251,7 @@ function handleTouchOrClick() {
         payWatchCoins[i].isClicked = true; // 버블이 클릭되었다고 표시
 
         score += 50;
+        coinSound.play();
         setTimeout(() => {
           payWatchCoins.splice(i, 1);
         }, 100);
