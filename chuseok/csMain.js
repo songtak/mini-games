@@ -13,14 +13,15 @@ let os;
 let userInfo;
 
 const getPayWatchApp = (functionName, params) => {
+  console.log("functionName", functionName);
   try {
     /** 안드로이드 디바이스일때 */
-    if (deviceType === "android") {
+    if (os === "android") {
       !_.isUndefined(params)
         ? window.PaywatchAppInterface[functionName](params)
         : window.PaywatchAppInterface[functionName]();
       /** IOS 디바이스일때 */
-    } else if (deviceType === "ios") {
+    } else if (os === "ios") {
       if (_.isUndefined(params)) {
         window.webkit.messageHandlers?.nativeCallback.postMessage(
           `${functionName}#`
