@@ -13,8 +13,6 @@ let os;
 let userInfo;
 
 const getPayWatchApp = (functionName, params) => {
-  console.log("getPayWatchApp os", os);
-  console.log("functionName", functionName);
   try {
     /** 안드로이드 디바이스일때 */
     if (os === "android") {
@@ -31,9 +29,6 @@ const getPayWatchApp = (functionName, params) => {
         typeof params === "string" &&
         typeof params === "number" &&
         typeof params === "boolean"
-        // _.isString(params) ||
-        // _.isNumber(params) ||
-        // _.isBoolean(params)
       ) {
         window.webkit.messageHandlers?.nativeCallback.postMessage(
           `${functionName}#${params}`
@@ -49,9 +44,6 @@ const getPayWatchApp = (functionName, params) => {
     }
   } catch (error) {
     console.log("error", error);
-    // console.groupCollapsed("[BRIDGE ERROR] bridge name : ", functionName);
-    // console.error(error);
-    // console.groupEnd();
   }
 };
 
@@ -61,19 +53,15 @@ function setup() {
   if (/(android)/i.test(ua)) {
     os = "android";
   } else if (/(ipod|iphone|ipad)/i.test(ua)) {
-    console.log("이거 타냐고");
     os = "ios";
   } else {
     os = null;
   }
 
-  console.log("ua", ua);
-  console.log("os", os);
-
   getPayWatchApp("getUserInfo");
 
   window.setUserInfo = (params) => {
-    console.log(JSON.parse(params));
+    console.log("setUserInfo : ", JSON.parse(params));
     userInfo = JSON.parse(params).userType;
   };
 
