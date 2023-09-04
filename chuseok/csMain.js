@@ -18,24 +18,27 @@ const getPayWatchApp = (functionName, params) => {
   try {
     /** 안드로이드 디바이스일때 */
     if (os === "android") {
-      !_.isUndefined(params)
+      typeof params !== "undefined" && params
         ? window.PaywatchAppInterface[functionName](params)
         : window.PaywatchAppInterface[functionName]();
       /** IOS 디바이스일때 */
     } else if (os === "ios") {
-      if (_.isUndefined(params)) {
+      if (typeof params === "undefined") {
         window.webkit.messageHandlers?.nativeCallback.postMessage(
           `${functionName}#`
         );
       } else if (
-        _.isString(params) ||
-        _.isNumber(params) ||
-        _.isBoolean(params)
+        typeof params === "string" &&
+        typeof params === "number" &&
+        typeof params === "boolean"
+        // _.isString(params) ||
+        // _.isNumber(params) ||
+        // _.isBoolean(params)
       ) {
         window.webkit.messageHandlers?.nativeCallback.postMessage(
           `${functionName}#${params}`
         );
-      } else if (_.isObject(params)) {
+      } else if (typeof params === "object") {
         const msg = JSON.stringify({});
         window.webkit.messageHandlers?.nativeCallback.postMessage(
           `${functionName}#${msg}`
