@@ -12,20 +12,6 @@ let pointerImage = false;
 let os;
 let userInfo;
 
-const ua = window.navigator.userAgent;
-
-if (/(android)/i.test(ua)) {
-  os = "android";
-} else if (/(ipod|iphone|ipad)/i.test(ua)) {
-  console.log("이거 타냐고");
-  os = "ios";
-} else {
-  os = null;
-}
-
-console.log("ua", ua);
-console.log("os", os);
-
 const getPayWatchApp = (functionName, params) => {
   try {
     /** 안드로이드 디바이스일때 */
@@ -64,6 +50,20 @@ const getPayWatchApp = (functionName, params) => {
 };
 
 function setup() {
+  const ua = window.navigator.userAgent;
+
+  if (/(android)/i.test(ua)) {
+    os = "android";
+  } else if (/(ipod|iphone|ipad)/i.test(ua)) {
+    console.log("이거 타냐고");
+    os = "ios";
+  } else {
+    os = null;
+  }
+
+  console.log("ua", ua);
+  console.log("os", os);
+
   getPayWatchApp("getUserInfo");
 
   window.setUserInfo = (params) => {
