@@ -174,21 +174,6 @@ function displayCountdown() {
 }
 /** ====================================================================== */
 
-// function createBubble() {
-//   if (frameCount % (60 / bubbleSpeed) === 0) {
-//     let bubble = new Bubble(random(width), -40); // y 좌표를 -40으로 설정
-//     bubbles.push(bubble);
-//   }
-// }
-
-// function createBubble() {
-//   if (millis() >= nextBubbleTime) {
-//     let bubble = new Bubble(random(width), -40); // y 좌표를 -40으로 설정
-//     bubbles.push(bubble);
-//     nextBubbleTime = millis() + 1000 / bubbleSpeed; // 다음 버블이 나오는 시간 업데이트
-//   }
-// }
-
 let totalBubbles = 80; // 총 버블 수
 let totalTime = 30000; // 총 시간 (30초 = 30000 밀리초)
 let bubblesCreated = 0; // 생성된 버블 수
