@@ -73,7 +73,7 @@ function setup() {
   getPayWatchApp("getUserInfo");
 
   window.setUserInfo = (params) => {
-    alert(params);
+    console.log(JSON.parse(params));
     userInfo = JSON.parse(params).userType;
   };
 
