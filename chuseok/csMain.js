@@ -13,6 +13,7 @@ let os;
 let userInfo;
 
 const getPayWatchApp = (functionName, params) => {
+  console.log("getPayWatchApp os", os);
   console.log("functionName", functionName);
   try {
     /** 안드로이드 디바이스일때 */
@@ -44,9 +45,10 @@ const getPayWatchApp = (functionName, params) => {
       console.log("[OS ERROR] OS is neither AOS nor IOS");
     }
   } catch (error) {
-    console.groupCollapsed("[BRIDGE ERROR] bridge name : ", functionName);
-    console.error(error);
-    console.groupEnd();
+    console.log("error", error);
+    // console.groupCollapsed("[BRIDGE ERROR] bridge name : ", functionName);
+    // console.error(error);
+    // console.groupEnd();
   }
 };
 
