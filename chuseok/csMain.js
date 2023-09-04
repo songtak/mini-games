@@ -14,14 +14,14 @@ let userInfo;
 
 const ua = window.navigator.userAgent;
 
-// if (/(android)/i.test(ua)) {
-//   os = "android";
-// } else if (/(ipod|iphone|ipad)/i.test(ua)) {
-//   console.log("이거 타냐고");
-//   os = "ios";
-// } else {
-//   os = null;
-// }
+if (/(android)/i.test(ua)) {
+  os = "android";
+} else if (/(ipod|iphone|ipad)/i.test(ua)) {
+  console.log("이거 타냐고");
+  os = "ios";
+} else {
+  os = null;
+}
 
 console.log("ua", ua);
 console.log("os", os);
@@ -63,13 +63,13 @@ const getPayWatchApp = (functionName, params) => {
   }
 };
 
-const setup = async () => {
-  // getPayWatchApp("getUserInfo");
+function setup() {
+  getPayWatchApp("getUserInfo");
 
-  // window.setUserInfo = (params) => {
-  //   alert(params);
-  //   userInfo = JSON.parse(params).userType;
-  // };
+  window.setUserInfo = (params) => {
+    alert(params);
+    userInfo = JSON.parse(params).userType;
+  };
 
   if (windowWidth < 800) {
     createCanvas(windowWidth, windowHeight);
@@ -94,7 +94,7 @@ const setup = async () => {
   );
 
   imageMode(CENTER); // 이미지를 가로 가운데로 정렬하는 모드로 설정합니다.
-};
+}
 
 function windowResized() {
   if (windowWidth < 800) {
