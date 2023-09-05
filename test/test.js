@@ -3,18 +3,6 @@ import { firebaseConfig, mixpanelToken } from '../config.js';
 // Initialize mixpanel
 // mixpanel.init(mixpanelToken, { debug: true, track_pageview: true });
 
-// /**
-//  * @description [급여계좌 입력 (서명 - 인증후)] 화면에서 '자동이체 등록' 버튼 클릭하여 [인출금액 입력] 화면으로 이동 시
-//  * @function register_CMS_account
-//  */
-// export const register_CMS_account = (bank) => {
-//   mixpanel.track('register_CMS_account', {
-//     withdraw_account_bank: bank.bankName,
-//     withdraw_account_number: Number(bank.account_number),
-//     withdraw_repayment_method: '자동이체',
-//   });
-// };
-
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 

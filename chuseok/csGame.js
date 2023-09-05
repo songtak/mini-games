@@ -29,6 +29,12 @@ let pinkSongImg;
 let eatingSound;
 let coinSound;
 
+// URL 파라미터 활용해서 기존 누적점수 받아오기
+// 기존 누적점수(points)에 score 더해서 mixpanel로 보내면 될듯
+// const urlParams = new URLSearchParams(window.location.search);
+// const points = urlParams.get('points');
+// console.log('points : ', points);
+
 function setup() {
   if (windowWidth < 800) {
     createCanvas(windowWidth, windowHeight);
@@ -36,34 +42,16 @@ function setup() {
     createCanvas(600, 900);
   }
   setInterval(increaseSpeed, 10000); // 10초마다 속도 증가 함수 호출
-  bubbleImg1 = loadImage(
-    "https://songtak.github.io/mini-games/assets/img/Bubble1.png"
-  );
-  bubbleImg2 = loadImage(
-    "https://songtak.github.io/mini-games/assets/img/Bubble2.png"
-  );
-  bubbleGif = loadImage(
-    "https://songtak.github.io/mini-games/assets/img/Bubble.gif"
-  );
-  popImg = loadImage("https://songtak.github.io/mini-games/assets/img/pop.png");
-  gameOverGif = loadImage(
-    "https://songtak.github.io/mini-games/assets/img/GameOver.gif"
-  );
-  bombGif = loadImage(
-    "https://songtak.github.io/mini-games/assets/img/Bomb.gif"
-  );
-  payWatchCoinGif = loadImage(
-    "https://songtak.github.io/mini-games/assets/img/PayWatchCoin.gif"
-  );
-  whiteSongImg = loadImage(
-    "https://songtak.github.io/mini-games/assets/img/WhiteSong.png"
-  );
-  greenSongImg = loadImage(
-    "https://songtak.github.io/mini-games/assets/img/GreenSong.png"
-  );
-  pinkSongImg = loadImage(
-    "https://songtak.github.io/mini-games/assets/img/PinkSong.png"
-  );
+  bubbleImg1 = loadImage('https://songtak.github.io/mini-games/assets/img/Bubble1.png');
+  bubbleImg2 = loadImage('https://songtak.github.io/mini-games/assets/img/Bubble2.png');
+  bubbleGif = loadImage('https://songtak.github.io/mini-games/assets/img/Bubble.gif');
+  popImg = loadImage('https://songtak.github.io/mini-games/assets/img/pop.png');
+  gameOverGif = loadImage('https://songtak.github.io/mini-games/assets/img/GameOver.gif');
+  bombGif = loadImage('https://songtak.github.io/mini-games/assets/img/Bomb.gif');
+  payWatchCoinGif = loadImage('https://songtak.github.io/mini-games/assets/img/PayWatchCoin.gif');
+  whiteSongImg = loadImage('https://songtak.github.io/mini-games/assets/img/WhiteSong.png');
+  greenSongImg = loadImage('https://songtak.github.io/mini-games/assets/img/GreenSong.png');
+  pinkSongImg = loadImage('https://songtak.github.io/mini-games/assets/img/PinkSong.png');
 
   startGame(); // 게임을 즉시 시작합니다.
   startTime = millis(); // 현재 시간을 저장
@@ -78,12 +66,8 @@ function windowResized() {
 }
 
 function preload() {
-  eatingSound = loadSound(
-    "https://songtak.github.io/mini-games/assets/sound/eating-sound-effect.mp3"
-  );
-  coinSound = loadSound(
-    "https://songtak.github.io/mini-games/assets/sound/coin.mp3"
-  );
+  eatingSound = loadSound('https://songtak.github.io/mini-games/assets/sound/eating-sound-effect.mp3');
+  coinSound = loadSound('https://songtak.github.io/mini-games/assets/sound/coin.mp3');
 }
 
 function draw() {
@@ -106,7 +90,7 @@ function draw() {
     bubbles[i].update();
 
     if (bubbles[i].contains(mouseX, mouseY, 40, 40)) {
-      cursor("pointer");
+      cursor('pointer');
     } else {
       cursor();
     }
@@ -150,7 +134,7 @@ function draw() {
   if (!isOver) {
     textSize(24);
     textAlign(LEFT);
-    text("Score: " + score, 10, 30);
+    text('Score: ' + score, 10, 30);
   }
 }
 
