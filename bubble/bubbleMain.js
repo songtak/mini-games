@@ -9,17 +9,6 @@ let pressStartGif;
 
 let pointerImage = false;
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDeDG3C9i3BZLa8JXGTJcOUCla2rwSskik",
-  authDomain: "test-c81cd.firebaseapp.com",
-  projectId: "test-c81cd",
-  storageBucket: "test-c81cd.appspot.com",
-  messagingSenderId: "485320566376",
-  appId: "1:485320566376:web:7b148995b1f40879c93ddd",
-};
-// firebase.initializeApp(firebaseConfig);
-// const app = firebase.initializeApp(firebaseConfig);
-
 function setup() {
   if (windowWidth < 800) {
     createCanvas(windowWidth, windowHeight);
@@ -27,21 +16,11 @@ function setup() {
     createCanvas(600, 900);
   }
 
-  bubbleImg1 = loadImage(
-    "https://songtak.github.io/mini-games/assets/img/Bubble1.png"
-  );
-  bubbleImg2 = loadImage(
-    "https://songtak.github.io/mini-games/assets/img/Bubble2.png"
-  );
-  bubbleGif = loadImage(
-    "https://songtak.github.io/mini-games/assets/img/Bubble.gif"
-  );
-  bubbleTitleGif = loadImage(
-    "https://songtak.github.io/mini-games/assets/img/BubbleTitle.gif"
-  );
-  pressStartGif = loadImage(
-    "https://songtak.github.io/mini-games/assets/img/PressStart.gif"
-  );
+  bubbleImg1 = loadImage('https://songtak.github.io/mini-games/assets/img/Bubble1.png');
+  bubbleImg2 = loadImage('https://songtak.github.io/mini-games/assets/img/Bubble2.png');
+  bubbleGif = loadImage('https://songtak.github.io/mini-games/assets/img/Bubble.gif');
+  bubbleTitleGif = loadImage('https://songtak.github.io/mini-games/assets/img/BubbleTitle.gif');
+  pressStartGif = loadImage('https://songtak.github.io/mini-games/assets/img/PressStart.gif');
 
   imageMode(CENTER); // 이미지를 가로 가운데로 정렬하는 모드로 설정합니다.
 }
@@ -77,7 +56,7 @@ function draw() {
   image(pressStartGif, width / 2, height / 2, 100, 100);
 
   if (mouseOverImage(width / 2 - 50, height / 2 - 50, 100, 100)) {
-    cursor("pointer");
+    cursor('pointer');
   } else {
     cursor();
   }
@@ -107,14 +86,14 @@ function touchStarted() {
   // 터치의 좌표
   // let touchX = touches[touches.length - 1].x;
   // let touchY = touches[touches.length - 1].y;
-  window.location.href = "../bubble/bubble.html";
+  window.location.href = '../bubble/bubble.html';
 
   return false; // 이 부분은 추가적인 터치 이벤트 처리를 방지하기 위해 필요합니다.
 }
 
 const handleTouchOrClick = () => {
   if (mouseOverImage(width / 2 - 50, height / 2 - 50, 100, 100)) {
-    window.location.href = "../bubble/bubble.html";
+    window.location.href = '../bubble/bubble.html';
   }
 };
 
