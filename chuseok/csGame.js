@@ -5,29 +5,28 @@ let bubbleSpeed = 9; // 초당 이동 거리 (기본값 1)
 let isGameStarted = false;
 let isOver = false; // 게임 끝
 const maxMissedBubbles = 3; // 최대 놓친 버블 개수
-let bombs = []; // bombGif 객체를 담을 배열
-let bombSpeed = 8; // bombGif의 속도
-let payWatchCoins = []; // bombGif 객체를 담을 배열
-let payWatchCoinSpeed = 10; // bombGif의 속도
+let bombs = []; // bomb 객체를 담을 배열
+let bombSpeed = 8; // bomb의 속도
+let payWatchCoins = []; // bomb 객체를 담을 배열
+let payWatchCoinSpeed = 10; // bomb의 속도
 let nextBubbleTime = 0; // 다음 버블이 나오는 시간
 
 let startTime; // 게임 시작 시간
 let countdown = 30; // 30초 카운트다운
 
-let bubbleImg1;
-let bubbleImg2;
-let popImg;
-let bubbleGif;
-let gameOverGif;
-let bombGif;
-let payWatchCoinGif;
+let gameOverImg;
+let bombImg;
+let bombExplodesImg;
+let payWatchLogoImg;
 
-let whiteSongImg;
-let greenSongImg;
-let pinkSongImg;
+let songImg1;
+let songImg2;
+let songImg3;
+let songImg4;
 
 let eatingSound;
-let coinSound;
+let logoSound;
+let bombSound;
 
 function setup() {
   if (windowWidth < 800) {
@@ -36,33 +35,33 @@ function setup() {
     createCanvas(600, 900);
   }
   setInterval(increaseSpeed, 10000); // 10초마다 속도 증가 함수 호출
-  bubbleImg1 = loadImage(
-    "https://songtak.github.io/mini-games/assets/img/Bubble1.png"
+
+  popImg = loadImage(
+    "https://songtak.github.io/mini-games/assets/chuseok/pop.png"
   );
-  bubbleImg2 = loadImage(
-    "https://songtak.github.io/mini-games/assets/img/Bubble2.png"
+  gameOverImg = loadImage(
+    "https://songtak.github.io/mini-games/assets/chuseok/GameOver.png"
   );
-  bubbleGif = loadImage(
-    "https://songtak.github.io/mini-games/assets/img/Bubble.gif"
+  bombImg = loadImage(
+    "https://songtak.github.io/mini-games/assets/chuseok/Bomb.png"
   );
-  popImg = loadImage("https://songtak.github.io/mini-games/assets/img/pop.png");
-  gameOverGif = loadImage(
-    "https://songtak.github.io/mini-games/assets/img/GameOver.gif"
+  bombExplodesImg = loadImage(
+    "https://songtak.github.io/mini-games/assets/chuseok/BombExplodes.png"
   );
-  bombGif = loadImage(
-    "https://songtak.github.io/mini-games/assets/img/Bomb.gif"
+  payWatchLogoImg = loadImage(
+    "https://songtak.github.io/mini-games/assets/chuseok/PayWatchLogoImg.gif"
   );
-  payWatchCoinGif = loadImage(
-    "https://songtak.github.io/mini-games/assets/img/PayWatchCoin.gif"
+  songImg1 = loadImage(
+    "https://songtak.github.io/mini-games/assets/chuseok/SongImg1.png"
   );
-  whiteSongImg = loadImage(
-    "https://songtak.github.io/mini-games/assets/img/WhiteSong.png"
+  songImg2 = loadImage(
+    "https://songtak.github.io/mini-games/assets/chuseok/SongImg2.png"
   );
-  greenSongImg = loadImage(
-    "https://songtak.github.io/mini-games/assets/img/GreenSong.png"
+  songImg3 = loadImage(
+    "https://songtak.github.io/mini-games/assets/chuseok/SongImg3.png"
   );
-  pinkSongImg = loadImage(
-    "https://songtak.github.io/mini-games/assets/img/PinkSong.png"
+  songImg4 = loadImage(
+    "https://songtak.github.io/mini-games/assets/chuseok/SongImg4.png"
   );
 
   startGame(); // 게임을 즉시 시작합니다.
@@ -79,10 +78,13 @@ function windowResized() {
 
 function preload() {
   eatingSound = loadSound(
-    "https://songtak.github.io/mini-games/assets/sound/eating-sound-effect.mp3"
+    "https://songtak.github.io/mini-games/assets/chuseok/ClickSong.wav"
   );
-  coinSound = loadSound(
-    "https://songtak.github.io/mini-games/assets/sound/coin.mp3"
+  logoSound = loadSound(
+    "https://songtak.github.io/mini-games/assets/chuseok/ClickLogo.wav"
+  );
+  bombSound = loadSound(
+    "https://songtak.github.io/mini-games/assets/chuseok/ClickBomb.wav"
   );
 }
 
@@ -100,7 +102,7 @@ function draw() {
     gameOver();
   }
 
-  /* bubbleGif */
+  /* bubble */
   for (let i = bubbles.length - 1; i >= 0; i--) {
     bubbles[i].display();
     bubbles[i].update();
@@ -116,7 +118,7 @@ function draw() {
     }
   }
 
-  /* bombGif */
+  /* bomb */
   for (let i = bombs.length - 1; i >= 0; i--) {
     bombs[i].display();
     bombs[i].update();
@@ -126,7 +128,7 @@ function draw() {
     }
   }
 
-  /* payWatchCoinGif */
+  /* payWatchCoin */
   for (let i = payWatchCoins.length - 1; i >= 0; i--) {
     payWatchCoins[i].display();
     payWatchCoins[i].update();
@@ -190,7 +192,7 @@ function createBubble() {
   }
 }
 
-// bombGif 생성 함수
+// bomb 생성 함수
 function createBomb() {
   if (frameCount % 30 === 0) {
     let bomb = new Bomb(random(width), -40); // y 좌표를 -40으로 설정
@@ -236,7 +238,7 @@ function handleTouchOrClick() {
         payWatchCoins[i].isClicked = true; // 버블이 클릭되었다고 표시
 
         score += 50;
-        coinSound.play();
+        logoSound.play();
         setTimeout(() => {
           payWatchCoins.splice(i, 1);
         }, 100);
@@ -244,10 +246,11 @@ function handleTouchOrClick() {
       }
     }
 
-    //  bombGif 클릭 체크
+    //  bomb 클릭 체크
     for (let i = bombs.length - 1; i >= 0; i--) {
       let d = dist(mouseX, mouseY, bombs[i].x + 20, bombs[i].y + 20);
       if (d < 20) {
+        bombSound.play();
         gameOver(); // 게임 오버 함수 호출
         return;
       }
@@ -268,7 +271,7 @@ class Bubble {
     this.y = y;
     this.r = 40;
     this.isClicked = false; // 버블이 클릭되었는지 여부를 추적합니다.
-    this.selectedImage = random([whiteSongImg, greenSongImg, pinkSongImg]); // 랜덤하게 이미지를 선택합니다.
+    this.selectedImage = random([songImg1, songImg2, songImg3, songImg4]); // 랜덤하게 이미지를 선택합니다.
   }
 
   display() {
@@ -303,7 +306,7 @@ class Bomb extends Bubble {
   }
 
   display() {
-    image(bombGif, this.x, this.y, this.r, this.r);
+    image(bombImg, this.x, this.y, this.r, this.r);
   }
 
   update() {
@@ -316,9 +319,9 @@ class PayWatchCoin extends Bubble {
   }
 
   display() {
-    // image(payWatchCoinGif, this.x, this.y, this.r, this.r);
+    // image(payWatchLogoImg, this.x, this.y, this.r, this.r);
     if (!this.isClicked) {
-      image(payWatchCoinGif, this.x, this.y, this.r, this.r);
+      image(payWatchLogoImg, this.x, this.y, this.r, this.r);
     } else {
       image(popImg, this.x, this.y, this.r, this.r); // 클릭되었을 때 popImg 이미지로 변경
     }
@@ -338,8 +341,8 @@ function startGame() {
 function gameOver() {
   isGameStarted = false;
   isOver = true;
-  gameOverGif;
-  image(gameOverGif, width / 2 - 60, height / 2 - 60, 120, 120);
+  gameOverImg;
+  image(gameOverImg, width / 2 - 60, height / 2 - 60, 120, 120);
   textSize(28);
   textAlign(CENTER);
   text(`Score : ${score > 1000 ? 1000 : score}`, width / 2, height / 2 + 100);
