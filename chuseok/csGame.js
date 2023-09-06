@@ -37,7 +37,7 @@ function setup() {
   setInterval(increaseSpeed, 10000); // 10초마다 속도 증가 함수 호출
 
   popImg = loadImage(
-    "https://songtak.github.io/mini-games/assets/chuseok/pop.png"
+    "https://songtak.github.io/mini-games/assets/chuseok/SongPop.png"
   );
   gameOverImg = loadImage(
     "https://songtak.github.io/mini-games/assets/chuseok/GameOver.png"
@@ -89,7 +89,7 @@ function preload() {
 }
 
 function draw() {
-  background(255, 255, 255); //
+  background(45, 45, 61); //
   // background(255, 244, 230); //
 
   if (isGameStarted) {
@@ -275,14 +275,11 @@ class Bubble {
   }
 
   display() {
-    fill(255, 0, 150);
     if (!this.isClicked) {
       image(this.selectedImage, this.x, this.y, this.r, this.r); // 선택된 이미지를 사용합니다.
     } else {
-      image(popImg, this.x, this.y, this.r, this.r); // 클릭되었을 때 popImg 이미지로 변경
+      image(popImg, this.x, this.y, this.r, this.r * 0.5); // 클릭되었을 때 popImg 이미지로 변경
     }
-
-    // ellipse(this.x, this.y, this.r * 2);
   }
 
   update() {
