@@ -81,6 +81,9 @@ let bombExplodesImg;
 let payWatchLogoImg;
 let paywatchLogoPopImg;
 
+let scoreImg;
+let timeImg;
+
 let songImg1;
 let songImg2;
 let songImg3;
@@ -335,10 +338,10 @@ function handleTouchOrClick() {
       if (bombs[i].contains(mouseX, mouseY)) {
         bombs[i].isClicked = true; // 버블이 클릭되었다고 표시
         bombSound.play();
-        // gameOver();
         setTimeout(() => {
           bombs.splice(i, 1);
         }, 100);
+        gameOver();
         break;
       }
     }
@@ -440,9 +443,9 @@ function gameOver() {
   text(`Score : ${score > 1000 ? 1000 : score}`, width / 2, height / 2 + 100);
   isOver === true && playGameOverSound();
   setTimeout(function () {
-    window.location.replace(
-      "https://paywatch-stage-webapp.paywatchglobal.com/event/22"
-    );
+    // window.location.replace(
+    //   "https://paywatch-stage-webapp.paywatchglobal.com/event/22"
+    // );
     // "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
   }, 3000);
 }
