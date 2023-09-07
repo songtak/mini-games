@@ -378,6 +378,7 @@ function gameOver() {
   text(`Score : ${score > 1000 ? 1000 : score}`, width / 2, height / 2 + 100);
   isOver === true && playGameOverSound();
   setTimeout(function () {
+    alert("게임 끝나고 3초 뒤 호출!");
     console.log("게임 끝나고 3초 뒤 호출!");
     window.location.href =
       "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
