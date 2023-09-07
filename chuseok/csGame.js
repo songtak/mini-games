@@ -1,12 +1,12 @@
 let bubbles = [];
 let score = 0;
 let gameEnded = false; // 게임 종료 상태
-let bubbleSpeed = 4; // 초당 이동 거리 (기본값 1)
+let bubbleSpeed = 1; // 초당 이동 거리 (기본값 1)
 let isGameStarted = false;
 let isOver = false; // 게임 끝
 const maxMissedBubbles = 3; // 최대 놓친 버블 개수
 let bombs = []; // bomb 객체를 담을 배열
-let bombSpeed = 3; // bomb의 속도
+let bombSpeed = 0.3; // bomb의 속도
 let payWatchCoins = []; // bomb 객체를 담을 배열
 let payWatchCoinSpeed = 10; // Logo의 속도
 let nextBubbleTime = 0; // 다음 버블이 나오는 시간
@@ -45,7 +45,7 @@ function setup() {
   } else {
     createCanvas(600, 900);
   }
-  setInterval(increaseSpeed, 1000); // 10초마다 속도 증가 함수 호출
+  // setInterval(increaseSpeed, 1000); // 10초마다 속도 증가 함수 호출
   /** 배경음악 */
   bgmSound.play();
 
@@ -266,7 +266,7 @@ function mousePressed() {
 function handleTouchOrClick() {
   if (isGameStarted) {
     for (let i = bubbles.length - 1; i >= 0; i--) {
-      if (bubbles[i].contains(mouseX, mouseY)) {
+      if (bubbles[i].contains(mouseX, mouseY, 60, 30)) {
         bubbles[i].isClicked = true; // 버블이 클릭되었다고 표시
         score += 10;
         eatingSound.play(); // 사운드 재생
@@ -279,7 +279,7 @@ function handleTouchOrClick() {
       }
     }
     for (let i = payWatchCoins.length - 1; i >= 0; i--) {
-      if (payWatchCoins[i].contains(mouseX, mouseY)) {
+      if (payWatchCoins[i].contains(mouseX, mouseY, 40, 40)) {
         payWatchCoins[i].isClicked = true; // 버블이 클릭되었다고 표시
         logoSound.play();
 
@@ -292,13 +292,13 @@ function handleTouchOrClick() {
     }
 
     for (let i = bombs.length - 1; i >= 0; i--) {
-      if (bombs[i].contains(mouseX, mouseY)) {
+      if (bombs[i].contains(mouseX, mouseY, 40, 40)) {
         bombs[i].isClicked = true; // 버블이 클릭되었다고 표시
         bombSound.play();
         setTimeout(() => {
           bombs.splice(i, 1);
         }, 100);
-        gameOver();
+        // gameOver();
         break;
       }
     }
@@ -336,10 +336,10 @@ function gameOver() {
   let currentTime = millis();
   gameOverCount = 6 - int((currentTime - startTime) / 1000);
 
-  if (gameOverCount <= 0) {
-    window.location.href =
-      "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
-  }
+  // if (gameOverCount <= 0) {
+  //   window.location.href =
+  //     "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
+  // }
   // setTimeout(() => {
   //   // window.location.href = "http://127.0.0.1:5500/chuseok/csGame.html";
   //   window.location.href =
@@ -365,7 +365,7 @@ class Bubble {
   constructor(x, y) {
     this.x = x - 20;
     this.y = y;
-    this.r = 50;
+    this.r = 40;
     this.isClicked = false; // 버블이 클릭되었는지 여부를 추적합니다.
     this.selectedImage = random([songImg1, songImg2, songImg3, songImg4]); // 랜덤하게 이미지를 선택합니다.
   }
@@ -374,9 +374,9 @@ class Bubble {
     if (isOver === false) {
       // Bubble을 그립니다.
       if (!this.isClicked) {
-        image(this.selectedImage, this.x - 40, this.y, 60, 30); // 선택된 이미지를 사용합니다.
+        image(this.selectedImage, this.x, this.y, 60, 30); // 선택된 이미지를 사용합니다.
       } else {
-        image(popImg, this.x - 40, this.y, this.r, this.r * 0.5); // 클릭되었을 때 popImg 이미지로 변경
+        image(popImg, this.x, this.y, this.r, this.r * 0.5); // 클릭되었을 때 popImg 이미지로 변경
       }
     }
   }
@@ -385,9 +385,13 @@ class Bubble {
     this.y += bubbleSpeed;
   }
 
-  contains(x, y) {
-    let d = dist(x, y, this.x, this.y);
-    return d < this.r;
+  // contains(x, y) {
+  //   let d = dist(x, y, this.x, this.y);
+  //   return d < this.r;
+  // }
+  contains(x, y, w, h) {
+    // w와 h는 아이콘의 너비와 높이입니다.
+    return x > this.x && x < this.x + w && y > this.y && y < this.y + h;
   }
 
   isOffScreen() {
@@ -403,7 +407,7 @@ class Bomb extends Bubble {
   display() {
     if (isOver === false) {
       if (!this.isClicked) {
-        image(bombImg, this.x - this.r, this.y, this.r, this.r);
+        image(bombImg, this.x, this.y, 40, 40);
       } else {
         image(bombExplodesImg, this.x, this.y, this.r, this.r); // 클릭되었을 때 popImg 이미지로 변경
       }
@@ -422,7 +426,7 @@ class PayWatchCoin extends Bubble {
   display() {
     if (isOver === false) {
       if (!this.isClicked) {
-        image(payWatchLogoImg, this.x - this.r, this.y, this.r, this.r);
+        image(payWatchLogoImg, this.x, this.y, this.r, this.r);
       } else {
         image(paywatchLogoPopImg, this.x, this.y, this.r, this.r * 0.5); // 클릭되었을 때 popImg 이미지로 변경
       }
