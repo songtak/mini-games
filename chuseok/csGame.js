@@ -1,7 +1,7 @@
 let bubbles = [];
 let score = 0;
 let gameEnded = false; // 게임 종료 상태
-let bubbleSpeed = 9; // 초당 이동 거리 (기본값 1)
+let bubbleSpeed = 5; // 초당 이동 거리 (기본값 1)
 let isGameStarted = false;
 let isOver = false; // 게임 끝
 const maxMissedBubbles = 3; // 최대 놓친 버블 개수
@@ -38,6 +38,7 @@ function setup() {
     createCanvas(600, 900);
   }
   setInterval(increaseSpeed, 10000); // 10초마다 속도 증가 함수 호출
+  // bgmSound.play();
 
   popImg = loadImage(
     "https://songtak.github.io/mini-games/assets/chuseok/SongPop.png"
@@ -95,12 +96,14 @@ function preload() {
   bgmSound = loadSound(
     "https://songtak.github.io/mini-games/assets/chuseok/Bgm.mp3"
   );
+  gameOverSound = loadSound(
+    "https://songtak.github.io/mini-games/assets/chuseok/GameOver.wav"
+  );
 }
 
 function draw() {
   background(45, 45, 61); //
   // background(255, 244, 230); //
-  // bgmSound.play();
 
   if (isGameStarted) {
     createBubble();
@@ -270,7 +273,7 @@ function handleTouchOrClick() {
       if (bombs[i].contains(mouseX, mouseY)) {
         bombs[i].isClicked = true; // 버블이 클릭되었다고 표시
         bombSound.play();
-
+        gameOver();
         setTimeout(() => {
           bombs.splice(i, 1);
         }, 100);
@@ -298,7 +301,7 @@ class Bubble {
 
   display() {
     if (!this.isClicked) {
-      image(this.selectedImage, this.x, this.y, this.r, this.r); // 선택된 이미지를 사용합니다.
+      image(this.selectedImage, this.x, this.y, this.r * 1.2, this.r * 0.5); // 선택된 이미지를 사용합니다.
     } else {
       image(popImg, this.x, this.y, this.r, this.r * 0.5); // 클릭되었을 때 popImg 이미지로 변경
     }
@@ -347,7 +350,7 @@ class PayWatchCoin extends Bubble {
     if (!this.isClicked) {
       image(payWatchLogoImg, this.x, this.y, this.r, this.r);
     } else {
-      image(paywatchLogoPopImg, this.x, this.y, this.r, this.r); // 클릭되었을 때 popImg 이미지로 변경
+      image(paywatchLogoPopImg, this.x, this.y, this.r, this.r * 0.5); // 클릭되었을 때 popImg 이미지로 변경
     }
   }
 
@@ -362,7 +365,10 @@ function startGame() {
   isGameStarted = true;
 }
 
+let isGameOverSoundPlaying = false;
+
 function gameOver() {
+  bgmSound.stop();
   isGameStarted = false;
   isOver = true;
   gameOverImg;
@@ -370,6 +376,24 @@ function gameOver() {
   textSize(28);
   textAlign(CENTER);
   text(`Score : ${score > 1000 ? 1000 : score}`, width / 2, height / 2 + 100);
+  isOver === true && playGameOverSound();
+  setTimeout(function () {
+    window.location.href =
+      "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
+  }, 3000);
 }
+
+function playGameOverSound() {
+  if (!isGameOverSoundPlaying) {
+    isGameOverSoundPlaying = true;
+    gameOverSound.play();
+    gameOverSound.addEventListener("ended", function () {
+      isGameOverSoundPlaying = false;
+    });
+  }
+}
+
+// 게임 오버 상황에서 playGameOverSound() 호출
+// 예: if (playerHealth <= 0) playGameOverSound();
 
 /** ====================================================================== */
