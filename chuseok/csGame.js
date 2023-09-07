@@ -38,7 +38,7 @@ function setup() {
     createCanvas(600, 900);
   }
   setInterval(increaseSpeed, 10000); // 10초마다 속도 증가 함수 호출
-  // bgmSound.play();
+  bgmSound.play();
 
   popImg = loadImage(
     "https://songtak.github.io/mini-games/assets/chuseok/SongPop.png"
