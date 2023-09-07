@@ -13,6 +13,7 @@ let nextBubbleTime = 0; // 다음 버블이 나오는 시간
 
 let startTime; // 게임 시작 시간
 let countdown = 30; // 30초 카운트다운
+let gameOverCount = 0;
 
 let gameOverImg;
 let bombImg;
@@ -331,16 +332,24 @@ function gameOver() {
   text(score > 1000 ? 1000 : score, width / 2 + 40, height / 2 + 66);
   image(scoreImg, width / 2 - 70, height / 2 + 50, 80, 16);
   isOver === true && playGameOverSound();
+
+  let currentTime = millis();
+  gameOverCount = 6 - int((currentTime - startTime) / 1000);
+
+  if (gameOverCount <= 0) {
+    window.location.href =
+      "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
+  }
   // setTimeout(() => {
   //   // window.location.href = "http://127.0.0.1:5500/chuseok/csGame.html";
   //   window.location.href =
   //     "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
   // }, 3000);
 
-  setTimeout(() => {
-    window.location.href =
-      "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
-  }, 600);
+  // setTimeout(() => {
+  //   window.location.href =
+  //     "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
+  // }, 1800);
 }
 
 function playGameOverSound() {
@@ -362,13 +371,12 @@ class Bubble {
   }
 
   display() {
-    console.log("isOver", isOver);
     if (isOver === false) {
       // Bubble을 그립니다.
       if (!this.isClicked) {
-        image(this.selectedImage, this.x, this.y, 40, 20); // 선택된 이미지를 사용합니다.
+        image(this.selectedImage, this.x - 40, this.y, 40, 20); // 선택된 이미지를 사용합니다.
       } else {
-        image(popImg, this.x, this.y, this.r, this.r * 0.5); // 클릭되었을 때 popImg 이미지로 변경
+        image(popImg, this.x - 40, this.y, this.r, this.r * 0.5); // 클릭되었을 때 popImg 이미지로 변경
       }
     }
   }
