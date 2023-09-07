@@ -1,12 +1,73 @@
+let os;
+let userInfo;
+
+/** 브릿지 통신 */
+const getPayWatchApp = (functionName, params) => {
+  try {
+    /** 안드로이드 디바이스일때 */
+    if (os === "android") {
+      typeof params !== "undefined" && params
+        ? window.PaywatchAppInterface[functionName](params)
+        : window.PaywatchAppInterface[functionName]();
+      /** IOS 디바이스일때 */
+    } else if (os === "ios") {
+      if (typeof params === "undefined") {
+        window.webkit.messageHandlers?.nativeCallback.postMessage(
+          `${functionName}#`
+        );
+      } else if (
+        typeof params === "string" &&
+        typeof params === "number" &&
+        typeof params === "boolean"
+      ) {
+        window.webkit.messageHandlers?.nativeCallback.postMessage(
+          `${functionName}#${params}`
+        );
+      } else if (typeof params === "object") {
+        const msg = JSON.stringify({});
+        window.webkit.messageHandlers?.nativeCallback.postMessage(
+          `${functionName}#${msg}`
+        );
+      }
+    } else {
+      console.log("[OS ERROR] OS is neither AOS nor IOS");
+    }
+  } catch (error) {
+    console.log("error", error);
+  }
+};
+
+/** 디바이스 정보 */
+const ua = window.navigator.userAgent;
+
+/** os 정보 저장 */
+if (/(android)/i.test(ua)) {
+  os = "android";
+} else if (/(ipod|iphone|ipad)/i.test(ua)) {
+  os = "ios";
+} else {
+  os = null;
+}
+
+/** 브릿지 호출 */
+getPayWatchApp("getUserInfo");
+
+/** 앱->웹 브릿지 정보 취득 */
+window.setUserInfo = (params) => {
+  console.log("setUserInfo : ", JSON.parse(params));
+  userInfo = JSON.parse(params).userType;
+};
+
+/** ========================================================================= */
 let bubbles = [];
 let score = 0;
 let gameEnded = false; // 게임 종료 상태
-let bubbleSpeed = 5; // 초당 이동 거리 (기본값 1)
+let bubbleSpeed = 1; // 초당 이동 거리 (기본값 1)
 let isGameStarted = false;
 let isOver = false; // 게임 끝
 const maxMissedBubbles = 3; // 최대 놓친 버블 개수
 let bombs = []; // bomb 객체를 담을 배열
-let bombSpeed = 8; // bomb의 속도
+let bombSpeed = 1; // bomb의 속도
 let payWatchCoins = []; // bomb 객체를 담을 배열
 let payWatchCoinSpeed = 10; // bomb의 속도
 let nextBubbleTime = 0; // 다음 버블이 나오는 시간
@@ -274,7 +335,7 @@ function handleTouchOrClick() {
       if (bombs[i].contains(mouseX, mouseY)) {
         bombs[i].isClicked = true; // 버블이 클릭되었다고 표시
         bombSound.play();
-        gameOver();
+        // gameOver();
         setTimeout(() => {
           bombs.splice(i, 1);
         }, 100);
@@ -295,14 +356,14 @@ class Bubble {
   constructor(x, y) {
     this.x = x - 20;
     this.y = y;
-    this.r = 40;
+    this.r = 30;
     this.isClicked = false; // 버블이 클릭되었는지 여부를 추적합니다.
     this.selectedImage = random([songImg1, songImg2, songImg3, songImg4]); // 랜덤하게 이미지를 선택합니다.
   }
 
   display() {
     if (!this.isClicked) {
-      image(this.selectedImage, this.x, this.y, this.r * 1.2, this.r * 0.5); // 선택된 이미지를 사용합니다.
+      image(this.selectedImage, this.x, this.y, 40, 20); // 선택된 이미지를 사용합니다.
     } else {
       image(popImg, this.x, this.y, this.r, this.r * 0.5); // 클릭되었을 때 popImg 이미지로 변경
     }
@@ -314,7 +375,7 @@ class Bubble {
 
   contains(x, y) {
     let d = dist(x, y, this.x, this.y);
-    return d < this.r + 5; // 반경을 5픽셀 더 늘림
+    return d < this.r; // 반경을 5픽셀 더 늘림
     // return d < this.r;
   }
 
@@ -379,8 +440,10 @@ function gameOver() {
   text(`Score : ${score > 1000 ? 1000 : score}`, width / 2, height / 2 + 100);
   isOver === true && playGameOverSound();
   setTimeout(function () {
-    window.location.href =
-      "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
+    window.location.replace(
+      "https://paywatch-stage-webapp.paywatchglobal.com/event/22"
+    );
+    // "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
   }, 3000);
 }
 
