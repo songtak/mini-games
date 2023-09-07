@@ -479,7 +479,9 @@ function gameOver() {
   image(scoreImg, width / 2 - 70, height / 2 + 50, 80, 16);
   isOver === true && playGameOverSound();
   setTimeout(function () {
-    window.location.href = "http://127.0.0.1:5500/chuseok/csGame.html";
+    // window.location.href = "http://127.0.0.1:5500/chuseok/csGame.html";
+    window.location.href =
+      "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
     // window.location.replace(
     //   "https://paywatch-stage-webapp.paywatchglobal.com/event/22"
     // );
