@@ -83,6 +83,8 @@ let paywatchLogoPopImg;
 
 let scoreImg;
 let timeImg;
+let moonImg;
+let giftImg;
 
 let songImg1;
 let songImg2;
@@ -123,6 +125,20 @@ function setup() {
   paywatchLogoPopImg = loadImage(
     "https://songtak.github.io/mini-games/assets/chuseok/PaywatchLogoPop.png"
   );
+
+  scoreImg = loadImage(
+    "https://songtak.github.io/mini-games/assets/chuseok/Score.png"
+  );
+  timeImg = loadImage(
+    "https://songtak.github.io/mini-games/assets/chuseok/Time.png"
+  );
+  moonImg = loadImage(
+    "https://songtak.github.io/mini-games/assets/chuseok/Moon.png"
+  );
+  giftImg = loadImage(
+    "https://songtak.github.io/mini-games/assets/chuseok/Gift.png"
+  );
+
   songImg1 = loadImage(
     "https://songtak.github.io/mini-games/assets/chuseok/SongImg1.png"
   );
@@ -168,9 +184,13 @@ function preload() {
 
 function draw() {
   background(45, 45, 61); //
-  // background(255, 244, 230); //
+
+  image(giftImg, 0, height - width / 2, width, width / 2);
 
   if (isGameStarted) {
+    if (isOver === false) {
+      image(moonImg, 30, 100, 160, 100);
+    }
     createBubble();
     createBomb();
     createPayWatchCoin();
@@ -228,9 +248,11 @@ function draw() {
   }
 
   if (!isOver) {
-    textSize(24);
+    fill(255, 255, 255);
+    textSize(22);
     textAlign(LEFT);
-    text("Score: " + score, 10, 30);
+    image(scoreImg, 30, 30, 80, 16);
+    text(score, 120, 46);
   }
 }
 
@@ -248,9 +270,11 @@ function updateCountdown() {
 }
 
 function displayCountdown() {
-  textSize(24);
+  textSize(22);
   textAlign(RIGHT);
-  text(`Time: ${countdown}`, width - 10, 30);
+  image(timeImg, width - 120, 30, 60, 14);
+
+  text(countdown, width - 20, 46);
 }
 /** ====================================================================== */
 
@@ -437,10 +461,15 @@ function gameOver() {
   isGameStarted = false;
   isOver = true;
   gameOverImg;
-  image(gameOverImg, width / 2 - 60, height / 2 - 60, 120, 120);
-  textSize(28);
+  // image(moonImg, 30, 100, 160, 100);
+
+  image(moonImg, width / 2 - 80, height / 6, 160, 100);
+  image(gameOverImg, width / 2 - 60, height / 2 - 60, 120, 80);
+  textSize(22);
   textAlign(CENTER);
-  text(`Score : ${score > 1000 ? 1000 : score}`, width / 2, height / 2 + 100);
+  // text(`Score : ${score > 1000 ? 1000 : score}`, width / 2, height / 2 + 100);
+  text(score > 1000 ? 1000 : score, width / 2 + 30, height / 2 + 66);
+  image(scoreImg, width / 2 - 70, height / 2 + 50, 80, 16);
   isOver === true && playGameOverSound();
   setTimeout(function () {
     // window.location.replace(
