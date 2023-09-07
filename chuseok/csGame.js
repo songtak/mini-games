@@ -62,7 +62,7 @@ window.setUserInfo = (params) => {
 let bubbles = [];
 let score = 0;
 let gameEnded = false; // 게임 종료 상태
-let bubbleSpeed = 1; // 초당 이동 거리 (기본값 1)
+let bubbleSpeed = 3; // 초당 이동 거리 (기본값 1)
 let isGameStarted = false;
 let isOver = false; // 게임 끝
 const maxMissedBubbles = 3; // 최대 놓친 버블 개수
@@ -187,12 +187,13 @@ function draw() {
 
   image(giftImg, 0, height - width / 2, width, width / 2);
 
-  if (isGameStarted) {
+  if (countdown > 0) {
     createBubble();
     createBomb();
     createPayWatchCoin();
+    image(moonImg, 30, 100, 160, 100);
     // setInterval(createBomb, 1000); // 10초마다 bomb 생성
-  } else if (isOver) {
+  } else {
     // 게임이 끝났을 때 gameOver 함수 호출
     gameOver();
   }
@@ -260,11 +261,9 @@ function increaseSpeed() {
 /** ====================================================================== */
 function updateCountdown() {
   let currentTime = millis();
-  countdown = 3 - int((currentTime - startTime) / 1000);
+  countdown = 30 - int((currentTime - startTime) / 1000);
   if (countdown <= 0) {
     gameOver(); // 시간이 다 되면 게임 오버
-  } else {
-    image(moonImg, 30, 100, 160, 100);
   }
 }
 
@@ -295,7 +294,7 @@ function createBubble() {
 
 // bomb 생성 함수
 function createBomb() {
-  if (frameCount % 30 === 0) {
+  if (frameCount % 100 === 0) {
     let bomb = new Bomb(random(width), -40); // y 좌표를 -40으로 설정
     bombs.push(bomb);
   }
@@ -388,6 +387,7 @@ class Bubble {
   }
 
   display() {
+    console.log("isOver", isOver);
     if (isOver === false) {
       // Bubble을 그립니다.
       if (!this.isClicked) {
@@ -467,6 +467,7 @@ function gameOver() {
   isGameStarted = false;
   isOver = true;
   gameOverImg;
+  countdown = 0;
   // image(moonImg, 30, 100, 160, 100);
 
   image(moonImg, width / 2 - 80, height / 6, 160, 100);
@@ -490,9 +491,6 @@ function playGameOverSound() {
   if (!isGameOverSoundPlaying) {
     isGameOverSoundPlaying = true;
     gameOverSound.play();
-    gameOverSound.addEventListener("ended", function () {
-      isGameOverSoundPlaying = false;
-    });
   }
 }
 
