@@ -1,12 +1,12 @@
 let bubbles = [];
 let score = 0;
 let gameEnded = false; // 게임 종료 상태
-let bubbleSpeed = 1; // 초당 이동 거리 (기본값 1)
+let bubbleSpeed = 4; // 초당 이동 거리 (기본값 1)
 let isGameStarted = false;
 let isOver = false; // 게임 끝
 const maxMissedBubbles = 3; // 최대 놓친 버블 개수
 let bombs = []; // bomb 객체를 담을 배열
-let bombSpeed = 0.3; // bomb의 속도
+let bombSpeed = 3; // bomb의 속도
 let payWatchCoins = []; // bomb 객체를 담을 배열
 let payWatchCoinSpeed = 10; // Logo의 속도
 let nextBubbleTime = 0; // 다음 버블이 나오는 시간
@@ -45,7 +45,7 @@ function setup() {
   } else {
     createCanvas(600, 900);
   }
-  // setInterval(increaseSpeed, 1000); // 10초마다 속도 증가 함수 호출
+  setInterval(increaseSpeed, 2000); // 10초마다 속도 증가 함수 호출
   /** 배경음악 */
   bgmSound.play();
 
