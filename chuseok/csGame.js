@@ -62,7 +62,7 @@ window.setUserInfo = (params) => {
 let bubbles = [];
 let score = 0;
 let gameEnded = false; // 게임 종료 상태
-let bubbleSpeed = 5; // 초당 이동 거리 (기본값 1)
+let bubbleSpeed = 1; // 초당 이동 거리 (기본값 1)
 let isGameStarted = false;
 let isOver = false; // 게임 끝
 const maxMissedBubbles = 3; // 최대 놓친 버블 개수
@@ -188,9 +188,6 @@ function draw() {
   image(giftImg, 0, height - width / 2, width, width / 2);
 
   if (isGameStarted) {
-    if (isOver === false) {
-      image(moonImg, 30, 100, 160, 100);
-    }
     createBubble();
     createBomb();
     createPayWatchCoin();
@@ -263,9 +260,11 @@ function increaseSpeed() {
 /** ====================================================================== */
 function updateCountdown() {
   let currentTime = millis();
-  countdown = 30 - int((currentTime - startTime) / 1000);
+  countdown = 3 - int((currentTime - startTime) / 1000);
   if (countdown <= 0) {
     gameOver(); // 시간이 다 되면 게임 오버
+  } else {
+    image(moonImg, 30, 100, 160, 100);
   }
 }
 
@@ -389,10 +388,13 @@ class Bubble {
   }
 
   display() {
-    if (!this.isClicked) {
-      image(this.selectedImage, this.x, this.y, 40, 20); // 선택된 이미지를 사용합니다.
-    } else {
-      image(popImg, this.x, this.y, this.r, this.r * 0.5); // 클릭되었을 때 popImg 이미지로 변경
+    if (isOver === false) {
+      // Bubble을 그립니다.
+      if (!this.isClicked) {
+        image(this.selectedImage, this.x, this.y, 40, 20); // 선택된 이미지를 사용합니다.
+      } else {
+        image(popImg, this.x, this.y, this.r, this.r * 0.5); // 클릭되었을 때 popImg 이미지로 변경
+      }
     }
   }
 
@@ -417,11 +419,13 @@ class Bomb extends Bubble {
   }
 
   display() {
-    // image(bombImg, this.x, this.y, this.r, this.r);
-    if (!this.isClicked) {
-      image(bombImg, this.x, this.y, this.r, this.r);
-    } else {
-      image(bombExplodesImg, this.x, this.y, this.r, this.r); // 클릭되었을 때 popImg 이미지로 변경
+    if (isOver === false) {
+      // image(bombImg, this.x, this.y, this.r, this.r);
+      if (!this.isClicked) {
+        image(bombImg, this.x, this.y, this.r, this.r);
+      } else {
+        image(bombExplodesImg, this.x, this.y, this.r, this.r); // 클릭되었을 때 popImg 이미지로 변경
+      }
     }
   }
 
@@ -435,11 +439,13 @@ class PayWatchCoin extends Bubble {
   }
 
   display() {
-    // image(payWatchLogoImg, this.x, this.y, this.r, this.r);
-    if (!this.isClicked) {
-      image(payWatchLogoImg, this.x, this.y, this.r, this.r);
-    } else {
-      image(paywatchLogoPopImg, this.x, this.y, this.r, this.r * 0.5); // 클릭되었을 때 popImg 이미지로 변경
+    if (isOver === false) {
+      // image(payWatchLogoImg, this.x, this.y, this.r, this.r);
+      if (!this.isClicked) {
+        image(payWatchLogoImg, this.x, this.y, this.r, this.r);
+      } else {
+        image(paywatchLogoPopImg, this.x, this.y, this.r, this.r * 0.5); // 클릭되었을 때 popImg 이미지로 변경
+      }
     }
   }
 
@@ -472,6 +478,7 @@ function gameOver() {
   image(scoreImg, width / 2 - 70, height / 2 + 50, 80, 16);
   isOver === true && playGameOverSound();
   setTimeout(function () {
+    window.location.href = "http://127.0.0.1:5500/chuseok/csGame.html";
     // window.location.replace(
     //   "https://paywatch-stage-webapp.paywatchglobal.com/event/22"
     // );
