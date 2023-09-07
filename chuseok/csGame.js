@@ -18,6 +18,7 @@ let gameOverImg;
 let bombImg;
 let bombExplodesImg;
 let payWatchLogoImg;
+let paywatchLogoPopImg;
 
 let songImg1;
 let songImg2;
@@ -27,6 +28,8 @@ let songImg4;
 let eatingSound;
 let logoSound;
 let bombSound;
+let bgmSound;
+let gameOverSound;
 
 function setup() {
   if (windowWidth < 800) {
@@ -49,7 +52,10 @@ function setup() {
     "https://songtak.github.io/mini-games/assets/chuseok/BombExplodes.png"
   );
   payWatchLogoImg = loadImage(
-    "https://songtak.github.io/mini-games/assets/chuseok/PayWatchLogoImg.gif"
+    "https://songtak.github.io/mini-games/assets/chuseok/PayWatchLogo.png"
+  );
+  paywatchLogoPopImg = loadImage(
+    "https://songtak.github.io/mini-games/assets/chuseok/PaywatchLogoPop.png"
   );
   songImg1 = loadImage(
     "https://songtak.github.io/mini-games/assets/chuseok/SongImg1.png"
@@ -86,11 +92,15 @@ function preload() {
   bombSound = loadSound(
     "https://songtak.github.io/mini-games/assets/chuseok/ClickBomb.wav"
   );
+  bgmSound = loadSound(
+    "https://songtak.github.io/mini-games/assets/chuseok/Bgm.mp3"
+  );
 }
 
 function draw() {
   background(45, 45, 61); //
   // background(255, 244, 230); //
+  // bgmSound.play();
 
   if (isGameStarted) {
     createBubble();
