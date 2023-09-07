@@ -468,7 +468,7 @@ function gameOver() {
   textSize(22);
   textAlign(CENTER);
   // text(`Score : ${score > 1000 ? 1000 : score}`, width / 2, height / 2 + 100);
-  text(score > 1000 ? 1000 : score, width / 2 + 30, height / 2 + 66);
+  text(score > 1000 ? 1000 : score, width / 2 + 40, height / 2 + 66);
   image(scoreImg, width / 2 - 70, height / 2 + 50, 80, 16);
   isOver === true && playGameOverSound();
   setTimeout(function () {
