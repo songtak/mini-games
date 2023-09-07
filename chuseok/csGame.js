@@ -403,7 +403,7 @@ class Bomb extends Bubble {
   display() {
     if (isOver === false) {
       if (!this.isClicked) {
-        image(bombImg, this.x, this.y, this.r, this.r);
+        image(bombImg, this.x - this.r, this.y, this.r, this.r);
       } else {
         image(bombExplodesImg, this.x, this.y, this.r, this.r); // 클릭되었을 때 popImg 이미지로 변경
       }
@@ -422,7 +422,7 @@ class PayWatchCoin extends Bubble {
   display() {
     if (isOver === false) {
       if (!this.isClicked) {
-        image(payWatchLogoImg, this.x, this.y, this.r, this.r);
+        image(payWatchLogoImg, this.x - this.r, this.y, this.r, this.r);
       } else {
         image(paywatchLogoPopImg, this.x, this.y, this.r, this.r * 0.5); // 클릭되었을 때 popImg 이미지로 변경
       }
