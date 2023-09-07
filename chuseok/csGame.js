@@ -1,7 +1,7 @@
 let bubbles = [];
 let score = 0;
 let gameEnded = false; // 게임 종료 상태
-let bubbleSpeed = 3; // 초당 이동 거리 (기본값 1)
+let bubbleSpeed = 4; // 초당 이동 거리 (기본값 1)
 let isGameStarted = false;
 let isOver = false; // 게임 끝
 const maxMissedBubbles = 3; // 최대 놓친 버블 개수
@@ -45,7 +45,7 @@ function setup() {
   } else {
     createCanvas(600, 900);
   }
-  setInterval(increaseSpeed, 10000); // 10초마다 속도 증가 함수 호출
+  setInterval(increaseSpeed, 1000); // 10초마다 속도 증가 함수 호출
   /** 배경음악 */
   bgmSound.play();
 
@@ -365,7 +365,7 @@ class Bubble {
   constructor(x, y) {
     this.x = x - 20;
     this.y = y;
-    this.r = 30;
+    this.r = 50;
     this.isClicked = false; // 버블이 클릭되었는지 여부를 추적합니다.
     this.selectedImage = random([songImg1, songImg2, songImg3, songImg4]); // 랜덤하게 이미지를 선택합니다.
   }
@@ -374,7 +374,7 @@ class Bubble {
     if (isOver === false) {
       // Bubble을 그립니다.
       if (!this.isClicked) {
-        image(this.selectedImage, this.x - 40, this.y, 40, 20); // 선택된 이미지를 사용합니다.
+        image(this.selectedImage, this.x - 40, this.y, 60, 30); // 선택된 이미지를 사용합니다.
       } else {
         image(popImg, this.x - 40, this.y, this.r, this.r * 0.5); // 클릭되었을 때 popImg 이미지로 변경
       }
