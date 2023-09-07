@@ -246,10 +246,9 @@ function handleTouchOrClick() {
     for (let i = payWatchCoins.length - 1; i >= 0; i--) {
       if (payWatchCoins[i].contains(mouseX, mouseY)) {
         payWatchCoins[i].isClicked = true; // 버블이 클릭되었다고 표시
-        eatingSound.play(); // 사운드 재생
+        logoSound.play();
 
         score += 50;
-        logoSound.play();
         setTimeout(() => {
           payWatchCoins.splice(i, 1);
         }, 100);
@@ -258,12 +257,24 @@ function handleTouchOrClick() {
     }
 
     //  bomb 클릭 체크
+    // for (let i = bombs.length - 1; i >= 0; i--) {
+    //   let d = dist(mouseX, mouseY, bombs[i].x + 20, bombs[i].y + 20);
+    //   if (d < 20) {
+    //     bombSound.play();
+    //     gameOver(); // 게임 오버 함수 호출
+    //     return;
+    //   }
+    // }
+
     for (let i = bombs.length - 1; i >= 0; i--) {
-      let d = dist(mouseX, mouseY, bombs[i].x + 20, bombs[i].y + 20);
-      if (d < 20) {
+      if (bombs[i].contains(mouseX, mouseY)) {
+        bombs[i].isClicked = true; // 버블이 클릭되었다고 표시
         bombSound.play();
-        gameOver(); // 게임 오버 함수 호출
-        return;
+
+        setTimeout(() => {
+          bombs.splice(i, 1);
+        }, 100);
+        break;
       }
     }
   }
@@ -314,7 +325,12 @@ class Bomb extends Bubble {
   }
 
   display() {
-    image(bombImg, this.x, this.y, this.r, this.r);
+    // image(bombImg, this.x, this.y, this.r, this.r);
+    if (!this.isClicked) {
+      image(bombImg, this.x, this.y, this.r, this.r);
+    } else {
+      image(bombExplodesImg, this.x, this.y, this.r, this.r); // 클릭되었을 때 popImg 이미지로 변경
+    }
   }
 
   update() {
