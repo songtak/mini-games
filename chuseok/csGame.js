@@ -147,7 +147,7 @@ function draw() {
     bubbles[i].display();
     bubbles[i].update();
 
-    if (bubbles[i].contains(mouseX, mouseY, 40, 40)) {
+    if (bubbles[i].contains(mouseX, mouseY, 60, 60)) {
       cursor("pointer");
     } else {
       cursor();
@@ -298,7 +298,7 @@ function handleTouchOrClick() {
         setTimeout(() => {
           bombs.splice(i, 1);
         }, 100);
-        // gameOver();
+        gameOver();
         break;
       }
     }
