@@ -550,7 +550,7 @@ const today = getToday();
  * 오늘의 게임 점수 업데이트
  */
 function updateTodayScore() {
-  // alert(`userId: ${userId}, today: ${today}`);
+  alert(`userId: ${userId} ${typeof userId}, today: ${today}`);
   game_history.doc(today).update({ score: score });
 }
 
