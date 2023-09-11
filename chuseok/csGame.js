@@ -324,22 +324,22 @@ function startGame() {
 let isGameOverSoundPlaying = false;
 
 function gameOver() {
-  bgmSound.stop();
-  isGameStarted = false;
-  isOver = true;
-  gameOverImg;
-  countdown = 0;
-  isDone = true;
+  if (!isDone) {
+    bgmSound.stop();
+    isGameStarted = false;
+    isOver = true;
+    gameOverImg;
+    countdown = 0;
+    isDone = true;
 
-  image(moonImg, width / 2 - 80, height / 6, 160, 100);
-  image(gameOverImg, width / 2 - 60, height / 2 - 60, 120, 80);
-  textSize(22);
-  textAlign(CENTER);
-  text(score > 1000 ? 1000 : score, width / 2 + 40, height / 2 + 66);
-  image(scoreImg, width / 2 - 70, height / 2 + 50, 80, 16);
-  isOver === true && playGameOverSound();
+    image(moonImg, width / 2 - 80, height / 6, 160, 100);
+    image(gameOverImg, width / 2 - 60, height / 2 - 60, 120, 80);
+    textSize(22);
+    textAlign(CENTER);
+    text(score > 1000 ? 1000 : score, width / 2 + 40, height / 2 + 66);
+    image(scoreImg, width / 2 - 70, height / 2 + 50, 80, 16);
+    isOver === true && playGameOverSound();
 
-  if (isDone) {
     isDone = false;
     setGameOver();
 
