@@ -324,24 +324,23 @@ function startGame() {
 let isGameOverSoundPlaying = false;
 
 function gameOver() {
+  bgmSound.stop();
+  isGameStarted = false;
+  isOver = true;
+  gameOverImg;
+  countdown = 0;
+
+  image(moonImg, width / 2 - 80, height / 6, 160, 100);
+  image(gameOverImg, width / 2 - 60, height / 2 - 60, 120, 80);
+  textSize(22);
+  textAlign(CENTER);
+  text(score > 1000 ? 1000 : score, width / 2 + 40, height / 2 + 66);
+  image(scoreImg, width / 2 - 70, height / 2 + 50, 80, 16);
+  isOver === true && playGameOverSound();
   if (!isDone) {
-    bgmSound.stop();
-    isGameStarted = false;
-    isOver = true;
-    gameOverImg;
-    countdown = 0;
     isDone = true;
-
-    image(moonImg, width / 2 - 80, height / 6, 160, 100);
-    image(gameOverImg, width / 2 - 60, height / 2 - 60, 120, 80);
-    textSize(22);
-    textAlign(CENTER);
-    text(score > 1000 ? 1000 : score, width / 2 + 40, height / 2 + 66);
-    image(scoreImg, width / 2 - 70, height / 2 + 50, 80, 16);
-    isOver === true && playGameOverSound();
-
-    isDone = false;
-    setGameOver();
+    updateTodayScore();
+    updateTotalScore();
 
     setTimeout(() => {
       window.location.href =
@@ -356,11 +355,6 @@ function gameOver() {
     //       "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
     //   }
   }
-  // setTimeout(() => {
-  //   // window.location.href = "http://127.0.0.1:5500/chuseok/csGame.html";
-  //   window.location.href =
-  //     "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
-  // }, 3000);
 }
 
 function playGameOverSound() {
@@ -551,9 +545,26 @@ const game_history = users.doc(userId).collection("game_history");
 
 const today = getToday();
 
-function setGameOver() {
-  alert(`userId: ${userId}, today: ${today}`);
+/**
+ * 오늘의 게임 점수 업데이트
+ */
+function updateTodayScore() {
+  // alert(`userId: ${userId}, today: ${today}`);
   game_history.doc(today).update({ score: score });
+}
+
+/**
+ * 누적 점수에 오늘의 점수 추가
+ */
+function updateTotalScore() {
+  users
+    // .doc("송민지_test")
+    .doc(userId)
+    .get()
+    .then((doc) => {
+      const total_score = doc.data().total_score;
+      users.doc(userId).update({ total_score: total_score + score });
+    });
 }
 
 /** =========================================================================== */
