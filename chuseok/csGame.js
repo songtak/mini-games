@@ -285,7 +285,7 @@ function displayCountdown() {
 
 /** ===[아이템 생성]=================================================================== */
 
-let totalBubbles = 80; // 총 버블 수
+let totalBubbles = 60; // 총 버블 수
 let totalTime = 30000; // 총 시간 (30초 = 30000 밀리초)
 let bubblesCreated = 0; // 생성된 버블 수
 
@@ -329,7 +329,7 @@ function mousePressed() {
 function handleTouchOrClick() {
   if (isGameStarted) {
     for (let i = bubbles.length - 1; i >= 0; i--) {
-      if (bubbles[i].contains(mouseX, mouseY, 70, 30)) {
+      if (bubbles[i].contains(mouseX, mouseY, 70, 40)) {
         bubbles[i].isClicked = true; // 버블이 클릭되었다고 표시
         score += 10;
         eatingSound.play(); // 사운드 재생
@@ -399,20 +399,20 @@ function gameOver() {
   let currentTime = millis();
   gameOverCount = 6 - int((currentTime - startTime) / 1000);
 
-  // if (gameOverCount <= 0) {
-  //   window.location.href =
-  //     "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
-  // }
+  if (gameOverCount <= 0) {
+    window.location.href =
+      "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
+  }
   // setTimeout(() => {
   //   // window.location.href = "http://127.0.0.1:5500/chuseok/csGame.html";
   //   window.location.href =
   //     "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
   // }, 3000);
 
-  setTimeout(() => {
-    window.location.href =
-      "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
-  }, 1800);
+  // setTimeout(() => {
+  //   window.location.href =
+  //     "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
+  // }, 1800);
 }
 
 function playGameOverSound() {
