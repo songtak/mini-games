@@ -343,10 +343,10 @@ function gameOver() {
     updateTodayScore();
     updateTotalScore();
 
-    setTimeout(() => {
-      window.location.href =
-        "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
-    }, 1800);
+    // setTimeout(() => {
+    //   window.location.href =
+    //     "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
+    // }, 1800);
 
     // let currentTime = millis();
     // gameOverCount = 6 - int((currentTime - startTime) / 1000);
@@ -538,10 +538,7 @@ firebase.initializeApp(firebaseConfig);
 const firestore = firebase.firestore();
 
 const users = firestore.collection("users");
-/**
- * 송민지_test -> userId
- */
-const game_history = users.doc(userId).collection("game_history");
+
 // const game_history = users.doc("송민지_test").collection("game_history");
 
 const today = getToday();
@@ -550,12 +547,15 @@ const today = getToday();
  * 오늘의 게임 점수 업데이트
  */
 function updateTodayScore() {
-  if (typeof userId === "string") {
-    game_history.doc(today).update({ score: score });
-    alert(
-      `userId: ${userId} ${typeof userId}, today: ${today}, score: ${score}`
-    );
-  }
+  /**
+   * 송민지_test -> userId
+   */
+  const game_history = users.doc(userId).collection("game_history");
+  console.log("game_history.doc(today)", game_history.doc(today));
+  game_history.doc(today).update({ score: score });
+  // alert(
+  //   `userId: ${userId} ${typeof userId}, today: ${today}, score: ${score}`
+  // );
 }
 
 /**
