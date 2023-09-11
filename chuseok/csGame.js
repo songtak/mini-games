@@ -45,7 +45,7 @@ function setup() {
   } else {
     createCanvas(600, 900);
   }
-  setInterval(increaseSpeed, 3000); 
+  setInterval(increaseSpeed, 3000);
   /** 배경음악 */
   bgmSound.play();
 
@@ -277,7 +277,7 @@ function handleTouchOrClick() {
 
         break;
       }
-    // }
+    }
     for (let i = payWatchCoins.length - 1; i >= 0; i--) {
       if (payWatchCoins[i].contains(mouseX, mouseY, 40, 40)) {
         payWatchCoins[i].isClicked = true; // 버블이 클릭되었다고 표시
