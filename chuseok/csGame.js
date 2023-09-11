@@ -227,7 +227,7 @@ function displayCountdown() {
 
 /** ===[아이템 생성]=================================================================== */
 
-let totalBubbles = 70; // 총 버블 수
+let totalBubbles = 80; // 총 버블 수
 let totalTime = 30000; // 총 시간 (30초 = 30000 밀리초)
 let bubblesCreated = 0; // 생성된 버블 수
 
@@ -271,7 +271,7 @@ function mousePressed() {
 function handleTouchOrClick() {
   if (isGameStarted) {
     for (let i = bubbles.length - 1; i >= 0; i--) {
-      if (bubbles[i].contains(mouseX, mouseY, 70, 40)) {
+      if (bubbles[i].contains(mouseX, mouseY, 70, 70)) {
         bubbles[i].isClicked = true; // 버블이 클릭되었다고 표시
         score += 10;
         eatingSound.play(); // 사운드 재생
@@ -343,10 +343,10 @@ function gameOver() {
     updateTodayScore();
     updateTotalScore();
 
-    // setTimeout(() => {
-    //   window.location.href =
-    //     "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
-    // }, 1800);
+    setTimeout(() => {
+      window.location.href =
+        "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
+    }, 1800);
 
     // let currentTime = millis();
     // gameOverCount = 6 - int((currentTime - startTime) / 1000);
@@ -539,23 +539,14 @@ const firestore = firebase.firestore();
 
 const users = firestore.collection("users");
 
-// const game_history = users.doc("송민지_test").collection("game_history");
-
 const today = getToday();
 
 /**
- * 오늘의 게임 점수 업데이트
+ * 오늘의 게임 점수 업데이트 "송민지_test"
  */
 function updateTodayScore() {
-  /**
-   * 송민지_test -> userId
-   */
   const game_history = users.doc(userId).collection("game_history");
-  console.log("game_history.doc(today)", game_history.doc(today));
   game_history.doc(today).update({ score: score });
-  // alert(
-  //   `userId: ${userId} ${typeof userId}, today: ${today}, score: ${score}`
-  // );
 }
 
 /**
