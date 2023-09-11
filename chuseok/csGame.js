@@ -45,7 +45,7 @@ function setup() {
   } else {
     createCanvas(600, 900);
   }
-  setInterval(increaseSpeed, 2000); // 10초마다 속도 증가 함수 호출
+  setInterval(increaseSpeed, 3000); 
   /** 배경음악 */
   bgmSound.play();
 
@@ -266,7 +266,7 @@ function mousePressed() {
 function handleTouchOrClick() {
   if (isGameStarted) {
     for (let i = bubbles.length - 1; i >= 0; i--) {
-      if (bubbles[i].contains(mouseX, mouseY, 60, 30)) {
+      if (bubbles[i].contains(mouseX, mouseY, 70, 30)) {
         bubbles[i].isClicked = true; // 버블이 클릭되었다고 표시
         score += 10;
         eatingSound.play(); // 사운드 재생
@@ -277,7 +277,7 @@ function handleTouchOrClick() {
 
         break;
       }
-    }
+    // }
     for (let i = payWatchCoins.length - 1; i >= 0; i--) {
       if (payWatchCoins[i].contains(mouseX, mouseY, 40, 40)) {
         payWatchCoins[i].isClicked = true; // 버블이 클릭되었다고 표시
@@ -374,7 +374,7 @@ class Bubble {
     if (isOver === false) {
       // Bubble을 그립니다.
       if (!this.isClicked) {
-        image(this.selectedImage, this.x, this.y, 60, 30); // 선택된 이미지를 사용합니다.
+        image(this.selectedImage, this.x, this.y, 60, 25); // 선택된 이미지를 사용합니다.
       } else {
         image(popImg, this.x, this.y, this.r, this.r * 0.5); // 클릭되었을 때 popImg 이미지로 변경
       }
