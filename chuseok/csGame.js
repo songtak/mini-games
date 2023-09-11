@@ -550,21 +550,21 @@ const today = getToday();
  * 오늘의 게임 점수 업데이트
  */
 function updateTodayScore() {
-  alert(`userId: ${userId} ${typeof userId}, today: ${today}`);
   game_history.doc(today).update({ score: score });
+  alert(`userId: ${userId} ${typeof userId}, today: ${today}, score: ${score}`);
 }
 
 /**
  * 누적 점수에 오늘의 점수 추가
  */
 function updateTotalScore() {
+  // .doc("송민지_test")
+  // users.doc("송민지_test").update({ total_score: total_score + score });
   users
-    // .doc("송민지_test")
     .doc(userId)
     .get()
     .then((doc) => {
       const total_score = doc.data().total_score;
-      // users.doc("송민지_test").update({ total_score: total_score + score });
       users.doc(userId).update({ total_score: total_score + score });
     });
 }
