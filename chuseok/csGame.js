@@ -1,3 +1,66 @@
+// import { firebaseConfig, mixpanelToken } from "../config.js";
+// import {
+//   event_start,
+//   event_complete,
+//   event_exit,
+// } from "../chuseok/mixpanel.js";
+
+// // Initialize mixpanel
+// // mixpanel.init(mixpanelToken, { debug: true, track_pageview: true });
+
+// // Initialize Firebase
+// firebase.initializeApp(firebaseConfig);
+
+// // Initialize Firestore
+// const db = firebase.firestore();
+
+// const userRef = db.collection("users");
+
+// userRef
+//   .get()
+//   .then((querySnapshot) => {
+//     querySnapshot.forEach((doc) => {
+//       console.log(doc.id, " => ", JSON.stringify(doc.data()));
+//     });
+//   })
+//   .catch((error) => {
+//     console.log("Error getting documents: ", error);
+//   });
+
+// async function getUserByUserName(name) {
+//   try {
+//     return await userRef.where("user_name", "==", name).get();
+//   } catch (error) {
+//     console.error("Error getting the user:", error);
+//   }
+// }
+
+// const findPoint = document.querySelector("#findPoint");
+
+// // 문서가 로드되면 함수를 실행합니다.
+// document.addEventListener("DOMContentLoaded", async function () {
+//   const snapshot = await getUserByUserName("오동녘어진이");
+
+//   if (!snapshot.empty) {
+//     const data = snapshot.docs[0].data();
+//     findPoint.textContent = data.points;
+//   } else {
+//     alert("No data found!");
+//   }
+
+//   // 버튼에 이벤트 리스너 추가
+//   const navigateBtn = document.getElementById("navigateBtn");
+//   navigateBtn.addEventListener("click", navigateToGame);
+// });
+
+// // navigateToGame 함수를 누적 점수와 함께 "./csGame.html"로 navigate되도록 수정
+// function navigateToGame() {
+//   const currentPoints = findPoint.textContent; // 현재 화면에 표시된 누적 점수를 가져옵니다.
+//   window.location.href = `./csGame.html?points=${currentPoints}`;
+// }
+
+/** ===[선언]=================================================================== */
+
 let bubbles = [];
 let score = 0;
 let gameEnded = false; // 게임 종료 상태
@@ -45,7 +108,7 @@ function setup() {
   } else {
     createCanvas(600, 900);
   }
-  setInterval(increaseSpeed, 3000);
+  // setInterval(increaseSpeed, 10000);
   /** 배경음악 */
   bgmSound.play();
 
@@ -346,10 +409,10 @@ function gameOver() {
   //     "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
   // }, 3000);
 
-  // setTimeout(() => {
-  //   window.location.href =
-  //     "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
-  // }, 1800);
+  setTimeout(() => {
+    window.location.href =
+      "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
+  }, 1800);
 }
 
 function playGameOverSound() {
