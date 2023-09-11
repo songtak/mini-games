@@ -337,6 +337,7 @@ function gameOver() {
   text(score > 1000 ? 1000 : score, width / 2 + 40, height / 2 + 66);
   image(scoreImg, width / 2 - 70, height / 2 + 50, 80, 16);
   isOver === true && playGameOverSound();
+
   if (!isDone) {
     isDone = true;
     updateTodayScore();
@@ -563,6 +564,7 @@ function updateTotalScore() {
     .get()
     .then((doc) => {
       const total_score = doc.data().total_score;
+      // users.doc("송민지_test").update({ total_score: total_score + score });
       users.doc(userId).update({ total_score: total_score + score });
     });
 }
