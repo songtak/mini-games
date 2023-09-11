@@ -1,59 +1,3 @@
-import { firebaseConfig, mixpanelToken } from "../config.js";
-
-// Initialize mixpanel
-// mixpanel.init(mixpanelToken, { debug: true, track_pageview: true });
-
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-
-// Initialize Firestore
-const db = firebase.firestore();
-
-const userRef = db.collection("users");
-
-userRef
-  .get()
-  .then((querySnapshot) => {
-    querySnapshot.forEach((doc) => {
-      console.log(doc.id, " => ", JSON.stringify(doc.data()));
-    });
-  })
-  .catch((error) => {
-    console.log("Error getting documents: ", error);
-  });
-
-async function getUserByUserName(name) {
-  try {
-    return await userRef.where("user_name", "==", name).get();
-  } catch (error) {
-    console.error("Error getting the user:", error);
-  }
-}
-
-const findPoint = document.querySelector("#findPoint");
-
-// 문서가 로드되면 함수를 실행합니다.
-document.addEventListener("DOMContentLoaded", async function () {
-  const snapshot = await getUserByUserName("오동녘어진이");
-
-  if (!snapshot.empty) {
-    const data = snapshot.docs[0].data();
-    findPoint.textContent = data.points;
-  } else {
-    alert("No data found!");
-  }
-
-  // 버튼에 이벤트 리스너 추가
-  const navigateBtn = document.getElementById("navigateBtn");
-  navigateBtn.addEventListener("click", navigateToGame);
-});
-
-// navigateToGame 함수를 누적 점수와 함께 "./csGame.html"로 navigate되도록 수정
-function navigateToGame() {
-  const currentPoints = findPoint.textContent; // 현재 화면에 표시된 누적 점수를 가져옵니다.
-  window.location.href = `./csGame.html?points=${currentPoints}`;
-}
-
 /** ===[선언]=================================================================== */
 
 let bubbles = [];
@@ -391,13 +335,15 @@ function gameOver() {
   image(scoreImg, width / 2 - 70, height / 2 + 50, 80, 16);
   isOver === true && playGameOverSound();
 
+  setGameOver();
+
   let currentTime = millis();
   gameOverCount = 6 - int((currentTime - startTime) / 1000);
 
-  if (gameOverCount <= 0) {
-    window.location.href =
-      "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
-  }
+  // if (gameOverCount <= 0) {
+  //   window.location.href =
+  //     "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
+  // }
   // setTimeout(() => {
   //   // window.location.href = "http://127.0.0.1:5500/chuseok/csGame.html";
   //   window.location.href =
@@ -499,7 +445,7 @@ class PayWatchCoin extends Bubble {
 /** ===[브릿지 통신]==================================================================== */
 
 let os;
-let userInfo;
+let userId;
 
 /** 브릿지 통신 */
 const getPayWatchApp = (functionName, params) => {
@@ -555,7 +501,104 @@ getPayWatchApp("getUserInfo");
 /** 앱->웹 브릿지 정보 취득 */
 window.setUserInfo = (params) => {
   console.log("setUserInfo : ", JSON.parse(params));
-  userInfo = JSON.parse(params).userType;
+  userId = JSON.parse(params).userId;
 };
 
 /** =========================================================================== */
+
+function getToday() {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = ("0" + (1 + date.getMonth())).slice(-2);
+  const day = ("0" + date.getDate()).slice(-2);
+
+  return year + "-" + month + "-" + day;
+}
+
+/** =========================================================================== */
+// import { firebaseConfig, mixpanelToken } from "../config.js";
+// document.write("<script src='../config.js'></script>");
+// const { firebaseConfig } = require("../config.js");
+const firebaseConfig = {
+  apiKey: "AIzaSyDeDG3C9i3BZLa8JXGTJcOUCla2rwSskik",
+  authDomain: "test-c81cd.firebaseapp.com",
+  projectId: "test-c81cd",
+  storageBucket: "test-c81cd.appspot.com",
+  messagingSenderId: "485320566376",
+  appId: "1:485320566376:web:7b148995b1f40879c93ddd",
+};
+
+/** =========================================================================== */
+// firebaseConfig 정보로 firebase 시작
+firebase.initializeApp(firebaseConfig);
+
+// firebase의 firestore 인스턴스를 변수에 저장
+const firestore = firebase.firestore();
+
+const users = firestore.collection("users");
+/**
+ * 송민지_test -> userId
+ */
+const game_history = users.doc(userId).collection("game_history");
+// const game_history = users.doc("송민지_test").collection("game_history");
+
+const today = getToday();
+
+function setGameOver() {
+  game_history.doc(today).update({ score: score });
+}
+
+/** =========================================================================== */
+// // Initialize mixpanel
+// // mixpanel.init(mixpanelToken, { debug: true, track_pageview: true });
+
+// // Initialize Firebase
+// firebase.initializeApp(firebaseConfig);
+
+// // Initialize Firestore
+// const db = firebase.firestore();
+
+// const userRef = db.collection("users");
+
+// userRef
+//   .get()
+//   .then((querySnapshot) => {
+//     querySnapshot.forEach((doc) => {
+//       console.log(doc.id, " => ", JSON.stringify(doc.data()));
+//     });
+//   })
+//   .catch((error) => {
+//     console.log("Error getting documents: ", error);
+//   });
+
+// async function getUserByUserName(name) {
+//   try {
+//     return await userRef.where("user_name", "==", name).get();
+//   } catch (error) {
+//     console.error("Error getting the user:", error);
+//   }
+// }
+
+// const findPoint = document.querySelector("#findPoint");
+
+// // // 문서가 로드되면 함수를 실행합니다.
+// // document.addEventListener("DOMContentLoaded", async function () {
+// //   const snapshot = await getUserByUserName("오동녘어진이");
+
+// //   if (!snapshot.empty) {
+// //     const data = snapshot.docs[0].data();
+// //     findPoint.textContent = data.points;
+// //   } else {
+// //     alert("No data found!");
+// //   }
+
+// //   // 버튼에 이벤트 리스너 추가
+// //   const navigateBtn = document.getElementById("navigateBtn");
+// //   navigateBtn.addEventListener("click", navigateToGame);
+// // });
+
+// // navigateToGame 함수를 누적 점수와 함께 "./csGame.html"로 navigate되도록 수정
+// function navigateToMain() {
+//   const currentPoints = findPoint.textContent; // 현재 화면에 표시된 누적 점수를 가져옵니다.
+//   window.location.href = `./csGame.html?points=${currentPoints}`;
+// }
