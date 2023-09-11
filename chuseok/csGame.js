@@ -545,6 +545,7 @@ const game_history = users.doc(userId).collection("game_history");
 const today = getToday();
 
 function setGameOver() {
+  alert("dddddddd");
   game_history.doc(today).update({ score: score });
 }
 
