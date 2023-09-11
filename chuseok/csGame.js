@@ -39,6 +39,9 @@ let bombSound;
 let bgmSound;
 let gameOverSound;
 
+/** 게임이 끝나고 한 번만 호출이 필요한 함수를 위한 플래그 */
+let isDone = false;
+
 /** ===[이미지 정의]=================================================================== */
 
 function setup() {
@@ -326,6 +329,7 @@ function gameOver() {
   isOver = true;
   gameOverImg;
   countdown = 0;
+  isDone = true;
 
   image(moonImg, width / 2 - 80, height / 6, 160, 100);
   image(gameOverImg, width / 2 - 60, height / 2 - 60, 120, 80);
@@ -335,25 +339,28 @@ function gameOver() {
   image(scoreImg, width / 2 - 70, height / 2 + 50, 80, 16);
   isOver === true && playGameOverSound();
 
-  setGameOver();
+  if (isDone) {
+    isDone = false;
+    setGameOver();
 
-  let currentTime = millis();
-  gameOverCount = 6 - int((currentTime - startTime) / 1000);
+    setTimeout(() => {
+      window.location.href =
+        "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
+    }, 1800);
 
-  // if (gameOverCount <= 0) {
-  //   window.location.href =
-  //     "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
-  // }
+    // let currentTime = millis();
+    // gameOverCount = 6 - int((currentTime - startTime) / 1000);
+
+    // if (gameOverCount <= 0) {
+    //     window.location.href =
+    //       "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
+    //   }
+  }
   // setTimeout(() => {
   //   // window.location.href = "http://127.0.0.1:5500/chuseok/csGame.html";
   //   window.location.href =
   //     "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
   // }, 3000);
-
-  // setTimeout(() => {
-  //   window.location.href =
-  //     "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
-  // }, 1800);
 }
 
 function playGameOverSound() {
