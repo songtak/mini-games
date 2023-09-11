@@ -108,7 +108,7 @@ function setup() {
   } else {
     createCanvas(600, 900);
   }
-  // setInterval(increaseSpeed, 10000);
+  setInterval(increaseSpeed, 10000);
   /** 배경음악 */
   bgmSound.play();
 
@@ -285,7 +285,7 @@ function displayCountdown() {
 
 /** ===[아이템 생성]=================================================================== */
 
-let totalBubbles = 60; // 총 버블 수
+let totalBubbles = 70; // 총 버블 수
 let totalTime = 30000; // 총 시간 (30초 = 30000 밀리초)
 let bubblesCreated = 0; // 생성된 버블 수
 
