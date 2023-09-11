@@ -550,8 +550,12 @@ const today = getToday();
  * 오늘의 게임 점수 업데이트
  */
 function updateTodayScore() {
-  game_history.doc(today).update({ score: score });
-  alert(`userId: ${userId} ${typeof userId}, today: ${today}, score: ${score}`);
+  if (typeof userId === "string") {
+    game_history.doc(today).update({ score: score });
+    alert(
+      `userId: ${userId} ${typeof userId}, today: ${today}, score: ${score}`
+    );
+  }
 }
 
 /**
