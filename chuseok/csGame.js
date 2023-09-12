@@ -10,7 +10,7 @@ const maxMissedBubbles = 3; // 최대 놓친 버블 개수
 let bombs = []; // bomb 객체를 담을 배열
 let bombSpeed = 3; // bomb의 속도
 let payWatchCoins = []; // bomb 객체를 담을 배열
-let payWatchCoinSpeed = 10; // Logo의 속도
+let payWatchCoinSpeed = 8; // Logo의 속도
 let nextBubbleTime = 0; // 다음 버블이 나오는 시간
 
 let startTime; // 게임 시작 시간
@@ -342,6 +342,11 @@ function gameOver() {
     isDone = true;
     updateTodayScore();
     updateTotalScore();
+    gtag("event", "event_complete", {
+      event_category: "event_complete",
+      event_label: "event_complete",
+      value: "event_complete",
+    });
 
     setTimeout(() => {
       goToMain();
