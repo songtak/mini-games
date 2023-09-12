@@ -583,15 +583,15 @@ function eventComplete() {
     gtag("event", "event_complete", {
       event_category: "event_complete",
       event_label: "event_complete",
-      value: userId,
-      key: userId,
+      userId: userId,
+      key: "22",
     });
   } else {
     gtag("event", "event_complete", {
       event_category: "event_complete",
       event_label: "event_complete",
-      value: "testUserId",
-      key: "testUserId",
+      userId: "testUserId",
+      key: "22",
     });
   }
 }
