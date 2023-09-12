@@ -342,12 +342,7 @@ function gameOver() {
     isDone = true;
     updateTodayScore();
     updateTotalScore();
-    gtag("event", "event_complete", {
-      event_category: "event_complete",
-      event_label: "event_complete",
-      value: "event_complete",
-    });
-
+    eventComplete();
     setTimeout(() => {
       goToMain();
     }, 1800);
@@ -581,56 +576,22 @@ function updateTotalScore() {
 }
 
 /** =========================================================================== */
-// // Initialize mixpanel
-// // mixpanel.init(mixpanelToken, { debug: true, track_pageview: true });
 
-// // Initialize Firebase
-// firebase.initializeApp(firebaseConfig);
-
-// // Initialize Firestore
-// const db = firebase.firestore();
-
-// const userRef = db.collection("users");
-
-// userRef
-//   .get()
-//   .then((querySnapshot) => {
-//     querySnapshot.forEach((doc) => {
-//       console.log(doc.id, " => ", JSON.stringify(doc.data()));
-//     });
-//   })
-//   .catch((error) => {
-//     console.log("Error getting documents: ", error);
-//   });
-
-// async function getUserByUserName(name) {
-//   try {
-//     return await userRef.where("user_name", "==", name).get();
-//   } catch (error) {
-//     console.error("Error getting the user:", error);
-//   }
-// }
-
-// const findPoint = document.querySelector("#findPoint");
-
-// // // 문서가 로드되면 함수를 실행합니다.
-// // document.addEventListener("DOMContentLoaded", async function () {
-// //   const snapshot = await getUserByUserName("오동녘어진이");
-
-// //   if (!snapshot.empty) {
-// //     const data = snapshot.docs[0].data();
-// //     findPoint.textContent = data.points;
-// //   } else {
-// //     alert("No data found!");
-// //   }
-
-// //   // 버튼에 이벤트 리스너 추가
-// //   const navigateBtn = document.getElementById("navigateBtn");
-// //   navigateBtn.addEventListener("click", navigateToGame);
-// // });
-
-// // navigateToGame 함수를 누적 점수와 함께 "./csGame.html"로 navigate되도록 수정
-// function navigateToMain() {
-//   const currentPoints = findPoint.textContent; // 현재 화면에 표시된 누적 점수를 가져옵니다.
-//   window.location.href = `./csGame.html?points=${currentPoints}`;
-// }
+/** GA 설정 */
+function eventComplete() {
+  if (typeof userId !== "undefined") {
+    gtag("event", "event_complete", {
+      event_category: "event_complete",
+      event_label: "event_complete",
+      value: userId,
+      key: userId,
+    });
+  } else {
+    gtag("event", "event_complete", {
+      event_category: "event_complete",
+      event_label: "event_complete",
+      value: "testUserId",
+      key: "testUserId",
+    });
+  }
+}
