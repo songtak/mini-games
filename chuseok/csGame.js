@@ -344,8 +344,7 @@ function gameOver() {
     updateTotalScore();
 
     setTimeout(() => {
-      window.location.href =
-        "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
+      goToMain();
     }, 1800);
 
     // let currentTime = millis();
@@ -505,6 +504,18 @@ window.setUserInfo = (params) => {
   console.log("setUserInfo : ", JSON.parse(params));
   userId = JSON.parse(params).userId;
 };
+
+function goToMain() {
+  if (os === "android") {
+    window.location.href =
+      "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
+  } else if (os === "ios") {
+    getPayWatchApp(
+      "getWebView",
+      "https://paywatch-stage-webapp.paywatchglobal.com/event/22"
+    );
+  }
+}
 
 /** =========================================================================== */
 
