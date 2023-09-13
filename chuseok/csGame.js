@@ -39,6 +39,8 @@ let bombSound;
 let bgmSound;
 let gameOverSound;
 
+let totalScore = 0; // 누적 점수
+
 /** 게임이 끝나고 한 번만 호출이 필요한 함수를 위한 플래그 */
 let isDone = false;
 
@@ -361,6 +363,7 @@ function gameOver() {
 
     setTimeout(() => {
       // goToMain();
+      console.log("=-=-=-");
       window.location.href =
         "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
     }, 1800);
@@ -596,8 +599,8 @@ function updateTotalScore() {
     .doc(userId)
     .get()
     .then((doc) => {
-      const total_score = doc.data().total_score;
-      users.doc(userId).update({ total_score: total_score + score });
+      totalScore = doc.data().total_score;
+      users.doc(userId).update({ total_score: totalScore + score });
     });
 }
 
@@ -608,6 +611,6 @@ function eventComplete() {
   gtag("event", "event_complete", {
     event_complete_id: "22",
     event_complete_save: score,
-    event_complete_total: total_score + score,
+    event_complete_total: totalScore + score,
   });
 }
