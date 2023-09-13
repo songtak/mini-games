@@ -353,7 +353,6 @@ function gameOver() {
   isOver === true && playGameOverSound();
 
   if (!isDone) {
-    isDone = true;
     updateTodayScore();
     updateTotalScore();
     eventComplete();
@@ -363,6 +362,7 @@ function gameOver() {
       window.location.href =
         "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
     }, 1800);
+    isDone = true;
   }
 }
 
