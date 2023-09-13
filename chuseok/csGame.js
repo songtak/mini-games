@@ -527,6 +527,17 @@ function getToday() {
   return year + "-" + month + "-" + day;
 }
 
+function getTodayWithTime() {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = ("0" + (1 + date.getMonth())).slice(-2);
+  const day = ("0" + date.getDate()).slice(-2);
+  const hours = ("0" + date.getHours()).slice(-2);
+  const minutes = ("0" + date.getMinutes()).slice(-2);
+
+  return year + "-" + month + "-" + day + " " + hours + ":" + minutes;
+}
+
 /** =========================================================================== */
 
 const firebaseConfig = {
@@ -558,7 +569,8 @@ const firestore = firebase.firestore();
 
 const users = firestore.collection("users");
 
-const today = getToday();
+// const today = getToday();
+const today = getTodayWithTime();
 
 /**
  * 오늘의 게임 점수 업데이트 "송민지_test"
