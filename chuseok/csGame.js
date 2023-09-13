@@ -308,6 +308,18 @@ function handleTouchOrClick() {
       }
     }
   }
+
+  if (isOver) {
+    if (
+      mouseX > width / 2 + 40 &&
+      mouseX < width / 2 + 40 + textWidth("메인화면으로 이동") &&
+      mouseY > height / 2 + 100 - 22 && // 텍스트의 높이는 22로 가정
+      mouseY < height / 2 + 100
+    ) {
+      window.location.href =
+        "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
+    }
+  }
 }
 
 function mouseOverImage(x, y, w, h) {
@@ -337,6 +349,7 @@ function gameOver() {
   text(score > 1000 ? 1000 : score, width / 2 + 40, height / 2 + 66);
   image(scoreImg, width / 2 - 70, height / 2 + 50, 80, 16);
   isOver === true && playGameOverSound();
+  text("메인화면으로 이동", width / 2 + 40, height / 2 + 100);
 
   if (!isDone) {
     isDone = true;
@@ -344,7 +357,7 @@ function gameOver() {
     updateTotalScore();
     eventComplete();
     setTimeout(() => {
-      goToMain();
+      // goToMain();
     }, 1800);
 
     // let currentTime = millis();
