@@ -349,8 +349,8 @@ function gameOver() {
   text(score > 1000 ? 1000 : score, width / 2 + 40, height / 2 + 66);
   image(scoreImg, width / 2 - 70, height / 2 + 50, 80, 16);
   isOver === true && playGameOverSound();
-  text("메인화면으로 이동", width / 2 + 40, height / 2 + 100);
-
+  // text("메인화면으로 이동", width / 2 + 40, height / 2 + 100);
+  alert("게임이 종료되었습니다. 메인화면으로 이동합니다.");
   if (!isDone) {
     isDone = true;
     updateTodayScore();
@@ -572,7 +572,8 @@ const today = getToday();
  * 오늘의 게임 점수 업데이트 "송민지_test"
  */
 function updateTodayScore() {
-  const game_history = users.doc(userId).collection("game_history");
+  // const game_history = users.doc(userId).collection("game_history");
+  const game_history = users.doc("3823").collection("game_history");
   game_history.doc(today).update({ score: score });
 }
 
@@ -583,7 +584,7 @@ function updateTotalScore() {
   // .doc("송민지_test")
   // users.doc("송민지_test").update({ total_score: total_score + score });
   users
-    .doc(userId)
+    .doc("3823")
     .get()
     .then((doc) => {
       const total_score = doc.data().total_score;
