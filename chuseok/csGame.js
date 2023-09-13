@@ -353,6 +353,9 @@ function gameOver() {
   isOver === true && playGameOverSound();
 
   if (!isDone) {
+    if (os === "ios") {
+      alert("게임이 종료되었습니다.");
+    }
     isDone = true;
     updateTodayScore();
     updateTotalScore();
