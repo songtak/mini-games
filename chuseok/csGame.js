@@ -510,10 +510,11 @@ function goToMain() {
     window.location.href =
       "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
   } else if (os === "ios") {
-    getPayWatchApp(
-      "getWebView",
-      "https://paywatch-stage-webapp.paywatchglobal.com/event/22"
-    );
+    getPayWatchApp("closeWebView");
+    // getPayWatchApp(
+    //   "getWebView",
+    //   "https://paywatch-stage-webapp.paywatchglobal.com/event/22"
+    // );
   }
 }
 
