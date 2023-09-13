@@ -598,19 +598,9 @@ function updateTotalScore() {
 
 /** GA 설정 */
 function eventComplete() {
-  if (typeof userId !== "undefined") {
-    gtag("event", "event_complete", {
-      event_category: "event_complete",
-      event_label: "event_complete",
-      userId: userId,
-      key: "22",
-    });
-  } else {
-    gtag("event", "event_complete", {
-      event_category: "event_complete",
-      event_label: "event_complete",
-      userId: "testUserId",
-      key: "22",
-    });
-  }
+  gtag("event", "event_complete", {
+    event_complete_id: "22",
+    event_complete_save: score,
+    event_complete_total: total_score + score,
+  });
 }
