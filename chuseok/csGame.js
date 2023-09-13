@@ -350,8 +350,8 @@ function gameOver() {
   image(scoreImg, width / 2 - 70, height / 2 + 50, 80, 16);
   isOver === true && playGameOverSound();
   // text("메인화면으로 이동", width / 2 + 40, height / 2 + 100);
-  alert("게임이 종료되었습니다. 메인화면으로 이동합니다.");
   if (!isDone) {
+    alert("게임이 종료되었습니다. 메인화면으로 이동합니다.");
     isDone = true;
     updateTodayScore();
     updateTotalScore();
