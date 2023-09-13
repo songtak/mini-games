@@ -286,7 +286,7 @@ function handleTouchOrClick() {
       }
     }
     for (let i = payWatchCoins.length - 1; i >= 0; i--) {
-      if (payWatchCoins[i].contains(mouseX, mouseY, 45, 50)) {
+      if (payWatchCoins[i].contains(mouseX, mouseY, 45, 60)) {
         payWatchCoins[i].isClicked = true; // 버블이 클릭되었다고 표시
         logoSound.play();
 
@@ -443,7 +443,7 @@ class PayWatchCoin extends Bubble {
   display() {
     if (isOver === false) {
       if (!this.isClicked) {
-        image(payWatchLogoImg, this.x, this.y + 5, this.r, this.r);
+        image(payWatchLogoImg, this.x, this.y + 10, this.r, this.r);
       } else {
         image(paywatchLogoPopImg, this.x, this.y, this.r, this.r * 0.5); // 클릭되었을 때 popImg 이미지로 변경
       }
