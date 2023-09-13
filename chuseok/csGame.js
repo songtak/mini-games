@@ -3,7 +3,7 @@
 let bubbles = [];
 let score = 0;
 let gameEnded = false; // 게임 종료 상태
-let bubbleSpeed = 4; // 초당 이동 거리 (기본값 1)
+let bubbleSpeed = 1; // 초당 이동 거리 (기본값 1)
 let isGameStarted = false;
 let isOver = false; // 게임 끝
 const maxMissedBubbles = 3; // 최대 놓친 버블 개수
@@ -351,13 +351,14 @@ function gameOver() {
   isOver === true && playGameOverSound();
   // text("메인화면으로 이동", width / 2 + 40, height / 2 + 100);
   if (!isDone) {
-    if (os !== "android") {
-      alert("게임이 종료되었습니다. 메인화면으로 이동합니다.");
-    }
+    // if (os !== "android") {
+    //   alert("게임이 종료되었습니다. 메인화면으로 이동합니다.");
+    // }
     isDone = true;
     updateTodayScore();
     updateTotalScore();
     eventComplete();
+
     setTimeout(() => {
       // goToMain();
       window.location.href =
@@ -368,11 +369,17 @@ function gameOver() {
     // gameOverCount = 6 - int((currentTime - startTime) / 1000);
 
     // if (gameOverCount <= 0) {
-    //     window.location.href =
-    //       "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
-    //   }
+    //   window.location.href =
+    //     "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
+    // }
   }
 }
+
+// setTimeout(() => {
+//   // goToMain();
+//   window.location.href =
+//     "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
+// }, 1800);
 
 function playGameOverSound() {
   if (!isGameOverSoundPlaying) {
@@ -574,8 +581,8 @@ const today = getToday();
  * 오늘의 게임 점수 업데이트 "송민지_test"
  */
 function updateTodayScore() {
-  // const game_history = users.doc(userId).collection("game_history");
-  const game_history = users.doc("3823").collection("game_history");
+  const game_history = users.doc(userId).collection("game_history");
+  // const game_history = users.doc("3823").collection("game_history");
   game_history.doc(today).update({ score: score });
 }
 
@@ -586,7 +593,7 @@ function updateTotalScore() {
   // .doc("송민지_test")
   // users.doc("송민지_test").update({ total_score: total_score + score });
   users
-    .doc("3823")
+    .doc(userId)
     .get()
     .then((doc) => {
       const total_score = doc.data().total_score;
