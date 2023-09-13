@@ -513,7 +513,7 @@ getPayWatchApp("getUserInfo");
 
 /** 앱->웹 브릿지 정보 취득 */
 window.setUserInfo = (params) => {
-  userId = JSON.parse(params).userId;
+  userId = String(JSON.parse(params).userId);
 };
 
 function goToMain() {
