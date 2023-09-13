@@ -3,7 +3,7 @@
 let bubbles = [];
 let score = 0;
 let gameEnded = false; // 게임 종료 상태
-let bubbleSpeed = 1; // 초당 이동 거리 (기본값 1)
+let bubbleSpeed = 4; // 초당 이동 거리 (기본값 1)
 let isGameStarted = false;
 let isOver = false; // 게임 끝
 const maxMissedBubbles = 3; // 최대 놓친 버블 개수
@@ -273,7 +273,7 @@ function mousePressed() {
 function handleTouchOrClick() {
   if (isGameStarted) {
     for (let i = bubbles.length - 1; i >= 0; i--) {
-      if (bubbles[i].contains(mouseX, mouseY, 70, 70)) {
+      if (bubbles[i].contains(mouseX, mouseY, 70, 60)) {
         bubbles[i].isClicked = true; // 버블이 클릭되었다고 표시
         score += 10;
         eatingSound.play(); // 사운드 재생
@@ -286,7 +286,7 @@ function handleTouchOrClick() {
       }
     }
     for (let i = payWatchCoins.length - 1; i >= 0; i--) {
-      if (payWatchCoins[i].contains(mouseX, mouseY, 40, 40)) {
+      if (payWatchCoins[i].contains(mouseX, mouseY, 45, 50)) {
         payWatchCoins[i].isClicked = true; // 버블이 클릭되었다고 표시
         logoSound.play();
 
@@ -351,11 +351,8 @@ function gameOver() {
   text(score > 1000 ? 1000 : score, width / 2 + 40, height / 2 + 66);
   image(scoreImg, width / 2 - 70, height / 2 + 50, 80, 16);
   isOver === true && playGameOverSound();
-  // text("메인화면으로 이동", width / 2 + 40, height / 2 + 100);
+
   if (!isDone) {
-    // if (os !== "android") {
-    //   alert("게임이 종료되었습니다. 메인화면으로 이동합니다.");
-    // }
     isDone = true;
     updateTodayScore();
     updateTotalScore();
@@ -363,26 +360,11 @@ function gameOver() {
 
     setTimeout(() => {
       // goToMain();
-      console.log("=-=-=-");
       window.location.href =
         "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
     }, 1800);
-
-    // let currentTime = millis();
-    // gameOverCount = 6 - int((currentTime - startTime) / 1000);
-
-    // if (gameOverCount <= 0) {
-    //   window.location.href =
-    //     "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
-    // }
   }
 }
-
-// setTimeout(() => {
-//   // goToMain();
-//   window.location.href =
-//     "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
-// }, 1800);
 
 function playGameOverSound() {
   if (!isGameOverSoundPlaying) {
@@ -406,7 +388,7 @@ class Bubble {
     if (isOver === false) {
       // Bubble을 그립니다.
       if (!this.isClicked) {
-        image(this.selectedImage, this.x, this.y, 60, 25); // 선택된 이미지를 사용합니다.
+        image(this.selectedImage, this.x, this.y + 20, 60, 25); // 선택된 이미지를 사용합니다.
       } else {
         image(popImg, this.x, this.y, this.r, this.r * 0.5); // 클릭되었을 때 popImg 이미지로 변경
       }
@@ -458,7 +440,7 @@ class PayWatchCoin extends Bubble {
   display() {
     if (isOver === false) {
       if (!this.isClicked) {
-        image(payWatchLogoImg, this.x, this.y, this.r, this.r);
+        image(payWatchLogoImg, this.x, this.y + 5, this.r, this.r);
       } else {
         image(paywatchLogoPopImg, this.x, this.y, this.r, this.r * 0.5); // 클릭되었을 때 popImg 이미지로 변경
       }
