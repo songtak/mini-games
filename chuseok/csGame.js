@@ -309,17 +309,17 @@ function handleTouchOrClick() {
     }
   }
 
-  if (isOver) {
-    if (
-      mouseX > width / 2 + 40 &&
-      mouseX < width / 2 + 40 + textWidth("메인화면으로 이동") &&
-      mouseY > height / 2 + 100 - 22 && // 텍스트의 높이는 22로 가정
-      mouseY < height / 2 + 100
-    ) {
-      window.location.href =
-        "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
-    }
-  }
+  // if (isOver) {
+  //   if (
+  //     mouseX > width / 2 + 40 &&
+  //     mouseX < width / 2 + 40 + textWidth("메인화면으로 이동") &&
+  //     mouseY > height / 2 + 100 - 22 && // 텍스트의 높이는 22로 가정
+  //     mouseY < height / 2 + 100
+  //   ) {
+  //     window.location.href =
+  //       "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
+  //   }
+  // }
 }
 
 function mouseOverImage(x, y, w, h) {
@@ -358,6 +358,8 @@ function gameOver() {
     eventComplete();
     setTimeout(() => {
       // goToMain();
+      window.location.href =
+        "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
     }, 1800);
 
     // let currentTime = millis();
@@ -519,16 +521,16 @@ window.setUserInfo = (params) => {
 };
 
 function goToMain() {
-  if (os === "android") {
-    window.location.href =
-      "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
-  } else if (os === "ios") {
-    getPayWatchApp("closeWebView");
-    // getPayWatchApp(
-    //   "getWebView",
-    //   "https://paywatch-stage-webapp.paywatchglobal.com/event/22"
-    // );
-  }
+  // if (os === "android") {
+  //   window.location.href =
+  //     "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
+  // } else if (os === "ios") {
+  //   getPayWatchApp("closeWebView");
+  //   // getPayWatchApp(
+  //   //   "getWebView",
+  //   //   "https://paywatch-stage-webapp.paywatchglobal.com/event/22"
+  //   // );
+  // }
 }
 
 /** =========================================================================== */
