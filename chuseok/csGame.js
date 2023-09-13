@@ -516,19 +516,6 @@ window.setUserInfo = (params) => {
   userId = String(JSON.parse(params).userId);
 };
 
-function goToMain() {
-  // if (os === "android") {
-  //   window.location.href =
-  //     "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
-  // } else if (os === "ios") {
-  //   getPayWatchApp("closeWebView");
-  //   // getPayWatchApp(
-  //   //   "getWebView",
-  //   //   "https://paywatch-stage-webapp.paywatchglobal.com/event/22"
-  //   // );
-  // }
-}
-
 /** =========================================================================== */
 
 function getToday() {
@@ -541,17 +528,26 @@ function getToday() {
 }
 
 /** =========================================================================== */
-// import { firebaseConfig, mixpanelToken } from "../config.js";
-// document.write("<script src='../config.js'></script>");
-// const { firebaseConfig } = require("../config.js");
+
 const firebaseConfig = {
-  apiKey: "AIzaSyDeDG3C9i3BZLa8JXGTJcOUCla2rwSskik",
-  authDomain: "test-c81cd.firebaseapp.com",
-  projectId: "test-c81cd",
-  storageBucket: "test-c81cd.appspot.com",
-  messagingSenderId: "485320566376",
-  appId: "1:485320566376:web:7b148995b1f40879c93ddd",
+  apiKey: "AIzaSyCdcvWDE4K8cMmTTCLPdYxigItucju8dFg",
+  authDomain: "albawatch-2b2da.firebaseapp.com",
+  databaseURL: "https://albawatch-2b2da.firebaseio.com",
+  projectId: "albawatch-2b2da",
+  storageBucket: "albawatch-2b2da.appspot.com",
+  messagingSenderId: "869683140565",
+  appId: "1:869683140565:web:318388b3685d6e2f684f5c",
+  measurementId: "G-VD419G6BZ2",
 };
+
+// const firebaseConfig = {
+//   x: "AIzaSyDeDG3C9i3BZLa8JXGTJcOUCla2rwSskik",
+//   authDomain: "test-c81cd.firebaseapp.com",
+//   projectId: "test-c81cd",
+//   storageBucket: "test-c81cd.appspot.com",
+//   messagingSenderId: "485320566376",
+//   appId: "1:485320566376:web:7b148995b1f40879c93ddd",
+// };
 
 /** =========================================================================== */
 // firebaseConfig 정보로 firebase 시작
