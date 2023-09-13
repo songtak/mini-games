@@ -578,7 +578,7 @@ const today = getTodayWithTime();
 function updateTodayScore() {
   // const game_history = users.doc("3823").collection("game_history");
   const game_history = users.doc(userId).collection("game_history");
-  game_history.doc(today).update({ score: score });
+  game_history.doc(today).update({ score: score > 1000 ? 1000 : score });
 }
 
 /**
@@ -592,7 +592,9 @@ function updateTotalScore() {
     .get()
     .then((doc) => {
       totalScore = doc.data().total_score;
-      users.doc(userId).update({ total_score: totalScore + score });
+      users
+        .doc(userId)
+        .update({ total_score: totalScore + (score > 1000 ? 1000 : score) });
     });
 }
 
@@ -603,6 +605,6 @@ function eventComplete() {
   gtag("event", "event_complete", {
     event_complete_id: "22",
     event_complete_save: score,
-    event_complete_total: totalScore + score,
+    event_complete_total: totalScore + (score > 1000 ? 1000 : score),
   });
 }
