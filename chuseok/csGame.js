@@ -229,7 +229,7 @@ function displayCountdown() {
 
 /** ===[아이템 생성]=================================================================== */
 
-let totalBubbles = 80; // 총 버블 수
+let totalBubbles = 90; // 총 버블 수
 let totalTime = 30000; // 총 시간 (30초 = 30000 밀리초)
 let bubblesCreated = 0; // 생성된 버블 수
 
@@ -353,9 +353,6 @@ function gameOver() {
   isOver === true && playGameOverSound();
 
   if (!isDone) {
-    if (os === "ios") {
-      alert("게임이 종료되었습니다.");
-    }
     isDone = true;
     updateTodayScore();
     updateTotalScore();
@@ -513,7 +510,6 @@ getPayWatchApp("getUserInfo");
 
 /** 앱->웹 브릿지 정보 취득 */
 window.setUserInfo = (params) => {
-  console.log("setUserInfo : ", JSON.parse(params));
   userId = JSON.parse(params).userId;
 };
 
@@ -569,8 +565,8 @@ const today = getToday();
  * 오늘의 게임 점수 업데이트 "송민지_test"
  */
 function updateTodayScore() {
-  const game_history = users.doc(userId).collection("game_history");
   // const game_history = users.doc("3823").collection("game_history");
+  const game_history = users.doc(userId).collection("game_history");
   game_history.doc(today).update({ score: score });
 }
 
