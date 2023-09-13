@@ -351,9 +351,9 @@ function gameOver() {
   isOver === true && playGameOverSound();
   // text("메인화면으로 이동", width / 2 + 40, height / 2 + 100);
   if (!isDone) {
-    // if (os !== "android") {
-    //   alert("게임이 종료되었습니다. 메인화면으로 이동합니다.");
-    // }
+    if (os !== "android") {
+      alert("게임이 종료되었습니다. 메인화면으로 이동합니다.");
+    }
     isDone = true;
     updateTodayScore();
     updateTotalScore();
