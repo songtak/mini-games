@@ -337,6 +337,11 @@ function startGame() {
 
 let isGameOverSoundPlaying = false;
 
+const urlParams = new URL(location.href).searchParams;
+const entryType = urlParams.get("type");
+
+console.log("entryType", entryType);
+
 function gameOver() {
   bgmSound.stop();
   isGameStarted = false;
@@ -353,16 +358,14 @@ function gameOver() {
   isOver === true && playGameOverSound();
 
   if (!isDone) {
+    isDone = true;
     updateTodayScore();
     updateTotalScore();
     eventComplete();
 
     setTimeout(() => {
-      // goToMain();
-      window.location.href =
-        "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
+      window.location.href = `https://paywatch-stage-webapp.paywatchglobal.com/event/22/${entryType}`;
     }, 1800);
-    isDone = true;
   }
 }
 
