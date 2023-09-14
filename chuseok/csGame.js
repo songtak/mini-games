@@ -247,14 +247,14 @@ function createBubble() {
 
 // bomb 생성 함수
 function createBomb() {
-  if (frameCount % 100 === 0) {
+  if (frameCount % 60 === 0) {
     let bomb = new Bomb(random(width), -40); // y 좌표를 -40으로 설정
     bombs.push(bomb);
   }
 }
 
 function createPayWatchCoin() {
-  if (frameCount % 300 === 0) {
+  if (frameCount % 600 === 0) {
     let payWatchCoin = new PayWatchCoin(random(width), -40); // y 좌표를 -40으로 설정
     payWatchCoins.push(payWatchCoin);
   }
