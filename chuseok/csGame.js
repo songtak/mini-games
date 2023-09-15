@@ -511,11 +511,25 @@ if (/(android)/i.test(ua)) {
 /** 브릿지 호출 */
 getPayWatchApp("getUserInfo");
 
+const firebaseConfig = {
+  apiKey: "AIzaSyCdcvWDE4K8cMmTTCLPdYxigItucju8dFg",
+  authDomain: "albawatch-2b2da.firebaseapp.com",
+  databaseURL: "https://albawatch-2b2da.firebaseio.com",
+  projectId: "albawatch-2b2da",
+  storageBucket: "albawatch-2b2da.appspot.com",
+  messagingSenderId: "869683140565",
+  appId: "1:869683140565:web:318388b3685d6e2f684f5c",
+  measurementId: "e1f16bcbf0ef3f073bc3e9133d9ee7cd",
+};
+
 /** 앱->웹 브릿지 정보 취득 */
 window.setUserInfo = (params) => {
   userId = String(JSON.parse(params).userId);
   /** 믹스패널 설정 */
-  mixpanel.init(userId, { debug: true, track_pageview: true });
+  mixpanel.init(firebaseConfig.measurementId, {
+    debug: true,
+    track_pageview: true,
+  });
 };
 
 /** =========================================================================== */
@@ -541,17 +555,6 @@ function getTodayWithTime() {
 }
 
 /** =========================================================================== */
-
-const firebaseConfig = {
-  apiKey: "AIzaSyCdcvWDE4K8cMmTTCLPdYxigItucju8dFg",
-  authDomain: "albawatch-2b2da.firebaseapp.com",
-  databaseURL: "https://albawatch-2b2da.firebaseio.com",
-  projectId: "albawatch-2b2da",
-  storageBucket: "albawatch-2b2da.appspot.com",
-  messagingSenderId: "869683140565",
-  appId: "1:869683140565:web:318388b3685d6e2f684f5c",
-  measurementId: "G-VD419G6BZ2",
-};
 
 // const firebaseConfig = {
 //   x: "AIzaSyDeDG3C9i3BZLa8JXGTJcOUCla2rwSskik",
