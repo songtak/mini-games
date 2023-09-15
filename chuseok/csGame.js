@@ -514,6 +514,8 @@ getPayWatchApp("getUserInfo");
 /** 앱->웹 브릿지 정보 취득 */
 window.setUserInfo = (params) => {
   userId = String(JSON.parse(params).userId);
+  /** 믹스패널 설정 */
+  mixpanel.init(userId, { debug: true, track_pageview: true });
 };
 
 /** =========================================================================== */
@@ -600,9 +602,14 @@ function updateTotalScore() {
 
 /** =========================================================================== */
 
-/** GA 설정 */
+/** 트레킹 설정 */
 function eventComplete() {
-  gtag("event", "event_complete", {
+  // gtag("event", "event_complete", {
+  //   event_complete_id: "22",
+  //   event_complete_save: score,
+  //   event_complete_total: totalScore + (score > 1000 ? 1000 : score),
+  // });
+  mixpanel.track("event_complete", {
     event_complete_id: "22",
     event_complete_save: score,
     event_complete_total: totalScore + (score > 1000 ? 1000 : score),
