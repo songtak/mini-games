@@ -310,18 +310,6 @@ function handleTouchOrClick() {
       }
     }
   }
-
-  // if (isOver) {
-  //   if (
-  //     mouseX > width / 2 + 40 &&
-  //     mouseX < width / 2 + 40 + textWidth("메인화면으로 이동") &&
-  //     mouseY > height / 2 + 100 - 22 && // 텍스트의 높이는 22로 가정
-  //     mouseY < height / 2 + 100
-  //   ) {
-  //     window.location.href =
-  //       "https://paywatch-stage-webapp.paywatchglobal.com/event/22";
-  //   }
-  // }
 }
 
 function mouseOverImage(x, y, w, h) {
@@ -340,8 +328,6 @@ let isGameOverSoundPlaying = false;
 const urlParams = new URL(location.href).searchParams;
 const entryType = urlParams.get("type");
 
-console.log("entryType", entryType);
-
 function gameOver() {
   bgmSound.stop();
   isGameStarted = false;
@@ -359,13 +345,8 @@ function gameOver() {
 
   if (!isDone) {
     isDone = true;
-    updateTodayScore();
-    updateTotalScore();
-    eventComplete();
 
-    setTimeout(() => {
-      window.location.href = `https://paywatch-stage-webapp.paywatchglobal.com/event/22/${entryType}`;
-    }, 1800);
+    eventComplete();
   }
 }
 
@@ -455,166 +436,4 @@ class PayWatchCoin extends Bubble {
   }
 }
 
-/** ===[브릿지 통신]==================================================================== */
-
-let os;
-let userId;
-
-/** 브릿지 통신 */
-const getPayWatchApp = (functionName, params) => {
-  try {
-    /** 안드로이드 디바이스일때 */
-    if (os === "android") {
-      typeof params !== "undefined" && params
-        ? window.PaywatchAppInterface[functionName](params)
-        : window.PaywatchAppInterface[functionName]();
-      /** IOS 디바이스일때 */
-    } else if (os === "ios") {
-      if (typeof params === "undefined") {
-        window.webkit.messageHandlers?.nativeCallback.postMessage(
-          `${functionName}#`
-        );
-      } else if (
-        typeof params === "string" &&
-        typeof params === "number" &&
-        typeof params === "boolean"
-      ) {
-        window.webkit.messageHandlers?.nativeCallback.postMessage(
-          `${functionName}#${params}`
-        );
-      } else if (typeof params === "object") {
-        const msg = JSON.stringify({});
-        window.webkit.messageHandlers?.nativeCallback.postMessage(
-          `${functionName}#${msg}`
-        );
-      }
-    } else {
-      console.log("[OS ERROR] OS is neither AOS nor IOS");
-    }
-  } catch (error) {
-    console.log("error", error);
-  }
-};
-
-/** 디바이스 정보 */
-const ua = window.navigator.userAgent;
-
-/** os 정보 저장 */
-if (/(android)/i.test(ua)) {
-  os = "android";
-} else if (/(ipod|iphone|ipad)/i.test(ua)) {
-  os = "ios";
-} else {
-  os = null;
-}
-
-/** 브릿지 호출 */
-getPayWatchApp("getUserInfo");
-
-const firebaseConfig = {
-  apiKey: "AIzaSyCdcvWDE4K8cMmTTCLPdYxigItucju8dFg",
-  authDomain: "albawatch-2b2da.firebaseapp.com",
-  databaseURL: "https://albawatch-2b2da.firebaseio.com",
-  projectId: "albawatch-2b2da",
-  storageBucket: "albawatch-2b2da.appspot.com",
-  messagingSenderId: "869683140565",
-  appId: "1:869683140565:web:318388b3685d6e2f684f5c",
-  measurementId: "e1f16bcbf0ef3f073bc3e9133d9ee7cd",
-};
-
-/** 앱->웹 브릿지 정보 취득 */
-window.setUserInfo = (params) => {
-  userId = String(JSON.parse(params).userId);
-  /** 믹스패널 설정 */
-  mixpanel.init(firebaseConfig.measurementId, {
-    debug: true,
-    track_pageview: true,
-  });
-};
-
 /** =========================================================================== */
-
-function getToday() {
-  const date = new Date();
-  const year = date.getFullYear();
-  const month = ("0" + (1 + date.getMonth())).slice(-2);
-  const day = ("0" + date.getDate()).slice(-2);
-
-  return year + "-" + month + "-" + day;
-}
-
-function getTodayWithTime() {
-  const date = new Date();
-  const year = date.getFullYear();
-  const month = ("0" + (1 + date.getMonth())).slice(-2);
-  const day = ("0" + date.getDate()).slice(-2);
-  const hours = ("0" + date.getHours()).slice(-2);
-  const minutes = ("0" + date.getMinutes()).slice(-2);
-
-  return year + "-" + month + "-" + day + " " + hours + ":" + minutes;
-}
-
-/** =========================================================================== */
-
-// const firebaseConfig = {
-//   x: "AIzaSyDeDG3C9i3BZLa8JXGTJcOUCla2rwSskik",
-//   authDomain: "test-c81cd.firebaseapp.com",
-//   projectId: "test-c81cd",
-//   storageBucket: "test-c81cd.appspot.com",
-//   messagingSenderId: "485320566376",
-//   appId: "1:485320566376:web:7b148995b1f40879c93ddd",
-// };
-
-/** =========================================================================== */
-// firebaseConfig 정보로 firebase 시작
-firebase.initializeApp(firebaseConfig);
-
-// firebase의 firestore 인스턴스를 변수에 저장
-const firestore = firebase.firestore();
-
-const users = firestore.collection("users");
-
-// const today = getToday();
-const today = getTodayWithTime();
-
-/**
- * 오늘의 게임 점수 업데이트 "송민지_test"
- */
-function updateTodayScore() {
-  // const game_history = users.doc("3823").collection("game_history");
-  const game_history = users.doc(userId).collection("game_history");
-  game_history.doc(today).update({ score: score > 1000 ? 1000 : score });
-}
-
-/**
- * 누적 점수에 오늘의 점수 추가
- */
-function updateTotalScore() {
-  // .doc("송민지_test")
-  // users.doc("송민지_test").update({ total_score: total_score + score });
-  users
-    .doc(userId)
-    .get()
-    .then((doc) => {
-      totalScore = doc.data().total_score;
-      users
-        .doc(userId)
-        .update({ total_score: totalScore + (score > 1000 ? 1000 : score) });
-    });
-}
-
-/** =========================================================================== */
-
-/** 트레킹 설정 */
-function eventComplete() {
-  // gtag("event", "event_complete", {
-  //   event_complete_id: "22",
-  //   event_complete_save: score,
-  //   event_complete_total: totalScore + (score > 1000 ? 1000 : score),
-  // });
-  mixpanel.track("event_complete", {
-    event_complete_id: "22",
-    event_complete_save: score,
-    event_complete_total: totalScore + (score > 1000 ? 1000 : score),
-  });
-}
