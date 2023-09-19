@@ -56,9 +56,7 @@ function setup() {
   /** 배경음악 */
   bgmSound.play();
 
-  popImg = loadImage(
-    "https://songtak.github.io/mini-games/assets/chuseok/SongPop.png"
-  );
+  popImg = loadImage("https://songtak.github.io/mini-games/assets/img/pop.png");
   gameOverImg = loadImage(
     "https://songtak.github.io/mini-games/assets/chuseok/GameOver.png"
   );
@@ -67,12 +65,6 @@ function setup() {
   );
   bombExplodesImg = loadImage(
     "https://songtak.github.io/mini-games/assets/chuseok/BombExplodes.png"
-  );
-  payWatchLogoImg = loadImage(
-    "https://songtak.github.io/mini-games/assets/chuseok/PayWatchLogo.png"
-  );
-  paywatchLogoPopImg = loadImage(
-    "https://songtak.github.io/mini-games/assets/chuseok/PaywatchLogoPop.png"
   );
 
   scoreImg = loadImage(
@@ -102,7 +94,6 @@ function setup() {
   );
 
   startGame(); // 게임을 즉시 시작합니다.
-  startTime = millis(); // 현재 시간을 저장
 }
 
 function windowResized() {
@@ -138,16 +129,9 @@ function draw() {
 
   image(giftImg, 0, height - width / 2, width, width / 2);
 
-  if (countdown > 0) {
-    createBubble();
-    createBomb();
-    createPayWatchCoin();
-    image(moonImg, 30, 100, 160, 100);
-    // setInterval(createBomb, 1000); // 10초마다 bomb 생성
-  } else {
-    // 게임이 끝났을 때 gameOver 함수 호출
-    gameOver();
-  }
+  createBubble();
+  createBomb();
+  image(moonImg, 30, 100, 160, 100);
 
   /* bubble */
   for (let i = bubbles.length - 1; i >= 0; i--) {
@@ -175,25 +159,10 @@ function draw() {
     }
   }
 
-  /* payWatchCoin */
-  for (let i = payWatchCoins.length - 1; i >= 0; i--) {
-    payWatchCoins[i].display();
-    payWatchCoins[i].update();
-
-    if (payWatchCoins[i].isOffScreen()) {
-      payWatchCoins.splice(i, 1);
-    }
-  }
-
   if (score >= 1000 && !gameEnded) {
     gameEnded = true; // 게임 종료 상태로 변경
     noLoop(); // draw() 함수의 반복을 중지
     gameOver();
-  }
-
-  if (isGameStarted && !isOver) {
-    updateCountdown();
-    displayCountdown();
   }
 
   if (!isOver) {
@@ -210,26 +179,9 @@ function increaseSpeed() {
   bubbleSpeed += 0.5; // 10초마다 속도를 0.5씩 증가
 }
 
-/** ===[시간 제한]=================================================================== */
-function updateCountdown() {
-  let currentTime = millis();
-  countdown = 30 - int((currentTime - startTime) / 1000);
-  if (countdown <= 0) {
-    gameOver(); // 시간이 다 되면 게임 오버
-  }
-}
-
-function displayCountdown() {
-  textSize(22);
-  textAlign(RIGHT);
-  image(timeImg, width - 120, 30, 60, 14);
-
-  text(countdown, width - 20, 46);
-}
-
 /** ===[아이템 생성]=================================================================== */
 
-let totalBubbles = 90; // 총 버블 수
+let totalBubbles = 5000; // 총 버블 수
 let totalTime = 30000; // 총 시간 (30초 = 30000 밀리초)
 let bubblesCreated = 0; // 생성된 버블 수
 
@@ -243,22 +195,20 @@ function createBubble() {
     bubbles.push(bubble);
     bubblesCreated++;
   }
+
+  if (bubblesCreated === 10000) {
+    gameOver();
+  }
 }
 
 // bomb 생성 함수
 function createBomb() {
-  if (frameCount % 60 === 0) {
+  if (frameCount % 100 === 0) {
     let bomb = new Bomb(random(width), -40); // y 좌표를 -40으로 설정
     bombs.push(bomb);
   }
 }
 
-function createPayWatchCoin() {
-  if (frameCount % 600 === 0) {
-    let payWatchCoin = new PayWatchCoin(random(width), -40); // y 좌표를 -40으로 설정
-    payWatchCoins.push(payWatchCoin);
-  }
-}
 /** ===[아이템 클릭]=================================================================== */
 
 function touchStarted() {
@@ -282,18 +232,6 @@ function handleTouchOrClick() {
           bubbles.splice(i, 1);
         }, 100);
 
-        break;
-      }
-    }
-    for (let i = payWatchCoins.length - 1; i >= 0; i--) {
-      if (payWatchCoins[i].contains(mouseX, mouseY, 45, 60)) {
-        payWatchCoins[i].isClicked = true; // 버블이 클릭되었다고 표시
-        logoSound.play();
-
-        score += 50;
-        setTimeout(() => {
-          payWatchCoins.splice(i, 1);
-        }, 100);
         break;
       }
     }
@@ -325,9 +263,6 @@ function startGame() {
 
 let isGameOverSoundPlaying = false;
 
-const urlParams = new URL(location.href).searchParams;
-const entryType = urlParams.get("type");
-
 function gameOver() {
   bgmSound.stop();
   isGameStarted = false;
@@ -341,11 +276,13 @@ function gameOver() {
   textAlign(CENTER);
   text(score > 1000 ? 1000 : score, width / 2 + 40, height / 2 + 66);
   image(scoreImg, width / 2 - 70, height / 2 + 50, 80, 16);
+
   isOver === true && playGameOverSound();
 
   if (!isDone) {
     isDone = true;
-
+    updateTodayScore();
+    updateTotalScore();
     eventComplete();
   }
 }
@@ -414,25 +351,6 @@ class Bomb extends Bubble {
 
   update() {
     this.y += bombSpeed;
-  }
-}
-class PayWatchCoin extends Bubble {
-  constructor(x, y) {
-    super(x, y);
-  }
-
-  display() {
-    if (isOver === false) {
-      if (!this.isClicked) {
-        image(payWatchLogoImg, this.x, this.y + 10, this.r, this.r);
-      } else {
-        image(paywatchLogoPopImg, this.x, this.y, this.r, this.r * 0.5); // 클릭되었을 때 popImg 이미지로 변경
-      }
-    }
-  }
-
-  update() {
-    this.y += payWatchCoinSpeed;
   }
 }
 
